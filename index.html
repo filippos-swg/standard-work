@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Standard Work™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+:root{
+  --bg:#E8E6E1;--surface:#FFFFFF;--surface-alt:#F2F0EB;
+  --text:#1A1918;--text-dim:#6E6C69;--text-faint:#AEADA9;
+  --accent:#E84500;--accent-dark:#C03800;--border:#1A1918;--border-light:#CCC9C4;
+  --font:'Outfit',sans-serif;--font-mono:'JetBrains Mono',monospace;
+  --max-w:1320px;--pad-x:clamp(20px,5vw,64px);--pad-section:clamp(72px,10vw,140px);
+  --radius:18px;--radius-sm:10px;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);border-bottom:1.5px solid var(--border);height:58px;display:flex;align-items:center;padding:0 var(--pad-x)}
+.nav-inner{width:100%;max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:var(--font);font-size:17px;font-weight:800;letter-spacing:-0.01em;color:var(--text);cursor:pointer;text-decoration:none}
+.nav-logo .dot{color:var(--accent)}
+.nav-links{display:flex;gap:28px}
+.nav-link{font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;text-decoration:none;transition:color 0.12s}
+.nav-link:hover,.nav-link.active{color:var(--text)}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.nav-hamburger span{display:block;width:22px;height:1.5px;background:var(--text)}
+.nav-mobile{display:none;position:fixed;top:58px;left:0;right:0;bottom:0;background:var(--surface);z-index:99;padding:40px var(--pad-x);flex-direction:column;gap:28px;border-top:1.5px solid var(--border)}
+.nav-mobile.open{display:flex}
+.nav-mobile .nav-link{font-size:16px;letter-spacing:0.06em;color:var(--text)}
+.page{display:none;padding-top:58px}
+.page.active{display:block}
+.display{font-family:var(--font);font-size:clamp(52px,9vw,128px);font-weight:900;line-height:0.92;letter-spacing:-0.03em;text-transform:uppercase}
+.display .dot{color:var(--accent)}
+.h1{font-family:var(--font);font-size:clamp(36px,5vw,76px);font-weight:800;line-height:0.96;letter-spacing:-0.025em}
+.h2{font-family:var(--font);font-size:clamp(26px,3.5vw,52px);font-weight:700;line-height:1.0;letter-spacing:-0.02em}
+.h3{font-family:var(--font);font-size:clamp(20px,2.5vw,34px);font-weight:700;line-height:1.1;letter-spacing:-0.01em}
+.label{font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim)}
+.body-lg{font-size:clamp(15px,1.6vw,19px);line-height:1.65}
+.body{font-size:clamp(14px,1.2vw,16px);line-height:1.65}
+.muted{color:var(--text-dim)}
+.accent{color:var(--accent)}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--font);font-size:clamp(14px,1.5vw,17px);font-weight:700;letter-spacing:-0.01em;background:var(--text);color:var(--surface);border:1.5px solid var(--text);border-radius:100px;padding:clamp(10px,1.4vw,16px) clamp(22px,2.8vw,36px);cursor:pointer;text-decoration:none;transition:background 0.12s,color 0.12s,transform 0.1s;white-space:nowrap}
+.btn:hover{background:#333;border-color:#333;transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn-outline{background:transparent;color:var(--text);border-color:var(--border)}
+.btn-outline:hover{background:var(--text);color:var(--surface)}
+.btn-accent{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn-accent:hover{background:var(--accent-dark);border-color:var(--accent-dark)}
+.accent-block{background:var(--accent);padding:var(--pad-section) var(--pad-x);position:relative;overflow:hidden}
+.accent-block-inner{max-width:var(--max-w);margin:0 auto;position:relative;z-index:1}
+.accent-block .label{color:rgba(255,255,255,0.65)}
+.accent-block-items{margin-top:40px;border-top:1px solid rgba(255,255,255,0.3)}
+.accent-block-item{padding:24px 0;border-bottom:1px solid rgba(255,255,255,0.3);font-family:var(--font);font-size:clamp(22px,3vw,44px);font-weight:700;line-height:1.1;color:#fff;letter-spacing:-0.015em}
+.accent-note{margin-top:40px;font-size:clamp(13px,1.2vw,16px);line-height:1.6;color:rgba(255,255,255,0.75);max-width:600px}
+.step-header{background:var(--accent);padding:14px 25px;display:flex;align-items:baseline;gap:16px}
+.step-num{font-family:var(--font);font-size:clamp(15px,1.7vw,20px);font-weight:700;color:#fff;letter-spacing:-0.01em;flex-shrink:0}
+.step-title{font-family:var(--font);font-size:clamp(15px,1.7vw,20px);font-weight:700;color:#fff;letter-spacing:-0.01em}
+.step-body{padding:24px 0 40px;border-bottom:1.5px solid var(--border-light)}
+.step-body:last-child{border-bottom:none}
+.services-grid{display:grid;grid-template-columns:3fr 2fr;gap:0;border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:48px;background:var(--surface)}
+.service-card{padding:clamp(28px,3.5vw,48px);display:flex;flex-direction:column;gap:20px}
+.service-card:first-child{border-right:1.5px solid var(--border)}
+.service-card-badge{display:inline-block;font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);padding:4px 10px;border-radius:100px;margin-bottom:4px;width:fit-content}
+.service-card-title{font-family:var(--font);font-size:clamp(20px,2.2vw,32px);font-weight:800;letter-spacing:-0.02em;line-height:1.1}
+.service-card-desc{font-size:clamp(13px,1.2vw,15px);color:var(--text-dim);line-height:1.65;flex:1}
+.service-card-price{font-family:var(--font);font-size:clamp(18px,2vw,28px);font-weight:700;letter-spacing:-0.02em}
+.process-mini{margin-top:32px}
+.process-mini-item{display:flex;gap:20px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--border-light)}
+.process-mini-item:last-child{border-bottom:none}
+.process-mini-num{font-family:var(--font-mono);font-size:11px;font-weight:600;color:var(--accent);letter-spacing:0.08em;flex-shrink:0;width:24px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,80px)}
+.hero-split{display:grid;grid-template-columns:1fr auto;gap:clamp(32px,5vw,80px);align-items:start}
+.hero-cta-box{display:flex;flex-direction:column;gap:12px;padding-top:8px;min-width:240px}
+.hero-cta-label{font-family:var(--font-mono);font-size:11px;color:var(--text-dim);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px}
+.list-clean{list-style:none;display:flex;flex-direction:column}
+.list-clean li{font-size:clamp(14px,1.3vw,16px);padding:12px 0;border-bottom:1px solid var(--border-light);line-height:1.5}
+.list-clean li:last-child{border-bottom:none}
+.included-list{margin-top:32px}
+.included-item{padding:20px 0;border-bottom:1px solid var(--border-light);display:grid;grid-template-columns:200px 1fr;gap:32px}
+.included-item:first-child{border-top:1px solid var(--border-light)}
+.included-title{font-family:var(--font);font-size:clamp(15px,1.6vw,20px);font-weight:700;letter-spacing:-0.01em}
+.included-desc{font-size:14px;color:var(--text-dim);line-height:1.6}
+.package-layout{display:grid;grid-template-columns:1fr 360px;gap:clamp(32px,4vw,56px);align-items:start}
+.package-content{min-width:0}
+.order-summary-wrap{position:sticky;top:74px}
+.order-summary{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.summary-top{padding:20px 24px;border-bottom:1.5px solid var(--border);background:var(--text)}
+.summary-top .label{color:rgba(255,255,255,0.6)}
+.summary-body{padding:0 24px}
+.summary-row{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--border-light)}
+.summary-row:last-of-type{border-bottom:none}
+.summary-key{font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim)}
+.summary-val{font-size:13px;font-weight:600;color:var(--text);text-align:right;max-width:180px}
+.summary-price-section{border-top:1.5px solid var(--border);padding:16px 24px;background:var(--surface-alt)}
+.summary-price-row{display:flex;justify-content:space-between;padding:5px 0;font-size:13px;color:var(--text-dim)}
+.summary-total-row{display:flex;justify-content:space-between;padding:14px 0 4px;font-family:var(--font);font-size:22px;font-weight:800;letter-spacing:-0.02em;border-top:1px solid var(--border-light);margin-top:8px}
+.summary-note{padding:14px 24px;font-family:var(--font-mono);font-size:10px;color:var(--text-dim);line-height:1.6;border-top:1.5px solid var(--border)}
+.summary-cta{padding:16px 24px;border-top:1px solid var(--border-light)}
+.summary-addons-section{padding:12px 24px;border-bottom:1px solid var(--border-light)}
+.config-step{margin-bottom:40px;padding-bottom:40px;border-bottom:1.5px solid var(--border-light)}
+.config-step:last-child{border-bottom:none}
+.config-step-label{font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:6px}
+.config-step-q{font-family:var(--font);font-size:clamp(18px,2vw,24px);font-weight:700;letter-spacing:-0.01em;margin-bottom:16px}
+.options-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;counter-reset:opt}
+.options-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;counter-reset:opt}
+.option-card{display:block;cursor:pointer;counter-increment:opt}
+.option-card input{position:absolute;opacity:0;width:0;height:0}
+.option-inner{border:none;background:var(--surface-alt);padding:14px 16px 16px;padding-top:36px;transition:background 0.15s,color 0.15s,transform 0.1s;font-size:15px;font-weight:600;line-height:1.3;color:var(--text-dim);border-radius:16px;position:relative;min-height:96px;display:flex;flex-direction:column;justify-content:flex-end}
+.option-inner::before{content:counter(opt,decimal-leading-zero);position:absolute;top:14px;left:16px;font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:0.1em;color:var(--text-faint);transition:color 0.15s}
+.option-inner::after{content:'';position:absolute;top:16px;right:16px;width:7px;height:7px;border-radius:50%;background:transparent;border:1.5px solid var(--border-light);transition:background 0.15s,border-color 0.15s}
+.option-card:hover .option-inner{background:#E3E0D9;color:var(--text);transform:translateY(-1px)}
+.option-card input:checked + .option-inner{background:var(--text);color:#fff;transform:translateY(-1px)}
+.option-card input:checked + .option-inner::before{color:var(--accent)}
+.option-card input:checked + .option-inner::after{background:var(--accent);border-color:var(--accent)}
+.option-inner .price-tag{display:block;font-family:var(--font-mono);font-size:11px;color:var(--text-faint);margin-top:6px;font-weight:500}
+.option-card input:checked + .option-inner .price-tag{color:var(--accent)}
+.price-block{padding:clamp(28px,4vw,48px) 0;border-top:1.5px solid var(--border-light)}
+.price-block:first-child{border-top:none;padding-top:0}
+.price-big{font-family:var(--font);font-size:clamp(32px,4.5vw,64px);font-weight:800;letter-spacing:-0.03em;margin:8px 0}
+.addons-list{display:flex;flex-direction:column}
+.addon-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--border-light);font-size:14px}
+.addon-row:first-child{border-top:1px solid var(--border-light)}
+.addon-price{font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--text-dim);white-space:nowrap}
+.form-grid{display:flex;flex-direction:column;gap:24px;margin-top:40px;max-width:680px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-label{font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim)}
+.form-input,.form-select,.form-textarea{background:var(--surface);border:1.5px solid var(--border-light);color:var(--text);font-family:var(--font);font-size:15px;padding:12px 16px;width:100%;transition:border-color 0.12s;outline:none;-webkit-appearance:none;border-radius:var(--radius-sm)}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--border)}
+.form-textarea{resize:vertical;min-height:120px;line-height:1.5}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-success{display:none;padding:48px 0}
+.form-success.show{display:block}
+footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-top:1.5px solid var(--border);background:var(--text);color:var(--surface)}
+.footer-inner{max-width:var(--max-w);margin:0 auto}
+.footer-logo{font-family:var(--font);font-size:clamp(26px,4vw,52px);font-weight:900;letter-spacing:-0.02em;margin-bottom:8px}
+.footer-logo .dot{color:var(--accent)}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;gap:32px}
+.footer-desc{font-size:14px;color:rgba(255,255,255,0.45);line-height:1.6;max-width:420px;margin-top:8px}
+.footer-email{font-family:var(--font-mono);font-size:13px;color:rgba(255,255,255,0.55);text-decoration:none}
+.footer-email:hover{color:#fff}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;border-top:1px solid rgba(255,255,255,0.12);font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.35);letter-spacing:0.04em}
+.footer-nav-links{display:flex;gap:24px}
+.footer-nav-link{color:rgba(255,255,255,0.35);text-decoration:none;cursor:pointer;transition:color 0.12s}
+.footer-nav-link:hover{color:rgba(255,255,255,0.7)}
+.footer-guild{display:flex;align-items:center;justify-content:flex-end;gap:12px;margin-top:48px;padding-top:32px;border-top:1px solid rgba(255,255,255,0.08)}
+.footer-guild-text{font-family:var(--font);font-size:14px;font-weight:400;color:rgba(255,255,255,0.55);white-space:nowrap}
+.footer-guild-logo{font-family:'UnifrakturMaguntia',serif;font-size:28px;color:#fff;text-decoration:none;line-height:1;transition:opacity 0.15s;display:inline-block}
+.footer-guild-logo:hover{opacity:0.75}
+.thankyou-wrap{min-height:calc(100vh - 58px);display:flex;align-items:center;padding:var(--pad-section) var(--pad-x)}
+.thankyou-step{display:flex;gap:20px;padding:18px 0;border-bottom:1px solid var(--border-light)}
+.thankyou-step:first-child{border-top:1px solid var(--border-light)}
+.thankyou-num{font-family:var(--font-mono);font-size:11px;font-weight:600;color:var(--accent);letter-spacing:0.06em;flex-shrink:0;width:24px;margin-top:2px}
+.mt-8{margin-top:8px}.mt-16{margin-top:16px}.mt-24{margin-top:24px}.mt-32{margin-top:32px}.mt-40{margin-top:40px}.mt-48{margin-top:48px}
+.mb-8{margin-bottom:8px}.mb-12{margin-bottom:12px}.mb-16{margin-bottom:16px}.mb-24{margin-bottom:24px}.mb-40{margin-bottom:40px}
+.surface-section{background:var(--surface);padding:var(--pad-section) var(--pad-x)}
+.alt-section{background:var(--surface-alt);padding:var(--pad-section) var(--pad-x);border-top:1.5px solid var(--border-light);border-bottom:1.5px solid var(--border-light)}
+@media(max-width:960px){
+  .two-col{grid-template-columns:1fr}
+  .services-grid{grid-template-columns:1fr}
+  .service-card:first-child{border-right:none;border-bottom:1.5px solid var(--border)}
+  .included-item{grid-template-columns:1fr;gap:6px}
+  .package-layout{grid-template-columns:1fr}
+  .order-summary-wrap{position:static}
+  .hero-split{grid-template-columns:1fr}
+  .hero-cta-box{flex-direction:row;flex-wrap:wrap}
+  .hero-cta-label{display:none}
+  .form-row{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .nav-links{display:none}
+  .nav-hamburger{display:flex}
+  .options-grid{grid-template-columns:1fr 1fr}
+  .footer-top{flex-direction:column;align-items:flex-start}
+  .footer-bottom{flex-direction:column;gap:12px;text-align:center}
+  .footer-guild{justify-content:flex-start;flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" onclick="navigate('home')">SW<span class="dot">.</span></a>
+    <div class="nav-links">
+      <a class="nav-link" onclick="navigate('how-it-works')">How it works</a>
+      <a class="nav-link" onclick="navigate('brand')">Brand</a>
+      <a class="nav-link" onclick="navigate('website')">Website</a>
+      <a class="nav-link" onclick="navigate('pricing')">Pricing</a>
+      <a class="nav-link" onclick="navigate('contact')">Contact</a>
+    </div>
+    <div class="nav-hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+<div class="nav-mobile" id="mobileMenu">
+  <a class="nav-link" onclick="navigate('home');toggleMenu()">Home</a>
+  <a class="nav-link" onclick="navigate('how-it-works');toggleMenu()">How it works</a>
+  <a class="nav-link" onclick="navigate('brand');toggleMenu()">Brand</a>
+  <a class="nav-link" onclick="navigate('website');toggleMenu()">Website</a>
+  <a class="nav-link" onclick="navigate('pricing');toggleMenu()">Pricing</a>
+  <a class="nav-link" onclick="navigate('contact');toggleMenu()">Contact</a>
+</div>
+
+<!-- HOME -->
+<div id="page-home" class="page">
+  <div style="background:var(--surface);border-bottom:1.5px solid var(--border);">
+    <div style="max-width:var(--max-w);margin:0 auto;padding:clamp(56px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);">
+      <div class="hero-split">
+        <div>
+          <p class="label mb-16">Productized design service</p>
+          <div class="display" style="margin-bottom:clamp(28px,4vw,52px);">Standard<br>Work<span class="dot">™</span></div>
+          <p class="h3" style="max-width:580px;margin-bottom:clamp(20px,3vw,32px);font-weight:500;color:var(--text-dim);">Build a brand and website for your business without agency processes and extra costs.</p>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:clamp(28px,4vw,44px);">
+            <p class="body-lg" style="font-weight:600;">No workshops.</p>
+            <p class="body-lg" style="font-weight:600;">No long briefs.</p>
+            <p class="body-lg" style="font-weight:600;">No inflated fees.</p>
+          </div>
+          <p class="body muted">Just a small number of good decisions executed properly.</p>
+        </div>
+        <div class="hero-cta-box">
+          <p class="hero-cta-label">Know what you need?</p>
+          <button class="btn btn-accent" onclick="navigate('brand')">→ Build a brand</button>
+          <button class="btn btn-outline" onclick="navigate('website')">→ Make a website</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accent-block">
+    <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(-45deg,transparent,transparent 6px,rgba(0,0,0,0.06) 6px,rgba(0,0,0,0.06) 7px);pointer-events:none;"></div>
+    <div class="accent-block-inner">
+      <p class="label" style="margin-bottom:16px;">What we do</p>
+      <h2 style="font-family:var(--font);font-size:clamp(20px,2.5vw,32px);font-weight:700;color:#fff;letter-spacing:-0.01em;">STANDARD WORK<span style="color:rgba(255,255,255,0.5);">™</span> helps you:</h2>
+      <div class="accent-block-items">
+        <div class="accent-block-item">Build a brand for your business.</div>
+        <div class="accent-block-item">Create a simple, well-designed website that presents it clearly.</div>
+        <div class="accent-block-item">Understand exactly what you're paying for before you begin.</div>
+      </div>
+      <p class="accent-note">We don't sell exploration. We sell clearly defined outcomes. Everything is fixed in scope and priced upfront.</p>
+    </div>
+  </div>
+
+  <div class="surface-section" style="border-bottom:1.5px solid var(--border-light);">
+    <div style="max-width:var(--max-w);margin:0 auto;">
+      <div class="two-col" style="gap:clamp(40px,6vw,100px);">
+        <div>
+          <p class="label mb-16">The process</p>
+          <h2 class="h2" style="margin-bottom:20px;">Calm and predictable.</h2>
+          <p class="body-lg muted" style="margin-bottom:32px;">You make a few practical choices. We guide them and do the work. No meetings by default. No open-ended processes.</p>
+          <button class="btn btn-outline" onclick="navigate('how-it-works')">See the full process →</button>
+        </div>
+        <div>
+          <div class="process-mini">
+            <div class="process-mini-item"><span class="process-mini-num">01</span><span class="body-lg" style="font-weight:600;">Choose what you need</span></div>
+            <div class="process-mini-item"><span class="process-mini-num">02</span><span class="body-lg" style="font-weight:600;">Answer a few practical questions</span></div>
+            <div class="process-mini-item"><span class="process-mini-num">03</span><span class="body-lg" style="font-weight:600;">Review scope, price, and delivery</span></div>
+            <div class="process-mini-item"><span class="process-mini-num">04</span><span class="body-lg" style="font-weight:600;">We do the work</span></div>
+            <div class="process-mini-item"><span class="process-mini-num">05</span><span class="body-lg" style="font-weight:600;">Review, refine, and deliver</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:var(--pad-section) var(--pad-x);max-width:var(--max-w);margin:0 auto;">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+      <div><p class="label mb-12">Our services</p><h2 class="h2">Choose what fits.</h2></div>
+      <p class="body muted" style="max-width:320px;">Fixed scope. Fixed price. Professional results.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div><div class="service-card-badge">Brand</div><h3 class="service-card-title">Brand for<br>Your Business</h3></div>
+        <p class="service-card-desc">Create the essential elements your business needs to look coherent and credible. Logo, type, colour, voice — all of it, without the process overhead.</p>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;padding-top:16px;border-top:1px solid var(--border-light);">
+          <span class="service-card-price">From 12,000 SEK</span>
+          <button class="btn btn-accent" onclick="navigate('brand')">→ Build a brand</button>
+        </div>
+      </div>
+      <div class="service-card">
+        <div><div class="service-card-badge">Website</div><h3 class="service-card-title">Website for<br>Your Business</h3></div>
+        <p class="service-card-desc">A simple, scrollable website that explains what you do and how to contact you. Designed. Built. Published.</p>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;padding-top:16px;border-top:1px solid var(--border-light);">
+          <span class="service-card-price">From 8,000 SEK</span>
+          <button class="btn btn-outline" onclick="navigate('website')">→ Make a website</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alt-section">
+    <div style="max-width:var(--max-w);margin:0 auto;">
+      <div class="two-col">
+        <div><p class="label mb-16">Behind the work</p><h2 class="h2">Not automated<span class="accent">.</span></h2></div>
+        <div>
+          <p class="body-lg muted" style="margin-bottom:20px;">Behind the system is a small group of experienced art directors, designers, writers, and developers who review and refine the work before it's delivered.</p>
+          <p class="body-lg muted" style="margin-bottom:20px;">The tools are modern. The structure is fixed. Quality is ensured by people who have done this work for years.</p>
+          <p class="body-lg muted">This allows us to deliver properly finished work without the overhead, meetings, or cost structure of a traditional agency.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--text);padding:var(--pad-section) var(--pad-x);">
+    <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
+      <div><h2 class="h2" style="color:#fff;margin-bottom:10px;">Get to work<span style="color:var(--accent);">.</span></h2><p class="body-lg" style="color:rgba(255,255,255,0.5);">Choose what you need and see the price immediately.</p></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <button class="btn btn-accent" onclick="navigate('brand')">→ Build a brand</button>
+        <button class="btn btn-outline" style="border-color:rgba(255,255,255,0.3);color:#fff;" onclick="navigate('website')">→ Make a website</button>
+      </div>
+    </div>
+  </div>
+  <div id="footer-home"></div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div id="page-how-it-works" class="page">
+  <div style="background:var(--surface);border-bottom:1.5px solid var(--border);">
+    <div style="max-width:var(--max-w);margin:0 auto;padding:clamp(56px,8vw,100px) var(--pad-x);">
+      <div class="hero-split">
+        <div>
+          <p class="label mb-16">Process</p>
+          <h1 class="h1" style="margin-bottom:clamp(20px,3vw,36px);">How it works<span class="accent">.</span></h1>
+          <p class="body-lg muted" style="max-width:540px;margin-bottom:14px;">STANDARD WORK is designed to be calm and predictable. No workshops. No discovery phases. No open-ended processes.</p>
+          <p class="body-lg muted" style="max-width:540px;">Everything is defined before work begins.</p>
+        </div>
+        <div class="hero-cta-box">
+          <p class="hero-cta-label">Ready to start?</p>
+          <button class="btn btn-accent" onclick="navigate('brand')">→ Build a brand</button>
+          <button class="btn btn-outline" onclick="navigate('website')">→ Make a website</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="padding:var(--pad-section) var(--pad-x);max-width:var(--max-w);margin:0 auto;">
+    <p class="label mb-40">Five steps</p>
+    <div class="step-header"><span class="step-num">01</span><span class="step-title">Choose what you need</span></div>
+    <div class="step-body"><p class="body-lg muted" style="max-width:620px;">Select the service that fits your situation: a brand, a website, or both. You'll see the full price and scope immediately.</p></div>
+    <div class="step-header"><span class="step-num">02</span><span class="step-title">Answer a few practical questions</span></div>
+    <div class="step-body"><p class="body-lg muted" style="max-width:620px;">You'll be guided through a short configuration flow. Defaults are provided. You only need to adjust what matters. This usually takes a few minutes.</p></div>
+    <div class="step-header"><span class="step-num">03</span><span class="step-title">Review and confirm</span></div>
+    <div class="step-body">
+      <p class="body-lg muted" style="max-width:620px;margin-bottom:16px;">Before confirming, you'll see everything clearly:</p>
+      <ul class="list-clean" style="max-width:420px;"><li>What's included</li><li>What's not included</li><li>The total cost</li><li>Delivery timing</li></ul>
+      <p class="body muted" style="margin-top:16px;">Payment: 50% to start, 50% on final delivery.</p>
+    </div>
+    <div class="step-header"><span class="step-num">04</span><span class="step-title">We do the work</span></div>
+    <div class="step-body"><p class="body-lg muted" style="max-width:620px;">Once confirmed, we review your submission and begin. The work is developed using a structured system and reviewed by experienced designers. No meetings required unless needed.</p></div>
+    <div class="step-header"><span class="step-num">05</span><span class="step-title">Review and delivery</span></div>
+    <div class="step-body" style="border-bottom:none;"><p class="body-lg muted" style="max-width:620px;">You'll receive a draft to review. One revision round is included to refine the work within the agreed scope. Final files are delivered once the remaining balance is paid.</p></div>
+  </div>
+  <div class="alt-section">
+    <div style="max-width:var(--max-w);margin:0 auto;">
+      <div class="two-col">
+        <div><p class="label mb-24">What this approach avoids</p><ul class="list-clean"><li>Long briefing sessions</li><li>Ongoing discussions about direction</li><li>Open-ended revisions</li><li>Agency-style overhead</li><li>Scope drift</li></ul></div>
+        <div><p class="label mb-24">What you can expect</p><ul class="list-clean"><li>Fixed scope</li><li>Fixed pricing</li><li>Clear delivery</li><li>Professional, finished work</li><li>Nothing hidden. Nothing improvised.</li></ul></div>
+      </div>
+    </div>
+  </div>
+  <div style="padding:var(--pad-section) var(--pad-x);max-width:720px;margin:0 auto;">
+    <p class="label mb-16">A note on fit</p>
+    <h2 class="h2" style="margin-bottom:20px;">This is for people who value clarity.</h2>
+    <p class="body-lg muted" style="margin-bottom:14px;">STANDARD WORK is for people who value clear decisions, prefer structure over process, and want professional results without an agency relationship.</p>
+    <p class="body-lg muted">If you're looking for workshops or ongoing collaboration, this may not be the right approach.</p>
+  </div>
+  <div style="background:var(--text);padding:var(--pad-section) var(--pad-x);">
+    <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
+      <div><h2 class="h2" style="color:#fff;margin-bottom:10px;">Ready to begin?</h2><p class="body-lg" style="color:rgba(255,255,255,0.5);">Choose what you need and see the price immediately.</p></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <button class="btn btn-accent" onclick="navigate('brand')">→ Build a brand</button>
+        <button class="btn btn-outline" style="border-color:rgba(255,255,255,0.3);color:#fff;" onclick="navigate('website')">→ Make a website</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BRAND -->
+<div id="page-brand" class="page">
+  <div style="background:var(--surface);border-bottom:1.5px solid var(--border);">
+    <div style="max-width:var(--max-w);margin:0 auto;padding:clamp(56px,8vw,100px) var(--pad-x);">
+      <div class="hero-split">
+        <div>
+          <p class="label mb-16">Brand</p>
+          <h1 class="h1" style="margin-bottom:clamp(16px,2vw,24px);">Brand for Your Business<span class="accent">.</span></h1>
+          <p class="h3" style="font-weight:500;color:var(--text-dim);margin-bottom:clamp(20px,3vw,32px);max-width:580px;">Build the essential elements your business needs to look coherent and credible.</p>
+          <p class="body-lg muted" style="max-width:540px;margin-bottom:14px;">This service helps you define and create a complete, usable brand — without workshops, long briefs, or agency processes.</p>
+          <p class="body-lg muted" style="max-width:540px;margin-bottom:32px;">You make a small number of clear choices. We guide them and execute the work professionally.</p>
+          <button class="btn btn-accent" onclick="document.getElementById('brand-config').scrollIntoView({behavior:'smooth'})">Configure your brand →</button>
+        </div>
+        <div class="hero-cta-box">
+          <p class="hero-cta-label">Already decided?</p>
+          <button class="btn btn-accent" onclick="navigate('brand')">→ Build a brand</button>
+          <button class="btn btn-outline" onclick="navigate('website')">→ Make a website</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="padding:var(--pad-section) var(--pad-x);max-width:var(--max-w);margin:0 auto;">
+    <div class="two-col">
+      <div><p class="label mb-16">What this is</p><h2 class="h2">Practical brand definition<span class="accent">.</span></h2></div>
+      <div>
+        <p class="body-lg muted" style="margin-bottom:16px;">Designed for:</p>
+        <ol style="list-style:decimal;padding-left:20px;display:flex;flex-direction:column;gap:10px;color:var(--text-dim);font-size:16px;line-height:1.6;">
+          <li>New businesses that need a solid starting point</li>
+          <li>Existing businesses that need a cleaner, more consistent brand</li>
+          <li>Individuals and freelancers who want to present themselves professionally</li>
+        </ol>
+        <p class="body muted" style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border-light);">This is not brand strategy consulting. It is practical brand definition.</p>
+      </div>
+    </div>
+  </div>
+  <div class="alt-section">
+    <div style="max-width:var(--max-w);margin:0 auto;">
+      <p class="label mb-16">What's included</p>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:16px;"><h2 class="h2">Base package</h2><span style="font-family:var(--font);font-size:clamp(22px,3vw,40px);font-weight:800;letter-spacing:-0.03em;">12,000 SEK</span></div>
+      <div class="included-list">
+        <div class="included-item"><div class="included-title">Brand direction</div><div class="included-desc">Keywords and statements describing what your business does, how it operates, and why it exists. Guides all design decisions.</div></div>
+        <div class="included-item"><div class="included-title">Logo</div><div class="included-desc">A professionally designed logo based on the agreed direction. Clean, usable, and appropriate for your business.</div></div>
+        <div class="included-item"><div class="included-title">Typography</div><div class="included-desc">A considered type selection that supports clarity and readability. Adapted to your voice and category.</div></div>
+        <div class="included-item"><div class="included-title">Colour palette</div><div class="included-desc">Primary, secondary, and accent colours. Defined for consistency across use.</div></div>
+        <div class="included-item"><div class="included-title">Imagery direction</div><div class="included-desc">Guidance for photography, illustration, or AI-generated imagery. References optional.</div></div>
+        <div class="included-item"><div class="included-title">Tone of voice</div><div class="included-desc">Keywords and short examples showing how your brand should sound and what to avoid.</div></div>
+      </div>
+    </div>
+  </div>
+  <div id="brand-config" style="padding:var(--pad-section) var(--pad-x);max-width:var(--max-w);margin:0 auto;">
+    <p class="label mb-16">Configure</p>
+    <h2 class="h2" style="margin-bottom:8px;">Customise your order<span class="accent">.</span></h2>
+    <p class="body muted" style="margin-bottom:48px;">Your summary updates as you go.</p>
+    <div class="package-layout">
+      <div class="package-content">
+        <div class="config-step">
+          <p class="config-step-label">01 / Business stage</p><p class="config-step-q">What describes your situation?</p>
+          <div class="options-grid">
+            <label class="option-card"><input type="radio" name="b-stage" value="New business" onchange="updateBrandSummary()"><div class="option-inner">New business</div></label>
+            <label class="option-card"><input type="radio" name="b-stage" value="Existing business" onchange="updateBrandSummary()"><div class="option-inner">Existing business</div></label>
+            <label class="option-card"><input type="radio" name="b-stage" value="Freelance / personal" onchange="updateBrandSummary()"><div class="option-inner">Freelance / personal</div></label>
+            <label class="option-card"><input type="radio" name="b-stage" value="Not sure yet" onchange="updateBrandSummary()"><div class="option-inner">Not sure yet</div></label>
+          </div>
+        </div>
+        <div class="config-step">
+          <p class="config-step-label">02 / Brand need</p><p class="config-step-q">Where are you starting from?</p>
+          <div class="options-grid">
+            <label class="option-card"><input type="radio" name="b-need" value="Everything from scratch" onchange="updateBrandSummary()"><div class="option-inner">Everything from scratch</div></label>
+            <label class="option-card"><input type="radio" name="b-need" value="Name, no identity" onchange="updateBrandSummary()"><div class="option-inner">Name, no identity</div></label>
+            <label class="option-card"><input type="radio" name="b-need" value="Logo, need a system" onchange="updateBrandSummary()"><div class="option-inner">Logo, need a system</div></label>
+            <label class="option-card"><input type="radio" name="b-need" value="Cleaner version of existing" onchange="updateBrandSummary()"><div class="option-inner">Cleaner version of existing</div></label>
+          </div>
+        </div>
+        <div class="config-step">
+          <p class="config-step-label">03 / Style direction</p><p class="config-step-q">What direction feels right?</p>
+          <div class="options-grid">
+            <label class="option-card"><input type="radio" name="b-style" value="Clean and minimal" onchange="updateBrandSummary()"><div class="option-inner">Clean and minimal</div></label>
+            <label class="option-card"><input type="radio" name="b-style" value="Warm and human" onchange="updateBrandSummary()"><div class="option-inner">Warm and human</div></label>
+            <label class="option-card"><input type="radio" name="b-style" value="Bold and expressive" onchange="updateBrandSummary()"><div class="option-inner">Bold and expressive</div></label>
+            <label class="option-card"><input type="radio" name="b-style" value="Premium and restrained" onchange="updateBrandSummary()"><div class="option-inner">Premium and restrained</div></label>
+            <label class="option-card"><input type="radio" name="b-style" value="Not sure yet" onchange="updateBrandSummary()"><div class="option-inner">Not sure yet</div></label>
+          </div>
+        </div>
+        <div class="config-step">
+          <p class="config-step-label">04 / Optional additions</p><p class="config-step-q">Add what you need. Each item updates the price.</p>
+          <div class="options-grid-2">
+            <label class="option-card"><input type="checkbox" name="b-addon" value="Naming" data-price="3000" onchange="updateBrandSummary()"><div class="option-inner">Naming<span class="price-tag">+3,000 SEK</span></div></label>
+            <label class="option-card"><input type="checkbox" name="b-addon" value="Brand summary PDF" data-price="1500" onchange="updateBrandSummary()"><div class="option-inner">Brand summary (PDF)<span class="price-tag">+1,500 SEK</span></div></label>
+            <label class="option-card"><input type="checkbox" name="b-addon" value="Social starter templates" data-price="2000" onchange="updateBrandSummary()"><div class="option-inner">Social starter templates<span class="price-tag">+2,000 SEK</span></div></label>
+            <label class="option-card"><input type="checkbox" name="b-addon" value="Extended imagery pack" data-price="1500" onchange="updateBrandSummary()"><div class="option-inner">Extended imagery pack<span class="price-tag">+1,500 SEK</span></div></label>
+            <label class="option-card"><input type="checkbox" name="b-addon" value="Extra revision round" data-price="1500" onchange="updateBrandSummary()"><div class="option-inner">Extra revision round<span class="price-tag">+1,500 SEK</span></div></label>
+          </div>
+        </div>
+        <div class="config-step">
+          <p class="config-step-label">05 / Deadline</p><p class="config-step-q">When do you need it?</p>
+          <div class="options-grid">
+            <label class="option-card"><input type="radio" name="b-deadline" value="No hard deadline" onchange="updateBrandSummary()"><div class="option-inner">No hard deadline</div></label>
+            <label class="option-card"><input type="radio" name="b-deadline" value="Within 2 weeks" onchange="updateBrandSummary()"><div class="option-inner">Within 2 weeks</div></label>
+            <label class="option-card"><input type="radio" name="b-deadline" value="Within 1 month" onchange="updateBrandSummary()"><div class="option-inner">Within 1 month</div></label>
+            <label class="option-card"><input type="radio" name="b-deadline" value="Specific date" onchange="updateBrandSummary();document.getElementById('b-date-wrap').style.display='block'"><div class="option-inner">Specific date</div></label>
+          </div>
+          <div id="b-date-wrap" style="margin-top:12px;display:none;"><input type="date" class="form-input" style="max-width:240px;" id="b-deadline-date" onchange="updateBrandSummary()"></div>
+        </div>
+      </div>
+      <div class="order-summary-wrap">
+        <div class="order-summary">
+          <div class="summary-top"><p class="label">Your request</p><p style="font-family:var(--font);font-size:16px;font-weight:700;color:#fff;margin-top:4px;letter-spacing:-0.01em;">Brand for Your Business</p></div>
+          <div class="summary-body" style="padding-top:4px;padding-bottom:4px;">
+            <div class="summary-row"><span class="summary-key">Stage</span><span class="summary-val" id="bs-stage">—</span></div>
+            <div class="summary-row"><span class="summary-key">Need</span><span class="summary-val" id="bs-need">—</span></div>
+            <div class="summary-row"><span class="summary-key">Style</span><span class="summary-val" id="bs-style">—</span></div>
+            <div class="summary-row" style="border-bottom:none;"><span class="summary-key">Deadline</span><span class="summary-val" id="bs-deadline">—</span></div>
+          </div>
+          <div id="bs-addons-wrap" style="display:none;" class="summary-addons-section"><p class="summary-key" style="margin-bottom:8px;">Additions</p><div id="bs-addons-list" style="display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--text-dim);"></div></div>
+          <div class="summary-price-section">
+            <div class="summary-price-row"><span>Base</span><span>12,000 SEK</span></div>
+            <div class="summary-price-row" id="bs-addon-price-row" style="display:none;"><span>Additions</span><span id="bs-addon-price" style="color:var(--accent);">+0 SEK</span></div>
+            <div class="summary-total-row"><span>Total</span><span id="bs-total">12,000 SEK</span></div>
+          </div>
+          <div class="summary-note">Final scope and price confirmed before work begins. 50% to start — 50% on delivery.</div>
+          <div class="summary-cta"><button class="btn btn-accent" style="width:100%;justify-content:center;" onclick="navigate('contact')">Continue to enquiry →</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="alt-section">
+    <div style="max-width:var(--max-w);margin:0 auto;">
+      <div class="two-col">
+        <div><p class="label mb-16">What's not included</p><h2 class="h2">Clearly defined before work begins.</h2></div>
+        <ul class="list-clean"><li>Workshops or discovery phases</li><li>Open-ended exploration</li><li>Ongoing collaboration</li><li>Marketing or performance strategy</li><li>Naming (available as an add-on)</li></ul>
+      </div>
+    </div>
+  </div>
+  <div style="padding:var(--pad-section) var(--pad-x);max-width:var(--max-w);margin:0 auto;">
+    <p class="label mb-16">Pricing</p>
+    <div class="price-block">
+      <h2 class="h2" style="margin-bottom:4px;">Brand for Your Business</h2>
+      <div class="price-big">12,000 SEK</div>
+      <p class="body muted" style="margin-bottom:24px;">Optional additions available during configuration. The total price updates live.</p>
+      <div class="addons-list mt-24" style="max-width:600px;">
+        <div class="addon-row"><span>Naming</span><span class="addon-price">+3,000 SEK</span></div>
+        <div class="addon-row"><span>Brand summary (1–2 page PDF)</span><span class="addon-price">+1,500 SEK</span></div>
+        <div class="addon-row"><span>Social starter templates</span><span class="addon-price">+2,000 SEK</span></div>
+        <div class="addon-row"><span>Extended imagery pack</span><span class="addon-price">+1,500 SEK</span></div>
+        <div class="addon-row"><span>Extra revision round</span><span class="addon-price">+1,500 SEK</span></div>
+      </div>
+    </div>
+    <div class="price-block"><h2 class="h3" style="margin-bottom:8px;">Payment</h2><p class="body muted">50% to start — 50% on final delivery. You'll see the exact amount before confirming.</p></div>
+    <div class="price-block"><h2 class="h3" style="margin-bottom:8px;">Cancellation &amp; refunds</h2><p class="body muted">Cancel before work begins for a full refund. Once work has started, the upfront payment is non-refundable. Final files are released after the remaining balance is paid.</p></div>
+  </div>
+  <div style="background:var(--text);padding:var(--pad-section) var(--pad-x);">
+    <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
+      <div><h2 class="h2" style="color:#fff;margin-bottom:10px;">Start building your brand.</h2><p style="color:rgba(255,255,255,0.5);font-size:16px;">Configure above, then continue to the enquiry.</p></div>
+      <button class="btn btn-accent" onclick="document.getElementById('brand-config').scrollIntoView({behavior:'smooth'})">Configure your brand →</button>
+    </div>
+  </div>
+</div>
+
+<!-- WEBSITE -->
+<div id="page-website" class="page">
+  <div style="background:var(--surface);border-bottom:1.5px solid var(--border);">
+    <div style="max-width:var(--max-w);margin:0 auto;padding:clamp(56px,8vw,100px) var(--pad-x);">
+      <div class="hero-split">
+        <div>
+          <p class="label mb-16">Website</p>
+          <h1 class="h1" style="margin-bottom:clamp(16px,2vw,24px);">Website for Your Business<span class="accent">.</span></h1>
+          <p class="h3" style="font-weight:500;color:var(--text-dim);margin-bottom:clamp(20px,3vw,32px);max-width:580px;">Create a clear, professional website that explains what you do.</p>
+          <p class="body-lg muted" style="max-width:540px;margin-bottom:14px;">A simple, well-structured website designed to present your business clearly and credibly.</p>
+          <p class="body-lg muted" style="max-width:540px;margin-bottom:32px;">No strategy workshops. No unnecessary features. Just a website that does its job.</p>
+          <button class="btn btn-accent" onclick="document.getElementById('website-config').scrollIntoView({behavior:'smooth'})">Configure your website →</button>
+        </div>
+        <div class="hero-cta-box">
+          <p class="hero-cta-label">Already decided?</p>
+          <button class="btn btn-outline" onclick="navigate('brand')">→ Build a brand</button>
+          <button class="btn btn-accent" onclick="navigate('website')">→ Make a website</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="padding:var(--pad-section) var(--pad-x);max-width:var(--max-w);margin:0 auto;">
+    <div class="two-col">
+      <div><p class="label mb-16">What this is</p><h2 class="h2">A clear business website<span class="accent">.</span></h2></div>
+      <div>
+        <p class="body-lg muted" style="margin-bottom:16px;">Designed for:</p>
+        <ol style="list-style:decimal;padding-left:20px;display:flex;flex-direction:column;gap:10px;color:var(--text-dim);font-size:16px;line-height:1.6;">
+          <li>Businesses that need a clear online presence</li>
+          <li>Brands that want a simple, well-designed site</li>
+          <li>Founders who want something finished, not ongoing</li>
+        </ol>
+        <p class="body muted" style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border-light);">This is not a marketing platform. It's a clear presentation of your business.</p>
+      </div>
+    </div>
+  </div>
+  <div class="alt-section">
+    <div style="max-width:var(--max-w);margin:0 auto;">
+      <p class="label mb-16">What's included</p>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:16px;"><h2 class="h2">Base package</h2><span style="font-family:var(--font);font-size:clamp(22px,3vw,40px);font-weight:800;letter-spacing:-0.03em;">8,000 SEK</span></div>
+      <div class="included-list">
+        <div class="included-item"><div class="included-title">One scrollable page</div><div class="included-desc">A single-page scrollable website — the most effective format for small businesses and founders.</div></div>
+        <div class="included-item"><div class="included-title">Clear content sections</div><div class="included-desc">Structured content areas for your offer, about section, and contact details.</div></div>
+        <div class="included-item"><div class="included-title">Brand-aligned visuals</div><div class="included-desc">Visual design aligned with your existing brand or Standard Work brand package.</div></div>
+        <div class="included-item"><div class="included-title">Contact details</div><div class="included-desc">Clear, functional contact section. Email link or basic contact form.</div></div>
+        <div class="included-item"><div class="included-title">Desktop and mobile</div><div class="included-desc">Fully responsive layout. Works on all screen sizes.</div></div>
+      </div>
+    </div>
+  </div>
+  <div id="website-config" style="padding:var(--pad-section) var(--pad-x);max-width:var(--max-w);margin:0 auto;">
+    <p class="label mb-16">Configure</p>
+    <h2 class="h2" style="margin-bottom:8px;">Customise your order<span class="accent">.</span></h2>
+    <p class="body muted" style="margin-bottom:48px;">Your summary updates as you go.</p>
+    <div class="package-layout">
+      <div class="package-content">
+        <div class="config-step">
+          <p class="config-step-label">01 / Website type</p><p class="config-step-q">What kind of site do you need?</p>
+          <div class="options-grid">
+            <label class="option-card"><input type="radio" name="w-type" value="Business website" onchange="updateWebSummary()"><div class="option-inner">Business website</div></label>
+            <label class="option-card"><input type="radio" name="w-type" value="Freelance / personal" onchange="updateWebSummary()"><div class="option-inner">Freelance / personal</div></label>
+            <label class="option-card"><input type="radio" name="w-type" value="Product / landing page" onchange="updateWebSummary()"><div class="option-inner">Product / landing page</div></label>
+            <label class="option-card"><input type="radio" name="w-type" value="Portfolio" onchange="updateWebSummary()"><div class="option-inner">Portfolio</div></label>
+            <label class="option-card"><input type="radio" name="w-type" value="Not sure yet" onchange="updateWebSummary()"><div class="option-inner">Not sure yet</div></label>
+          </div>
+        </div>
+        <div class="config-step">
+          <p class="config-step-label">02 / Build &amp; publish</p><p class="config-step-q">What level of support do you need?</p>
+          <div class="options-grid">
+            <label class="option-card"><input type="radio" name="w-build" value="Design only" onchange="updateWebSummary()"><div class="option-inner">Design only</div></label>
+            <label class="option-card"><input type="radio" name="w-build" value="Design and build" onchange="updateWebSummary()"><div class="option-inner">Design and build</div></label>
+            <label class="option-card"><input type="radio" name="w-build" value="Design, build, publish" onchange="updateWebSummary()"><div class="option-inner">Design, build, publish</div></label>
+            <label class="option-card"><input type="radio" name="w-build" value="Not sure yet" onchange="updateWebSummary()"><div class="option-inner">Not sure yet</div></label>
+          </div>
+        </div>
+        <div class="config-step">
+          <p class="config-step-label">03 / Platform preference</p><p class="config-step-q">Any platform preference?</p>
+          <div class="options-grid">
+            <label class="option-card"><input type="radio" name="w-platform" value="Framer" onchange="updateWebSummary()"><div class="option-inner">Framer</div></label>
+            <label class="option-card"><input type="radio" name="w-platform" value="Webflow" onchange="updateWebSummary()"><div class="option-inner">Webflow</div></label>
+            <label class="option-card"><input type="radio" name="w-platform" value="Readymag" onchange="updateWebSummary()"><div class="option-inner">Readymag</div></label>
+            <label class="option-card"><input type="radio" name="w-platform" value="Shopify" onchange="updateWebSummary()"><div class="option-inner">Shopify</div></label>
+            <label class="option-card"><input type="radio" name="w-platform" value="No preference" onchange="updateWebSummary()"><div class="option-inner">No preference</div></label>
+          </div>
+        </div>
+        <div class="config-step">
+          <p class="config-step-label">04 / Content status</p><p class="config-step-q">Where is your copy?</p>
+          <div class="options-grid">
+            <label class="option-card"><input type="radio" name="w-copy" value="All copy ready" onchange="updateWebSummary()"><div class="option-inner">All copy ready</div></label>
+            <label class="option-card"><input type="radio" name="w-copy" value="Rough copy" onchange="updateWebSummary()"><div class="option-inner">Rough copy</div></label>
+            <label class="option-card"><input type="radio" name="w-copy" value="Need help writing" onchange="updateWebSummary()"><div class="option-inner">Need help writing</div></label>
+            <label class="option-card"><input type="radio" name="w-copy" value="Not sure yet" onchange="updateWebSummary()"><div class="option-inner">Not sure yet</div></label>
+          </div>
+        </div>
+        <div class="config-step">
+          <p class="config-step-label">05 / Optional additions</p><p class="config-step-q">Add what you need. Each item updates the price.</p>
+          <div class="options-grid-2">
+            <label class="option-card"><input type="checkbox" name="w-addon" value="Extra page" data-price="2000" onchange="updateWebSummary()"><div class="option-inner">Extra page<span class="price-tag">+2,000 SEK</span></div></label>
+            <label class="option-card"><input type="checkbox" name="w-addon" value="Copy support" data-price="2000" onchange="updateWebSummary()"><div class="option-inner">Copy support<span class="price-tag">+2,000 SEK</span></div></label>
+            <label class="option-card"><input type="checkbox" name="w-addon" value="Multilingual setup" data-price="2000" onchange="updateWebSummary()"><div class="option-inner">Multilingual setup<span class="price-tag">+2,000 SEK</span></div></label>
+            <label class="option-card"><input type="checkbox" name="w-addon" value="Image pack" data-price="1500" onchange="updateWebSummary()"><div class="option-inner">Image pack<span class="price-tag">+1,500 SEK</span></div></label>
+            <label class="option-card"><input type="checkbox" name="w-addon" value="Extra revision round" data-price="1500" onchange="updateWebSummary()"><div class="option-inner">Extra revision round<span class="price-tag">+1,500 SEK</span></div></label>
+          </div>
+        </div>
+      </div>
+      <div class="order-summary-wrap">
+        <div class="order-summary">
+          <div class="summary-top"><p class="label">Your request</p><p style="font-family:var(--font);font-size:16px;font-weight:700;color:#fff;margin-top:4px;letter-spacing:-0.01em;">Website for Your Business</p></div>
+          <div class="summary-body" style="padding-top:4px;padding-bottom:4px;">
+            <div class="summary-row"><span class="summary-key">Type</span><span class="summary-val" id="ws-type">—</span></div>
+            <div class="summary-row"><span class="summary-key">Build</span><span class="summary-val" id="ws-build">—</span></div>
+            <div class="summary-row"><span class="summary-key">Platform</span><span class="summary-val" id="ws-platform">—</span></div>
+            <div class="summary-row" style="border-bottom:none;"><span class="summary-key">Copy</span><span class="summary-val" id="ws-copy">—</span></div>
+          </div>
+          <div id="ws-addons-wrap" style="display:none;" class="summary-addons-section"><p class="summary-key" style="margin-bottom:8px;">Additions</p><div id="ws-addons-list" style="display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--text-dim);"></div></div>
+          <div class="summary-price-section">
+            <div class="summary-price-row"><span>Base</span><span>8,000 SEK</span></div>
+            <div class="summary-price-row" id="ws-addon-price-row" style="display:none;"><span>Additions</span><span id="ws-addon-price" style="color:var(--accent);">+0 SEK</span></div>
+            <div class="summary-total-row"><span>Total</span><span id="ws-total">8,000 SEK</span></div>
+          </div>
+          <div class="summary-note">Final scope and price confirmed before work begins. 50% to start — 50% on delivery.</div>
+          <div class="summary-cta"><button class="btn btn-accent" style="width:100%;justify-content:center;" onclick="navigate('contact')">Continue to enquiry →</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="alt-section">
+    <div style="max-width:var(--max-w);margin:0 auto;">
+      <div class="two-col">
+        <div><p class="label mb-16">What's not included</p><h2 class="h2">Clearly defined before work begins.</h2></div>
+        <ul class="list-clean"><li>E-commerce</li><li>Performance marketing</li><li>SEO optimisation (basic setup as add-on)</li><li>Advanced functionality</li><li>Ongoing updates or maintenance</li></ul>
+      </div>
+    </div>
+  </div>
+  <div style="padding:var(--pad-section) var(--pad-x);max-width:var(--max-w);margin:0 auto;">
+    <p class="label mb-16">Pricing</p>
+    <div class="price-block">
+      <h2 class="h2" style="margin-bottom:4px;">Website for Your Business</h2>
+      <div class="price-big">8,000 SEK</div>
+      <p class="body muted" style="margin-bottom:24px;">Optional additions available during configuration. The total price updates live.</p>
+      <div class="addons-list mt-24" style="max-width:600px;">
+        <div class="addon-row"><span>Extra page</span><span class="addon-price">+2,000 SEK per page</span></div>
+        <div class="addon-row"><span>Copy support</span><span class="addon-price">+2,000 SEK</span></div>
+        <div class="addon-row"><span>Multilingual setup</span><span class="addon-price">+2,000 SEK</span></div>
+        <div class="addon-row"><span>Image pack</span><span class="addon-price">+1,500 SEK</span></div>
+        <div class="addon-row"><span>Extra revision round</span><span class="addon-price">+1,500 SEK</span></div>
+      </div>
+    </div>
+    <div class="price-block"><h2 class="h3" style="margin-bottom:8px;">Payment</h2><p class="body muted">50% to start — 50% on final delivery.</p></div>
+    <div class="price-block"><h2 class="h3" style="margin-bottom:8px;">Cancellation &amp; refunds</h2><p class="body muted">Cancel before work begins for a full refund. Once work has started, the upfront payment is non-refundable. Final files are released after the remaining balance is paid.</p></div>
+  </div>
+  <div style="background:var(--text);padding:var(--pad-section) var(--pad-x);">
+    <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
+      <div><h2 class="h2" style="color:#fff;margin-bottom:10px;">Start building your website.</h2><p style="color:rgba(255,255,255,0.5);font-size:16px;">Configure above, then continue to the enquiry.</p></div>
+      <button class="btn btn-accent" onclick="document.getElementById('website-config').scrollIntoView({behavior:'smooth'})">Configure your website →</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div id="page-pricing" class="page">
+  <div style="background:var(--surface);border-bottom:1.5px solid var(--border);">
+    <div style="max-width:var(--max-w);margin:0 auto;padding:clamp(56px,8vw,100px) var(--pad-x);">
+      <div class="hero-split">
+        <div>
+          <p class="label mb-16">Pricing</p>
+          <h1 class="h1" style="margin-bottom:clamp(16px,2vw,24px);">Fixed pricing. Clear outcomes<span class="accent">.</span></h1>
+          <p class="body-lg muted" style="max-width:540px;margin-bottom:14px;">Every service has a clearly defined scope, a set price, and a clear outcome. You'll see the full cost before you begin.</p>
+          <p class="body-lg muted" style="max-width:540px;">No proposals. No negotiations. No surprises.</p>
+        </div>
+        <div class="hero-cta-box">
+          <p class="hero-cta-label">Ready to start?</p>
+          <button class="btn btn-accent" onclick="navigate('brand')">→ Build a brand</button>
+          <button class="btn btn-outline" onclick="navigate('website')">→ Make a website</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="padding:var(--pad-section) var(--pad-x);max-width:var(--max-w);margin:0 auto;">
+    <div class="price-block" style="border-top:none;padding-top:0;">
+      <p class="label mb-16">Brand</p>
+      <h2 class="h2" style="margin-bottom:4px;">Brand for Your Business</h2>
+      <div class="price-big">12,000 SEK</div>
+      <p class="body muted" style="max-width:640px;margin-bottom:20px;">A guided way to define and create the essential elements your business needs to look coherent and credible.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 32px;max-width:560px;margin-bottom:28px;">
+        <span class="body muted">Brand direction</span><span class="body muted">Logo</span>
+        <span class="body muted">Typography</span><span class="body muted">Colour palette</span>
+        <span class="body muted">Imagery direction</span><span class="body muted">Tone of voice</span>
+      </div>
+      <p class="label mb-16" style="color:var(--text-faint);">Optional additions</p>
+      <div class="addons-list" style="max-width:600px;">
+        <div class="addon-row"><span>Naming</span><span class="addon-price">+3,000 SEK</span></div>
+        <div class="addon-row"><span>Brand summary (1–2 page PDF)</span><span class="addon-price">+1,500 SEK</span></div>
+        <div class="addon-row"><span>Social starter templates</span><span class="addon-price">+2,000 SEK</span></div>
+        <div class="addon-row"><span>Extended imagery pack</span><span class="addon-price">+1,500 SEK</span></div>
+        <div class="addon-row"><span>Extra revision round</span><span class="addon-price">+1,500 SEK</span></div>
+      </div>
+      <div style="margin-top:28px;"><button class="btn btn-accent" onclick="navigate('brand')">→ Configure and start</button></div>
+    </div>
+    <div class="price-block">
+      <p class="label mb-16">Website</p>
+      <h2 class="h2" style="margin-bottom:4px;">Website for Your Business</h2>
+      <div class="price-big">8,000 SEK</div>
+      <p class="body muted" style="max-width:640px;margin-bottom:20px;">A simple, scrollable website that presents your business clearly. We design and build — and can launch and host upon request.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 32px;max-width:560px;margin-bottom:28px;">
+        <span class="body muted">One scrollable page</span><span class="body muted">Clear content sections</span>
+        <span class="body muted">Brand-aligned visuals</span><span class="body muted">Contact details</span>
+        <span class="body muted">Desktop and mobile</span>
+      </div>
+      <p class="label mb-16" style="color:var(--text-faint);">Optional additions</p>
+      <div class="addons-list" style="max-width:600px;">
+        <div class="addon-row"><span>Extra page</span><span class="addon-price">+2,000 SEK per page</span></div>
+        <div class="addon-row"><span>Copy support</span><span class="addon-price">+2,000 SEK</span></div>
+        <div class="addon-row"><span>Multilingual setup</span><span class="addon-price">+2,000 SEK</span></div>
+        <div class="addon-row"><span>Image pack</span><span class="addon-price">+1,500 SEK</span></div>
+        <div class="addon-row"><span>Extra revision round</span><span class="addon-price">+1,500 SEK</span></div>
+      </div>
+      <div style="margin-top:28px;"><button class="btn btn-outline" onclick="navigate('website')">→ Configure and start</button></div>
+    </div>
+    <div class="price-block"><h2 class="h3" style="margin-bottom:12px;">Payment</h2><p class="body muted" style="margin-bottom:6px;">50% to start — 50% on final delivery.</p><p class="body muted">You'll see the exact amounts before confirming.</p></div>
+    <div class="price-block"><h2 class="h3" style="margin-bottom:12px;">Cancellation &amp; refunds</h2><p class="body muted" style="margin-bottom:6px;">Cancel before work begins for a full refund.</p><p class="body muted" style="margin-bottom:6px;">Once work has started, the upfront payment is non-refundable.</p><p class="body muted">Final files are released after the remaining balance is paid.</p></div>
+    <div class="price-block"><h2 class="h3" style="margin-bottom:12px;">A note on scope</h2><p class="body muted" style="max-width:640px;">STANDARD WORK is designed for clarity and completion. If you need additional work beyond the defined scope, it can be added separately once the initial project is complete.</p></div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="page-contact" class="page">
+  <div style="background:var(--surface);border-bottom:1.5px solid var(--border);">
+    <div style="max-width:var(--max-w);margin:0 auto;padding:clamp(56px,8vw,100px) var(--pad-x);">
+      <div class="hero-split">
+        <div style="max-width:640px;">
+          <p class="label mb-16">Contact</p>
+          <h1 class="h1" style="margin-bottom:clamp(16px,2vw,24px);">Contact<span class="accent">.</span></h1>
+          <p class="body-lg muted" style="margin-bottom:14px;">STANDARD WORK is designed to be self-serve. We don't offer consultations by default.</p>
+          <p class="body-lg muted">If you have a specific question before starting, you can reach us here. Most questions are answered on the site.</p>
+        </div>
+        <div class="hero-cta-box">
+          <p class="hero-cta-label">Ready to start?</p>
+          <button class="btn btn-accent" onclick="navigate('brand')">→ Build a brand</button>
+          <button class="btn btn-outline" onclick="navigate('website')">→ Make a website</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="padding:var(--pad-section) var(--pad-x);max-width:var(--max-w);margin:0 auto;">
+    <div class="two-col">
+      <div><p class="label mb-16">Email</p><a href="mailto:hello@standardwork.design" style="font-family:var(--font);font-size:clamp(18px,2vw,28px);font-weight:700;color:var(--text);text-decoration:none;letter-spacing:-0.02em;">hello@standardwork.design</a></div>
+      <div>
+        <p class="label mb-16">When to get in touch</p>
+        <p class="body muted" style="margin-bottom:16px;">This page is best used if:</p>
+        <ul class="list-clean"><li>You're unsure which service fits your situation</li><li>You have a practical question about scope or delivery</li><li>You're checking availability before starting</li></ul>
+        <p class="body muted" style="margin-top:20px;">If you already know what you need, the fastest way forward is to start directly.</p>
+      </div>
+    </div>
+  </div>
+  <div class="alt-section">
+    <div style="max-width:var(--max-w);margin:0 auto;">
+      <p class="label mb-16">Enquiry form</p>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:16px;"><h2 class="h2">Send us a message.</h2><p class="body muted">We'll come back with the next step.</p></div>
+      <div id="contact-form-wrap">
+        <form class="form-grid" id="contact-form" onsubmit="submitContact(event)">
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Name</label><input class="form-input" type="text" placeholder="Your name" required></div>
+            <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" placeholder="your@email.com" required></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Company</label><input class="form-input" type="text" placeholder="Company or project name"></div>
+            <div class="form-group"><label class="form-label">Website or social</label><input class="form-input" type="text" placeholder="Any existing presence"></div>
+          </div>
+          <div class="form-group"><label class="form-label">What do you need?</label><select class="form-select"><option value="" disabled selected>Select a service</option><option>Brand for Your Business</option><option>Website for Your Business</option><option>Brand and Website</option><option>Not sure yet</option></select></div>
+          <div class="form-group"><label class="form-label">Current situation</label><textarea class="form-textarea" placeholder="Brief description of where you are now..."></textarea></div>
+          <div class="form-group"><label class="form-label">Anything else we should know?</label><textarea class="form-textarea" placeholder="Deadline, budget, specific questions..."></textarea></div>
+          <div><button type="submit" class="btn btn-accent">Submit project request →</button></div>
+        </form>
+      </div>
+      <div class="form-success" id="contact-success">
+        <p class="label mb-16" style="color:var(--accent);">Received</p>
+        <p class="h2" style="margin-bottom:14px;">Thanks.</p>
+        <p class="body-lg muted" style="margin-bottom:8px;">Your Standard Work request has been received.</p>
+        <p class="body muted" style="margin-bottom:32px;">We'll review the scope and come back with the next step.</p>
+        <button class="btn btn-outline" onclick="navigate('home')">← Back to home</button>
+      </div>
+    </div>
+  </div>
+  <div style="background:var(--surface);border-top:1.5px solid var(--border-light);padding:var(--pad-section) var(--pad-x);">
+    <div style="max-width:var(--max-w);margin:0 auto;"><h2 class="h2" style="margin-bottom:28px;">Or start directly.</h2><div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-accent" onclick="navigate('brand')">→ Start building your brand</button><button class="btn btn-outline" onclick="navigate('website')">→ Start building your website</button></div></div>
+  </div>
+</div>
+
+<!-- THANK YOU -->
+<div id="page-thank-you" class="page">
+  <div class="thankyou-wrap">
+    <div style="max-width:640px;">
+      <p class="label mb-24" style="color:var(--accent);">Confirmed</p>
+      <h1 class="h1" style="margin-bottom:16px;">Thanks. Request received<span class="accent">.</span></h1>
+      <p class="body-lg muted" style="margin-bottom:40px;">We'll review the scope and come back with the next step.</p>
+      <div>
+        <div class="thankyou-step"><span class="thankyou-num">01</span><p class="body">We review your submission and check if the scope is clear.</p></div>
+        <div class="thankyou-step"><span class="thankyou-num">02</span><p class="body">We come back with confirmation, timeline, and payment details.</p></div>
+        <div class="thankyou-step"><span class="thankyou-num">03</span><p class="body">Once you confirm and pay 50% upfront, work begins.</p></div>
+      </div>
+      <div style="margin-top:48px;"><button class="btn btn-outline" onclick="navigate('home')">← Back to home</button></div>
+    </div>
+  </div>
+</div>
+
+<template id="footer-template">
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">Standard Work<span class="dot">.</span></div>
+        <p class="footer-desc">A structured way to build the brand and website for your business.</p>
+      </div>
+      <a href="mailto:hello@standardwork.design" class="footer-email">hello@standardwork.design</a>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Standard Work™</span>
+      <div class="footer-nav-links">
+        <a class="footer-nav-link" onclick="navigate('how-it-works')">How it works</a>
+        <a class="footer-nav-link" onclick="navigate('pricing')">Pricing</a>
+        <a class="footer-nav-link" onclick="navigate('contact')">Contact</a>
+      </div>
+    </div>
+    <div class="footer-guild">
+      <span class="footer-guild-text">Standard Work is a part of the guild of</span>
+      <a href="https://www.sillywizardsguild.com" target="_blank" rel="noopener" class="footer-guild-logo">Silly Wizards</a>
+    </div>
+  </div>
+</footer>
+</template>
+
+<script>
+const PAGES=['home','how-it-works','brand','website','pricing','contact','thank-you'];
+const BRAND_BASE=12000,WEB_BASE=8000;
+function navigate(page){
+  PAGES.forEach(p=>{const el=document.getElementById('page-'+p);if(el)el.classList.remove('active')});
+  const t=document.getElementById('page-'+page);
+  if(t){t.classList.add('active');if(!t.querySelector('footer')){const clone=document.getElementById('footer-template').content.cloneNode(true);t.appendChild(clone);}}
+  window.scrollTo(0,0);window.location.hash=page;
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  const al=document.querySelector(`.nav-link[onclick*="'${page}'"]`);if(al)al.classList.add('active');
+}
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+function updateBrandSummary(){
+  const stage=document.querySelector('input[name="b-stage"]:checked');
+  const need=document.querySelector('input[name="b-need"]:checked');
+  const style=document.querySelector('input[name="b-style"]:checked');
+  const deadline=document.querySelector('input[name="b-deadline"]:checked');
+  const addons=document.querySelectorAll('input[name="b-addon"]:checked');
+  document.getElementById('bs-stage').textContent=stage?stage.value:'—';
+  document.getElementById('bs-need').textContent=need?need.value:'—';
+  document.getElementById('bs-style').textContent=style?style.value:'—';
+  let dlText='—';
+  if(deadline){dlText=deadline.value;if(deadline.value==='Specific date'){document.getElementById('b-date-wrap').style.display='block';const dv=document.getElementById('b-deadline-date').value;if(dv)dlText=dv;}else{document.getElementById('b-date-wrap').style.display='none';}}
+  document.getElementById('bs-deadline').textContent=dlText;
+  let at=0;const an=[];
+  addons.forEach(a=>{at+=parseInt(a.dataset.price||0);an.push(a.value)});
+  const aw=document.getElementById('bs-addons-wrap'),al=document.getElementById('bs-addons-list');
+  if(an.length>0){aw.style.display='block';al.innerHTML=an.map(n=>`<span style="display:flex;align-items:center;gap:6px;"><span style="color:var(--accent);font-weight:600;">+</span>${n}</span>`).join('')}else{aw.style.display='none'}
+  const pr=document.getElementById('bs-addon-price-row');
+  if(at>0){pr.style.display='flex';document.getElementById('bs-addon-price').textContent='+'+at.toLocaleString('sv-SE')+' SEK'}else{pr.style.display='none'}
+  document.getElementById('bs-total').textContent=(BRAND_BASE+at).toLocaleString('sv-SE')+' SEK';
+}
+function updateWebSummary(){
+  const type=document.querySelector('input[name="w-type"]:checked');
+  const build=document.querySelector('input[name="w-build"]:checked');
+  const platform=document.querySelector('input[name="w-platform"]:checked');
+  const copy=document.querySelector('input[name="w-copy"]:checked');
+  const addons=document.querySelectorAll('input[name="w-addon"]:checked');
+  document.getElementById('ws-type').textContent=type?type.value:'—';
+  document.getElementById('ws-build').textContent=build?build.value:'—';
+  document.getElementById('ws-platform').textContent=platform?platform.value:'—';
+  document.getElementById('ws-copy').textContent=copy?copy.value:'—';
+  let at=0;const an=[];
+  addons.forEach(a=>{at+=parseInt(a.dataset.price||0);an.push(a.value)});
+  const aw=document.getElementById('ws-addons-wrap'),al=document.getElementById('ws-addons-list');
+  if(an.length>0){aw.style.display='block';al.innerHTML=an.map(n=>`<span style="display:flex;align-items:center;gap:6px;"><span style="color:var(--accent);font-weight:600;">+</span>${n}</span>`).join('')}else{aw.style.display='none'}
+  const pr=document.getElementById('ws-addon-price-row');
+  if(at>0){pr.style.display='flex';document.getElementById('ws-addon-price').textContent='+'+at.toLocaleString('sv-SE')+' SEK'}else{pr.style.display='none'}
+  document.getElementById('ws-total').textContent=(WEB_BASE+at).toLocaleString('sv-SE')+' SEK';
+}
+function submitContact(e){
+  e.preventDefault();
+  document.getElementById('contact-form').style.display='none';
+  document.getElementById('contact-success').classList.add('show');
+}
+(function(){const hash=window.location.hash.replace('#','');navigate(PAGES.includes(hash)?hash:'home');})();
+</script>
+</body>
+</html>
