@@ -497,7 +497,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
             <div style="display:flex;justify-content:flex-end;padding:2px 0 4px;"><span style="font-family:var(--font-mono);font-size:9px;color:var(--text-dim);letter-spacing:0.08em;text-transform:uppercase;">ex. moms · VAT added at checkout</span></div>
           </div>
           <div class="summary-note">Final scope confirmed before work begins. 50% to start, 50% on delivery.</div>
-          <div class="summary-cta"><button class="btn btn-accent" style="width:100%;justify-content:center;" onclick="navigate('contact')">Continue to enquiry →</button></div>
+          <div class="summary-cta"><button class="btn btn-accent" style="width:100%;justify-content:center;" id="brand-checkout-btn" onclick="startCheckout('brand')">Get started →</button></div>
         </div>
       </div>
     </div>
@@ -656,7 +656,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
             <div style="display:flex;justify-content:flex-end;padding:2px 0 4px;"><span style="font-family:var(--font-mono);font-size:9px;color:var(--text-dim);letter-spacing:0.08em;text-transform:uppercase;">ex. moms · VAT added at checkout</span></div>
           </div>
           <div class="summary-note">Final scope confirmed before work begins. 50% to start, 50% on delivery.</div>
-          <div class="summary-cta"><button class="btn btn-accent" style="width:100%;justify-content:center;" onclick="navigate('contact')">Continue to enquiry →</button></div>
+          <div class="summary-cta"><button class="btn btn-accent" style="width:100%;justify-content:center;" id="website-checkout-btn" onclick="startCheckout('website')">Get started →</button></div>
         </div>
       </div>
     </div>
@@ -920,6 +920,30 @@ function updateWebSummary(){
   const pr=document.getElementById('ws-addon-price-row');
   if(at>0){pr.style.display='flex';document.getElementById('ws-addon-price').textContent='+'+at.toLocaleString('sv-SE')+' SEK'}else{pr.style.display='none'}
   document.getElementById('ws-total').textContent=(WEB_BASE+at).toLocaleString('sv-SE')+' SEK';
+}
+function startCheckout(type){
+  const isBrand=type==='brand';
+  const base=isBrand?BRAND_BASE:WEB_BASE;
+  const addonName=isBrand?'b-addon':'w-addon';
+  const addons=document.querySelectorAll(`input[name="${addonName}"]:checked`);
+  let addonTotal=0;
+  addons.forEach(a=>{addonTotal+=parseInt(a.dataset.price||0)});
+  const total=base+addonTotal;
+  const description=isBrand?'Brand for Your Business':'Website for Your Business';
+  const cancelPath=isBrand?'#brand':'#website';
+  const btn=document.getElementById(isBrand?'brand-checkout-btn':'website-checkout-btn');
+  btn.disabled=true;btn.textContent='Preparing checkout…';
+  fetch('/.netlify/functions/create-checkout',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({totalSEK:total,description,cancelPath})
+  })
+  .then(r=>r.json())
+  .then(data=>{
+    if(data.url){window.location=data.url;}
+    else{btn.disabled=false;btn.textContent='Get started →';alert('Something went wrong. Please try again or contact us at hello@standardwork.design');}
+  })
+  .catch(()=>{btn.disabled=false;btn.textContent='Get started →';alert('Something went wrong. Please try again or contact us at hello@standardwork.design');});
 }
 function submitContact(e){
   e.preventDefault();
