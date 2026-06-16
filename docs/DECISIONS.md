@@ -22,6 +22,12 @@ Removes the agency dance. Price visibility is part of the positioning, not just 
 **50/50 payment split, no retainer.**
 Matches a fixed-scope, defined-delivery model. Trade-off: no recurring revenue. Out of scope for now by design.
 
+**Prices shown ex. moms. VAT added at checkout.**
+Swedish B2B standard. Stripe Tax handles calculation and display automatically. Trade-off: final price is higher than shown — mitigated by labelling prices "ex. moms" clearly on the site.
+
+**Payment via Stripe Checkout, under South North Studios AB.**
+Stripe is the processor. Legal entity for invoicing and payouts is South North Studios AB (not Silly Wizards, which is not yet a legal entity). Trade-off: Stripe account setup required before checkout can go live. (2026-06-16)
+
 ---
 
 ## Technical

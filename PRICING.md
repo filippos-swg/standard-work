@@ -5,9 +5,9 @@
 `index.html` is the live implementation and must match this file exactly.
 `PROJECT_BRIEF.md`, `AI_HANDOFF.md`, and `README.md` reference this file — they do not restate prices.
 
-Currency: SEK. All prices are excluding VAT (MOMS) unless stated otherwise. See OPEN_QUESTIONS.md — VAT display is unresolved.
+Currency: SEK. All prices are **ex. moms (excluding VAT)**. VAT is added at checkout.
 
-Last updated: 2026-06-15 · v0.1
+Last updated: 2026-06-16 · v0.1
 
 ---
 
@@ -44,6 +44,8 @@ Last updated: 2026-06-15 · v0.1
 ## Payment Terms
 
 - 50% to start, 50% on delivery.
+- Payment via Stripe. VAT (25% MOMS) added at checkout.
+- Legal entity for invoicing: South North Studios AB.
 - No retainer. No open-ended billing.
 - Add-ons are the only flexibility on price. Base scope is fixed.
 

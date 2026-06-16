@@ -11,9 +11,6 @@ Each item: the question · why it matters · current lean (if any).
 **Form backend: Netlify Forms or Formspree?**
 The form is mocked. Real enquiries need capture + notification. Netlify Forms is zero-config on current hosting; Formspree is portable if we ever leave Netlify. Lean: Netlify Forms for v1, revisit only if we outgrow it. (TASK_002)
 
-**VAT (MOMS) display on prices.**
-Prices are currently shown as plain SEK. Swedish B2B buyers expect to know if a number is ex- or inc-VAT. Showing the wrong basis is a trust and legal issue. Needs a decision before real quotes go out. Lean: show "ex. moms" next to prices.
-
 ---
 
 ## Affects v1 polish
@@ -31,8 +28,8 @@ Site is English; audience is largely Swedish. Is English correct for positioning
 
 ## Later / strategic
 
-**Payment: when does Stripe enter?**
-50/50 split is currently handled manually (invoice). At what volume does automated payment earn its complexity? Out of scope until enquiry flow is proven.
+**Stripe Checkout integration.**
+Payment is decided: Stripe, 50% upfront via checkout, VAT added automatically via Stripe Tax. Legal entity: South North Studios AB. Stripe account needs to be created under South North Studios AB before integration can begin. (TASK_003)
 
 **Show work / case studies?**
 No proof on the site yet. Strong for conversion, but we have limited public examples and the brand is new. When and what do we show?
