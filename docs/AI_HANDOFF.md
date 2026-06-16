@@ -24,7 +24,7 @@ It must feel like the service: structured, calm, confident, easy to buy from.
 - Google Fonts: Outfit, JetBrains Mono, UnifrakturMaguntia
 - No build step. No dependencies. No backend (yet).
 
-To make any change to the site, edit `index.html` only.
+To make any change to the site, edit `index.html` only. See `ARCHITECTURE.md` for how routing, state, and the configurator work.
 
 ---
 
@@ -32,17 +32,23 @@ To make any change to the site, edit `index.html` only.
 
 1. `PROJECT_BRIEF.md` — what this is and what it must not become
 2. `MVP_SCOPE.md` — what is in scope and what waits
-3. `docs/CREATIVE_DIRECTION.md` — design system, copy rules, what is banned
+3. `PRICING.md` — canonical prices (the only place prices live)
+4. `docs/CREATIVE_DIRECTION.md` — design system, copy rules, banned language
+5. `docs/UX_PRINCIPLES.md` — how the site must behave
+6. `docs/DECISIONS.md` — what was decided and why (read before reversing anything)
+7. `docs/OPEN_QUESTIONS.md` — what is still undecided
 
 ---
 
 ## Rules for This Project
 
-**Preserve the voice.** Direct, plainspoken, senior. No agency or SaaS language.
+**Preserve the voice.** Direct, plainspoken, senior. No agency or SaaS language. The banned-words list is in `docs/CREATIVE_DIRECTION.md`.
 
-**Preserve the design system.** All tokens are in `:root` CSS variables. Never hardcode colours or fonts outside of the system.
+**Preserve the design system.** All tokens are in `:root` CSS variables. Never hardcode colours or fonts outside the system.
 
 **Preserve scope.** The configurator has defined steps and pricing. Do not add options, reorder steps, or change prices without explicit instruction.
+
+**Prices live in one place.** `PRICING.md` is canonical. The configurator in `index.html` must match it. Never restate prices in other docs — link to `PRICING.md`.
 
 **No bloat.** This site is intentionally lean. Do not add libraries, frameworks, or dependencies without strong reason.
 
@@ -50,27 +56,9 @@ To make any change to the site, edit `index.html` only.
 
 ---
 
-## Current Pricing (do not change without instruction)
+## Pricing
 
-### Brand for Your Business
-Base: 12,000 SEK
-
-Add-ons:
-- Naming: +3,000 SEK
-- Brand summary PDF: +1,500 SEK
-- Social starter templates: +2,000 SEK
-- Extended imagery pack: +1,500 SEK
-- Extra revision round: +1,500 SEK
-
-### Website for Your Business
-Base: 8,000 SEK
-
-Add-ons:
-- Extra page: +2,000 SEK
-- Copy support: +2,000 SEK
-- Multilingual setup: +2,000 SEK
-- Image pack: +1,500 SEK
-- Extra revision round: +1,500 SEK
+All prices — base and add-ons — are in `PRICING.md`. Do not change them without explicit instruction from Filippos, and follow the change protocol in that file when you do.
 
 ---
 
@@ -90,6 +78,8 @@ When completing a task, report:
 3. Any known issues
 4. Suggested next step
 
+If a decision was made during the task, add it to `docs/DECISIONS.md`. If a question was opened, add it to `docs/OPEN_QUESTIONS.md`.
+
 ---
 
 ## Known Gaps (as of v0.1)
@@ -99,3 +89,5 @@ When completing a task, report:
 - No favicon
 - No meta/OG tags
 - No analytics
+
+These are tracked in `MVP_SCOPE.md` (v1) and `docs/OPEN_QUESTIONS.md`.

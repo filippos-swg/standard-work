@@ -40,19 +40,15 @@ Fixed packages are the mechanism. Senior judgment is the value.
 ### Brand for Your Business
 Define and create the essential brand elements a business needs to look coherent and credible.
 
-Includes: Logo, typography, colour palette, brand direction, imagery direction, tone of voice.
-
-Base price: 12,000 SEK
+Includes: logo, typography, colour palette, brand direction, imagery direction, tone of voice.
 
 ### Website for Your Business
 A simple, scrollable website that explains what the business does and makes it easy to get in touch.
 
-Includes: One scrollable page, content sections, brand-aligned visuals, contact, desktop + mobile.
+Includes: one scrollable page, content sections, brand-aligned visuals, contact, desktop + mobile.
 
-Base price: 8,000 SEK
-
-### Add-ons (both packages)
-Selected add-ons increase the base price. All pricing is shown live in the configurator.
+### Pricing
+All prices — base and add-ons — are in `PRICING.md` and shown live in the configurator. Add-ons are the only flexibility on price.
 
 ---
 
@@ -68,7 +64,7 @@ Selected add-ons increase the base price. All pricing is shown live in the confi
 ## 6. Business Model
 
 - Fixed-scope packages
-- Clear upfront pricing
+- Clear upfront pricing (see `PRICING.md`)
 - Payment split: 50% to start, 50% on delivery
 - No ongoing retainer
 - No open-ended processes
@@ -86,7 +82,7 @@ Selected add-ons increase the base price. All pricing is shown live in the confi
 
 ## 8. Current State
 
-v0.1 prototype built. 7-page single-file HTML site with working configurator and enquiry form.
+v0.1 prototype built. 7-page single-file HTML site with working configurator and enquiry form (submission mocked).
 
 Domain: standardwork.design (Namecheap)
 Hosting: Netlify (pending deployment)

@@ -6,7 +6,7 @@ Standard Work offers defined design packages with clear scope, predictable prici
 
 ---
 
-# What It Is
+## What It Is
 
 Standard Work is a guided design system that helps founders, small businesses, and individual creators build professional brands and websites with clear scope, clear decisions, and predictable outcomes.
 
@@ -16,33 +16,37 @@ It is about making a small number of good decisions and executing them properly.
 
 ---
 
-# Services
+## Services
 
-## Brand for Your Business
+### Brand for Your Business
+
 Create the essential elements your business needs to look coherent and credible.
-Starting from 12,000 SEK.
+Base from 12,000 SEK.
 
-## Website for Your Business
+### Website for Your Business
+
 A simple, scrollable website that explains what you do and how to contact you. Designed. Built. Published.
-Starting from 8,000 SEK.
+Base from 8,000 SEK.
+
+Full pricing, including all add-ons, lives in [`PRICING.md`](PRICING.md) — the single source of truth.
 
 ---
 
-# Current Build State
+## Current Build State
 
 **v0.1 — Prototype**
 
 - 7-page single-file HTML prototype
 - Working configurator with live price updates
 - Order summary panel
-- Enquiry form with success state
+- Enquiry form with success state (submission mocked)
 - Responsive layout (desktop + mobile)
-- Hosted on: Netlify (pending)
+- Hosting: Netlify (pending)
 - Domain: standardwork.design (Namecheap)
 
 ---
 
-# Tech Stack
+## Tech Stack
 
 - Single HTML file (`index.html`)
 - Vanilla JS — hash-based SPA routing
@@ -50,37 +54,47 @@ Starting from 8,000 SEK.
 - Google Fonts: Outfit, JetBrains Mono, UnifrakturMaguntia
 - No build step. No dependencies. No framework.
 
+See [`ARCHITECTURE.md`](ARCHITECTURE.md) for how it all fits together.
+
 ---
 
-# Repo Structure
+## Repo Structure
 
 ```
-standard-work-site/
-  index.html              ← full site
+standard-work/
+  index.html              ← the entire site
   README.md
-  PROJECT_BRIEF.md
-  MVP_SCOPE.md
-  ARCHITECTURE.md
+  PRICING.md              ← canonical prices (single source of truth)
+  PROJECT_BRIEF.md        ← what it is and must not become
+  MVP_SCOPE.md            ← what is in scope, what waits
+  ARCHITECTURE.md         ← how the site is built
+  .gitignore
   docs/
-    CREATIVE_DIRECTION.md
-    UX_PRINCIPLES.md
-    AI_HANDOFF.md
-    DECISIONS.md
-    OPEN_QUESTIONS.md
+    AI_HANDOFF.md         ← standing briefing for any AI agent
+    CREATIVE_DIRECTION.md ← design system, copy rules, banned language
+    UX_PRINCIPLES.md      ← how the site behaves
+    DECISIONS.md          ← what was decided and why
+    OPEN_QUESTIONS.md     ← what is still undecided
   tasks/
-    TASK_001.md
+    TASK_001.md           ← deploy v0.1
 ```
 
 ---
 
-# Guild
+## Working on This Project
 
-Standard Work is a part of the guild of [Silly Wizards](https://www.sillywizardsguild.com).
+Start with [`docs/AI_HANDOFF.md`](docs/AI_HANDOFF.md). It is the standing briefing for any agent or collaborator and points to everything else.
 
 ---
 
-# Operating System
+## Guild
 
-This project runs on [Project AIOS](https://github.com/filippos-swg/project-aios).
+Standard Work is part of the guild of [Silly Wizards](https://www.sillywizardsguild.com).
 
-Build from briefs. Not vibes.
+---
+
+## Operating System
+
+This project runs on the Project AIOS method: build from briefs, not vibes.
+
+Every change traces back to a brief, a scope, and a decision — not a whim. The files in this repo are the operating system; the site is the output.

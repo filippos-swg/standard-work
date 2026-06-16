@@ -13,7 +13,7 @@ A working prototype for internal review and first live test.
 - 7-page SPA: Home, How It Works, Brand, Website, Pricing, Contact, Thank You
 - Brand package configurator (5 steps, radio + checkbox)
 - Website package configurator (5 steps, radio + checkbox)
-- Live order summary with real pricing and add-on calculation
+- Live order summary with real pricing and add-on calculation (values match `PRICING.md`)
 - Enquiry form with success state
 - Responsive layout (desktop + mobile)
 - Footer with Silly Wizards guild link
@@ -24,7 +24,7 @@ A working prototype for internal review and first live test.
 - Form submission (no backend)
 - Payment processing
 - Email confirmation
-- Pricing engine (values are static but accurate)
+- Pricing values are static but accurate (no pricing engine — numbers come from `PRICING.md`)
 
 ---
 
@@ -36,7 +36,7 @@ Make the prototype functional enough for real client enquiries.
 
 ### Must add for v1
 
-- Working form submission (Netlify Forms or Formspree — no custom backend needed)
+- Working form submission (Netlify Forms or Formspree — see `docs/OPEN_QUESTIONS.md`)
 - Email notification when enquiry is submitted
 - Basic meta tags + Open Graph for sharing
 - Favicon
@@ -44,7 +44,7 @@ Make the prototype functional enough for real client enquiries.
 ### Nice to have for v1
 
 - Actual Silly Wizards logo PNG in footer (replace font approximation)
-- Google Analytics or simple page view tracking
+- Privacy-friendly analytics or simple page-view tracking
 - Polish pass on mobile spacing
 
 ### Out of scope for v1
