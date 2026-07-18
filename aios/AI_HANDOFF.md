@@ -1,5 +1,7 @@
 # AI Handoff — Standard Work™
 
+**AIOS version:** 1.3
+
 **Standing briefing for Claude / Cowork.**
 
 Read this before any work on this project.
@@ -24,18 +26,18 @@ It must feel like the service: structured, calm, confident, easy to buy from.
 - Google Fonts: Outfit, JetBrains Mono, UnifrakturMaguntia
 - No build step. No dependencies. No backend (yet).
 
-To make any change to the site, edit `index.html` only. See `ARCHITECTURE.md` for how routing, state, and the configurator work.
+To make any change to the site, edit `index.html` only. See `docs/ARCHITECTURE.md` for how routing, state, and the configurator work.
 
 ---
 
 ## Files to Read Before Working
 
-1. `PROJECT_BRIEF.md` — what this is and what it must not become
-2. `MVP_SCOPE.md` — what is in scope and what waits
+1. `aios/PROJECT_BRIEF.md` — what this is and what it must not become
+2. `docs/MVP_SCOPE.md` — what is in scope and what waits
 3. `PRICING.md` — canonical prices (the only place prices live)
 4. `docs/CREATIVE_DIRECTION.md` — design system, copy rules, banned language
 5. `docs/UX_PRINCIPLES.md` — how the site must behave
-6. `docs/DECISIONS.md` — what was decided and why (read before reversing anything)
+6. `aios/DECISIONS.md` — what was decided and why (read before reversing anything)
 7. `docs/OPEN_QUESTIONS.md` — what is still undecided
 
 ---
@@ -78,7 +80,7 @@ When completing a task, report:
 3. Any known issues
 4. Suggested next step
 
-If a decision was made during the task, add it to `docs/DECISIONS.md`. If a question was opened, add it to `docs/OPEN_QUESTIONS.md`.
+If a decision was made during the task, add it to `aios/DECISIONS.md`. If a question was opened, add it to `docs/OPEN_QUESTIONS.md`.
 
 ---
 
@@ -90,4 +92,4 @@ If a decision was made during the task, add it to `docs/DECISIONS.md`. If a ques
 - No meta/OG tags
 - No analytics
 
-These are tracked in `MVP_SCOPE.md` (v1) and `docs/OPEN_QUESTIONS.md`.
+These are tracked in `docs/MVP_SCOPE.md` (v1) and `docs/OPEN_QUESTIONS.md`.

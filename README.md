@@ -54,7 +54,7 @@ Full pricing, including all add-ons, lives in [`PRICING.md`](PRICING.md) — the
 - Google Fonts: Outfit, JetBrains Mono, UnifrakturMaguntia
 - No build step. No dependencies. No framework.
 
-See [`ARCHITECTURE.md`](ARCHITECTURE.md) for how it all fits together.
+See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for how it all fits together.
 
 ---
 
@@ -65,25 +65,30 @@ standard-work/
   index.html              ← the entire site
   README.md
   PRICING.md              ← canonical prices (single source of truth)
-  PROJECT_BRIEF.md        ← what it is and must not become
-  MVP_SCOPE.md            ← what is in scope, what waits
-  ARCHITECTURE.md         ← how the site is built
+  CLAUDE.md               ← pointer to aios/AI_HANDOFF.md (read automatically)
   .gitignore
-  docs/
+  aios/                   ← Project OS (AIOS v1.3)
     AI_HANDOFF.md         ← standing briefing for any AI agent
+    PROJECT_BRIEF.md      ← what it is and must not become
+    PROJECT_CANON.md      ← immutable identity (placeholder, to complete)
+    DECISIONS.md          ← what was decided and why
+    CHANGELOG.md          ← timestamped changes
+    tasks/
+      TASK_001.md         ← deploy v0.1
+      done/               ← completed tasks
+  docs/                   ← extended reference
+    ARCHITECTURE.md       ← how the site is built
+    MVP_SCOPE.md          ← what is in scope, what waits
     CREATIVE_DIRECTION.md ← design system, copy rules, banned language
     UX_PRINCIPLES.md      ← how the site behaves
-    DECISIONS.md          ← what was decided and why
     OPEN_QUESTIONS.md     ← what is still undecided
-  tasks/
-    TASK_001.md           ← deploy v0.1
 ```
 
 ---
 
 ## Working on This Project
 
-Start with [`docs/AI_HANDOFF.md`](docs/AI_HANDOFF.md). It is the standing briefing for any agent or collaborator and points to everything else.
+Start with [`aios/AI_HANDOFF.md`](aios/AI_HANDOFF.md). It is the standing briefing for any agent or collaborator and points to everything else.
 
 ---
 
