@@ -8,7 +8,7 @@
 ## Where things stand
 
 **Repo:** `github.com/filippos-swg/standard-work` (public, branch `main`)
-**Local repo:** `/Users/southnorthflip/Documents/Projects/standard-work`
+**Local repo:** `/Users/southnorthflip/Projects/standard-work`
 **Domain:** `standardwork.design` — **LIVE on Netlify DNS** (DNS propagated, SSL pending auto-provision)
 **Hosting:** Netlify free tier, deployed from GitHub `main`
 
