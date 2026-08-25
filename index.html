@@ -6,24 +6,151 @@
 <title>Standard Work™ — Work view + brand gate prototype</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+<!-- OUTFIT IS NOW A DISPLAY FACE ONLY — headlines, the wordmark, prices and
+     numerals. Reading copy, buttons and form controls set in Inter, which is the
+     grotesk sillywizardsguild.com and seriouslywow.com both run on. Same split as
+     the siblings: one display face per site, one shared body face across the
+     network. Weights trimmed to what is actually used — Outfit 700/800/900,
+     Inter 400/500/600/700. UnifrakturMaguntia is gone with the blackletter guild
+     mark in the footer; the Guild has a real lockup now. -->
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:16px;scroll-behavior:smooth}
+/* ============================================================================
+   standardwork.design — one style block, tokens first. Nothing hard-coded
+   below :root.
+
+   THE GROUND, THE INK AND THE GREIGE ARE THE NETWORK'S, EXACTLY. #F2F0EA is
+   shared by decision with sillywizardsguild.com and seriouslywow.com. It is the
+   one thing all three sites hold in common and it is never what changes to tell
+   them apart — if a later session finds the sites too similar, the answer is the
+   display face or the accent. NEVER the ground. That rule is written into the
+   other two stylesheets in the same words; this is the third site adopting it.
+
+   WHAT IS STANDARD WORK'S OWN, and is the whole of the difference:
+     Outfit at display scale · the orange · rounded corners and pill CTAs.
+   The Guild is square and set in Archivo. Seriously, Wow. is square and set in
+   Source Serif. Standard Work is the one you buy from, and it is the soft one —
+   the radii are a signature, not a leftover, and they stay. 2026-08-25.
+   ========================================================================== */
 :root{
-  --bg:#E8E6E1;--surface:#FFFFFF;--surface-alt:#F2F0EB;
-  --text:#1A1918;--text-dim:#6E6C69;--text-faint:#AEADA9;
-  --accent:#E84500;--accent-dark:#C03800;--border:#1A1918;--border-light:#CCC9C4;
-  --font:'Outfit',sans-serif;--font-mono:'JetBrains Mono',monospace;
-  --max-w:1320px;--pad-x:clamp(20px,5vw,64px);--pad-section:clamp(72px,10vw,140px);
+  /* --- palette — measured on this ground before use, not taken on trust ---- *
+   * ink 16.17 · mono-dim 4.59 · accent 3.49 · accent-dark 4.84 · greige 1.37
+   *
+   * ONE ACCENT, TWO VALUES, and the split is not a style choice — it is the
+   * same rule the Guild runs on its red, arrived at independently from the same
+   * arithmetic. --accent is 3.49 on this ground. AA wants 3.0 for large text
+   * and non-text marks, which it passes, and 4.5 for small text, which it does
+   * not. So --accent carries the brand dot, the bands and anything set at 24px
+   * or above; --accent-dark carries every mono label, counter and tag below it.
+   * 4.84 — the Guild's --red-text is 4.81 on the same ground.
+   *
+   * DO NOT SET --accent ON SMALL TYPE and do not use --accent-dark as a ground.
+   * --accent-dark was already in this file as the button hover. It is now
+   * load-bearing, and the two values differ by measurement, not by taste. */
+  --accent:#E84500;        /* the mark, the bands, large text */
+  --accent-dark:#C03800;   /* the same orange, deep enough to read small */
+  /* Type that sits ON the accent. Not a third orange — it is --text's value
+     under a role name, because the thing it has to contrast with is the accent
+     rather than the page. 4.63, and the only value on that ground that passes
+     at any size. The Guild carries the identical token as --on-red. */
+  --on-accent:#141414;
+  /* And the pair for the near-black surfaces — the CTA bands, the order-summary
+     header, the mobile total bar and the ink-filled option chip. Literals, not
+     var(--bg), because .ink-block redefines --bg and a swap must never source
+     its own values from a token it shadows.
+
+     THE LIGHT VALUE IS THE PAPER, NOT PURE WHITE. Nothing anywhere in the
+     network is #FFFFFF type — the ground is warm, so white type on a dark band
+     reads colder than the rest of the site and gives the block a bluish cast
+     next to everything around it. 16.17 on the ink either way. The dim value is
+     6.62, which clears 4.5 for the 11px mono labels that use it. */
+  --on-ink:#F2F0EA;
+  --on-ink-dim:rgba(242,240,234,.62);
+
+  --bg:#F2F0EA;            /* the network ground — shared, never changed */
+  --text:#141414;          /* the network ink — 16.17 here */
+  --greige:#D6CEC2;        /* option chips, image placeholders, warm blocks */
+  --greige-deep:#C9C0B2;   /* the same block, hovered */
+  --text-dim:#6E6C69;      /* captions and mono labels — 4.59 on the ground */
+
+  /* THE THIRD INK TIER IS GONE, AND THAT IS A MEASUREMENT RATHER THAN A TASTE.
+     --text-faint was #AEADA9, which is 1.97 on this ground — below even the 3.0
+     floor for non-text marks, and every single thing it colours is 9-11px mono
+     type needing 4.5. It was not a tier, it was invisible. The network has
+     exactly two ink values on this ground for the same reason. The token stays
+     so nothing below has to change shape, and re-tiering is one line. */
+  --text-faint:#6E6C69;
+
+  /* Small type on --greige. --text-dim is only 3.36 there and fails; ink at .72
+     is 5.84 and passes at any size. This is seriouslywow.com's --on-light-dim
+     under a local name, and it exists for exactly the same reason: a coloured
+     light ground needs its own dim value, because the page's does not survive. */
+  --ink-dim:rgba(20,20,20,.72);
+
+  --surface:#FFFFFF;       /* cards and panels — they carry a 1.5px ink border */
+  /* The alternating full-bleed band. It was #F2F0EB on a #E8E6E1 ground, which
+     is to say it always LIFTED off the page rather than sinking below it. That
+     relationship is preserved rather than inverted, and the value is the Guild's
+     own --paper-lift: #F2F0EA is already L* 94.8, so a lighter tone tops out a
+     few points under white and has to carry a warm shift to read at all. */
+  --surface-alt:#FEFAEC;
+
+  --border:#141414;
+  /* The network hairline, in its alpha form rather than as a flat hex. #CCC9C4
+     and this composite to within a step of each other on the page — the reason
+     to take the alpha is that it INVERTS FOR FREE inside a token swap, so the
+     accent bands below get a correct rule without a forked selector. */
+  --border-light:rgba(20,20,20,.14);
+
+  /* --- type -------------------------------------------------------------- *
+   * Outfit is the display face and nothing else. Inter is the network's body
+   * grotesk, shared with both siblings. When the PP Neue Montreal licence lands
+   * it replaces --font on this one line, exactly as it will on the other two. */
+  --font-display:'Outfit','Helvetica Neue',Arial,sans-serif;
+  --font:'Inter','Helvetica Neue',Arial,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,'SF Mono',monospace;
+  /* The network's mono tracking. Applied to the LABEL VOICE only — .nav-link
+     keeps .08em because nav overflow is covered by an automated assertion at
+     three widths and opening the tracking is exactly what would break it. One
+     documented exception, not a drift. */
+  --track-mono:.14em;
+
+  /* --- rhythm — the network's, with the radii kept ------------------------ */
+  --max-w:1280px;          /* was 1320; 1280 across all three sites */
+  --measure:34em;
+  --pad-x:clamp(20px,5vw,64px);--pad-section:clamp(72px,10vw,140px);
   --radius:18px;--radius-sm:10px;
 }
-body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:var(--font);font-size:17px;line-height:1.6;
+  font-weight:400;letter-spacing:-.005em;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+}
+/* Inter carries a wider default fit than Outfit did, so the body takes the
+   network's -.005em. 17px is kept rather than dropped to the Guild's 16 — the
+   whole page is built on clamps tuned around it and reflowing 1391 lines to
+   save a pixel is churn, not system. */
+img{max-width:100%;display:block}
+/* Both siblings set this. Unstyled, the browser default ring is the one mark on
+   the page that never learned the palette. 3.49 on the ground, over the 3.0
+   floor for non-text. */
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+::selection{background:var(--text);color:var(--bg)}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);border-bottom:1.5px solid var(--border);height:58px;display:flex;align-items:center;padding:0 var(--pad-x)}
 .nav-inner{width:100%;max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{font-family:var(--font);font-size:17px;font-weight:800;letter-spacing:-0.01em;color:var(--text);cursor:pointer;text-decoration:none}
-.nav-logo .dot{color:var(--accent)}
+.nav-logo{font-family:var(--font-display);font-size:17px;font-weight:800;letter-spacing:-0.01em;color:var(--text);cursor:pointer;text-decoration:none}
+/* 17px at 800. WCAG large-bold starts at 18.66px, so the wordmark's dot is
+   small text and takes the deep value — 4.84. The display and footer dots are
+   large and keep --accent. Same two-value rule, applied by size. */
+.nav-logo .dot{color:var(--accent-dark)}
 .nav-links{display:flex;gap:28px}
+/* THE ONE EXCEPTION TO --track-mono, and it is deliberate. The handover ships an
+   automated assertion that the nav does not overflow at three widths; .14em on
+   four links plus a CTA is precisely what would break it. .08em stays until that
+   test is re-measured rather than merely re-run. */
 .nav-link{font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;text-decoration:none;transition:color 0.12s}
 .nav-link:hover,.nav-link.active{color:var(--text)}
 .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
@@ -33,127 +160,254 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);bo
 .nav-mobile .nav-link{font-size:16px;letter-spacing:0.06em;color:var(--text)}
 .page{display:none;padding-top:58px}
 .page.active{display:block}
-.display{font-family:var(--font);font-size:clamp(52px,9vw,128px);font-weight:900;line-height:0.92;letter-spacing:-0.03em;text-transform:uppercase}
+.display{font-family:var(--font-display);font-size:clamp(52px,9vw,128px);font-weight:900;line-height:0.92;letter-spacing:-0.03em;text-transform:uppercase}
 .display .dot{color:var(--accent)}
-.h1{font-family:var(--font);font-size:clamp(36px,5vw,76px);font-weight:800;line-height:0.96;letter-spacing:-0.025em}
-.h2{font-family:var(--font);font-size:clamp(26px,3.5vw,52px);font-weight:700;line-height:1.0;letter-spacing:-0.02em}
-.h3{font-family:var(--font);font-size:clamp(20px,2.5vw,34px);font-weight:700;line-height:1.1;letter-spacing:-0.01em}
-.label{font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim)}
+.h1{font-family:var(--font-display);font-size:clamp(36px,5vw,76px);font-weight:800;line-height:0.96;letter-spacing:-0.025em}
+.h2{font-family:var(--font-display);font-size:clamp(26px,3.5vw,52px);font-weight:700;line-height:1.0;letter-spacing:-0.02em}
+.h3{font-family:var(--font-display);font-size:clamp(20px,2.5vw,34px);font-weight:700;line-height:1.1;letter-spacing:-0.01em}
+.label{font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--text-dim)}
 .body-lg{font-size:clamp(15px,1.6vw,19px);line-height:1.65}
 .body{font-size:clamp(14px,1.2vw,16px);line-height:1.65}
 .muted{color:var(--text-dim)}
 .accent{color:var(--accent)}
 .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--font);font-size:clamp(14px,1.5vw,17px);font-weight:700;letter-spacing:-0.01em;background:var(--text);color:var(--surface);border:1.5px solid var(--text);border-radius:100px;padding:clamp(10px,1.4vw,16px) clamp(22px,2.8vw,36px);cursor:pointer;text-decoration:none;transition:background 0.12s,color 0.12s,transform 0.1s;white-space:nowrap}
-.btn:hover{background:#333;border-color:#333;transform:translateY(-1px)}
+.btn:hover{background:var(--accent-dark);border-color:var(--accent-dark);transform:translateY(-1px)}
 .btn:active{transform:translateY(0)}
 .btn-outline{background:transparent;color:var(--text);border-color:var(--border)}
 .btn-outline:hover{background:var(--text);color:var(--surface)}
-.btn-accent{background:var(--accent);border-color:var(--accent);color:#fff}
-.btn-accent:hover{background:var(--accent-dark);border-color:var(--accent-dark)}
-.accent-block{background:var(--accent);padding:var(--pad-section) var(--pad-x);position:relative;overflow:hidden}
+/* .btn is clamp(14px,1.5vw,17px) at 700 — under the 18.66px bold threshold, so
+   it is small text. White on the orange is 3.98 and fails; --on-accent is 4.63
+   and passes. Same finding as the bands. */
+.btn-accent{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+/* HOVER INVERTS RATHER THAN DEEPENS, and that is arithmetic too. Deepening the
+   fill to --accent-dark would drop --on-accent to 3.34 and break the button on
+   the one state where the pointer is already on it. Inverting to an ink fill
+   puts the orange on top at 4.63 and matches what .btn-outline already does. */
+.btn-accent:hover{background:var(--on-accent);border-color:var(--on-accent);color:var(--accent)}
+/* ============================================================================
+   THE ACCENT SURFACES. A TOKEN SWAP, NOT A SET OF FORKED RULES.
+
+   Both siblings do this and neither restyles a component to do it: the Guild's
+   About page redefines --red/--paper/--ink on .page-red, Seriously, Wow.'s
+   bands redefine --purple on .band, and every child inherits the inversion for
+   free. This block is the same mechanism. Nothing below it restyles anything —
+   it only changes what the tokens MEAN inside an accent surface.
+
+   THE TYPE ON THESE BANDS IS BLACK, AND THAT IS NOT A MISTAKE. It reads as a
+   regression to anyone who knows the white-on-orange version, so here is the
+   arithmetic. On #E84500:
+
+     white          3.98    passes 3.0 for large text, FAILS 4.5 for small
+     white @.75     2.80    fails everything, including the non-text floor
+     white @.65     2.44    fails everything
+     paper #F2F0EA  3.49    large text only
+     ink   #141414  4.63    PASSES AT ANY SIZE
+
+   .accent-note is clamp(13px,1.2vw,16px) and .accent-block .label is 11px —
+   both small text, both were set in white at 3.98 and .75-of-white at 2.80.
+   They were not legible and the band is where the offer is stated. Ink is the
+   only value on this ground that passes, which is word for word the Guild's
+   finding on its own red. Simon had already half-arrived here: .dd-head was set
+   to var(--text) by hand. This finishes the move.
+
+   AND THERE IS NO DIM TIER HERE. ink@.78 is 3.66 and ink@.72 is 3.37 — both
+   under 4.5, so an opacity ramp on this ground is an illegal tier however
+   tempting. Where two voices are genuinely needed, the second is --accent,
+   which the swap turns into paper: 3.49, legal on the 19px-bold-and-up that
+   .do-dont sets. Two polarities, both measured. Never an opacity.
+   ========================================================================== */
+/* THE SECOND SURFACE. Same mechanism as the accent bands below, one shade of
+   ground apart: the CTA blocks were written inline eight times over, each one
+   repeating #fff and rgba(255,255,255,.5) by hand. That is the thing
+   DECISIONS.md forbids — "never hardcode a colour or font outside the tokens" —
+   and it is why the .5 white had drifted to .55 and .6 in three other places.
+   One class, one swap, and every child inherits.
+
+   Kept rather than converted to paper, unlike the footer: a CTA band that
+   states the price is meant to stop the page, and both siblings have their own
+   version of a surface that does that — the Guild's red About ground, Seriously
+   Wow's purple bands. This is Standard Work's. */
+.ink-block{
+  --bg:#141414;
+  --surface:#141414;
+  --text:#F2F0EA;
+  --text-dim:rgba(242,240,234,.62);
+  --text-faint:rgba(242,240,234,.62);
+  --ink-dim:rgba(242,240,234,.62);
+  --border:#F2F0EA;
+  --border-light:rgba(242,240,234,.22);
+  background:var(--bg);color:var(--text);
+  padding:var(--pad-section) var(--pad-x);
+}
+.ink-block-inner{max-width:var(--max-w);margin:0 auto}
+/* The subordinate line under each band's headline. It carried an inline
+   rgba(255,255,255,.5) that went with the literals; this restores the same
+   hierarchy through the token, at 6.62 rather than 6.47 — a difference nobody
+   will see, on a value that now inverts with everything else. */
+.ink-block .body-lg,.ink-block p{color:var(--text-dim)}
+/* An outline button on the ink band. The base rule paints --text on --surface,
+   which the swap has already inverted, so only the border needs saying. */
+.ink-block .btn-outline{border-color:var(--border-light);color:var(--text)}
+.ink-block .btn-outline:hover{background:var(--text);color:#141414}
+
+/* THE GROUND AND THE ACCENT TRADE PLACES, and the values here are literals on
+   purpose. A swap cannot source its own background from a token it redefines —
+   custom properties resolve after the cascade, so `background:var(--accent)` in
+   a rule that also sets --accent reads the NEW value and paints the band paper.
+   The Guild's .page-red writes flat hexes for the same reason. This is the one
+   place in the file where a literal colour is correct. */
+.accent-block,.step-header{
+  --bg:#E84500;                /* the accent becomes the ground */
+  --surface:#E84500;
+  --text:#141414;
+  --text-dim:#141414;          /* collapses — no legal dim value on this ground */
+  --text-faint:#141414;
+  --ink-dim:#141414;
+  --accent:#F2F0EA;            /* the mark was orange; on orange it is paper */
+  --accent-dark:#141414;
+  --border:#141414;
+  --border-light:rgba(20,20,20,.26);
+  background:var(--bg);color:var(--text);
+}
+.accent-block{padding:var(--pad-section) var(--pad-x);position:relative;overflow:hidden}
 .accent-block-inner{max-width:var(--max-w);margin:0 auto;position:relative;z-index:1}
-.accent-block .label{color:rgba(255,255,255,0.65)}
-.accent-block-items{margin-top:40px;border-top:1px solid rgba(255,255,255,0.3)}
-.accent-block-item{padding:24px 0;border-bottom:1px solid rgba(255,255,255,0.3);font-family:var(--font);font-size:clamp(22px,3vw,44px);font-weight:700;line-height:1.1;color:#fff;letter-spacing:-0.015em}
-.accent-note{margin-top:40px;font-size:clamp(13px,1.2vw,16px);line-height:1.6;color:rgba(255,255,255,0.75);max-width:600px}
-.step-header{background:var(--accent);padding:14px 25px;display:flex;align-items:baseline;gap:16px}
-.step-num{font-family:var(--font);font-size:clamp(15px,1.7vw,20px);font-weight:700;color:#fff;letter-spacing:-0.01em;flex-shrink:0}
-.step-title{font-family:var(--font);font-size:clamp(15px,1.7vw,20px);font-weight:700;color:#fff;letter-spacing:-0.01em}
+.accent-block-items{margin-top:40px;border-top:1px solid var(--border-light)}
+.accent-block-item{padding:24px 0;border-bottom:1px solid var(--border-light);font-family:var(--font-display);font-size:clamp(22px,3vw,44px);font-weight:700;line-height:1.1;color:var(--text);letter-spacing:-0.015em}
+.accent-note{margin-top:40px;font-size:clamp(13px,1.2vw,16px);line-height:1.6;color:var(--text);max-width:600px}
+.step-header{padding:14px 25px;display:flex;align-items:baseline;gap:16px}
+/* 20px at the cap and 15px at the floor — small text either way, so white at
+   3.98 was never legal on these two. They inherit ink from the swap. */
+.step-num{font-family:var(--font-display);font-size:clamp(15px,1.7vw,20px);font-weight:700;color:var(--text);letter-spacing:-0.01em;flex-shrink:0}
+.step-title{font-family:var(--font-display);font-size:clamp(15px,1.7vw,20px);font-weight:700;color:var(--text);letter-spacing:-0.01em}
 .step-body{padding:24px 0 40px;border-bottom:1.5px solid var(--border-light)}
 .step-body:last-child{border-bottom:none}
 .services-grid{display:grid;grid-template-columns:3fr 2fr;gap:0;border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:48px;background:var(--surface)}
 .service-card{padding:clamp(28px,3.5vw,48px);display:flex;flex-direction:column;gap:20px}
 .service-card:first-child{border-right:1.5px solid var(--border)}
-.service-card-badge{display:inline-block;font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);padding:4px 10px;border-radius:100px;margin-bottom:4px;width:fit-content}
-.service-card-title{font-family:var(--font);font-size:clamp(20px,2.2vw,32px);font-weight:800;letter-spacing:-0.02em;line-height:1.1}
+.service-card-badge{display:inline-block;font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--accent-dark);border:1px solid var(--accent);padding:4px 10px;border-radius:100px;margin-bottom:4px;width:fit-content}
+.service-card-title{font-family:var(--font-display);font-size:clamp(20px,2.2vw,32px);font-weight:800;letter-spacing:-0.02em;line-height:1.1}
 .service-card-desc{font-size:clamp(13px,1.2vw,15px);color:var(--text-dim);line-height:1.65;flex:1}
-.service-card-price{font-family:var(--font);font-size:clamp(18px,2vw,28px);font-weight:700;letter-spacing:-0.02em}
+.service-card-price{font-family:var(--font-display);font-size:clamp(18px,2vw,28px);font-weight:700;letter-spacing:-0.02em}
 .process-mini{margin-top:32px}
 .process-mini-item{display:flex;gap:20px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--border-light)}
 .process-mini-item:last-child{border-bottom:none}
-.process-mini-num{font-family:var(--font-mono);font-size:11px;font-weight:600;color:var(--accent);letter-spacing:0.08em;flex-shrink:0;width:24px}
+.process-mini-num{font-family:var(--font-mono);font-size:11px;font-weight:600;color:var(--accent-dark);letter-spacing:0.08em;flex-shrink:0;width:24px}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,80px)}
 .hero-split{display:grid;grid-template-columns:1fr auto;gap:clamp(32px,5vw,80px);align-items:start}
 .hero-cta-box{display:flex;flex-direction:column;gap:12px;padding-top:8px;min-width:240px}
-.hero-cta-label{font-family:var(--font-mono);font-size:11px;color:var(--text-dim);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px}
+.hero-cta-label{font-family:var(--font-mono);font-size:11px;color:var(--text-dim);letter-spacing:var(--track-mono);text-transform:uppercase;margin-bottom:4px}
 .list-clean{list-style:none;display:flex;flex-direction:column}
 .list-clean li{font-size:clamp(14px,1.3vw,16px);padding:12px 0;border-bottom:1px solid var(--border-light);line-height:1.5}
 .list-clean li:last-child{border-bottom:none}
 .included-list{margin-top:32px}
 .included-item{padding:20px 0;border-bottom:1px solid var(--border-light);display:grid;grid-template-columns:200px 1fr;gap:32px}
 .included-item:first-child{border-top:1px solid var(--border-light)}
-.included-title{font-family:var(--font);font-size:clamp(15px,1.6vw,20px);font-weight:700;letter-spacing:-0.01em}
+.included-title{font-family:var(--font-display);font-size:clamp(15px,1.6vw,20px);font-weight:700;letter-spacing:-0.01em}
 .included-desc{font-size:14px;color:var(--text-dim);line-height:1.6}
 .package-layout{display:grid;grid-template-columns:1fr 360px;gap:clamp(32px,4vw,56px);align-items:start}
 .package-content{min-width:0}
 .order-summary-wrap{position:sticky;top:74px}
 .order-summary{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden}
-.summary-top{padding:20px 24px;border-bottom:1.5px solid var(--border);background:var(--text)}
-.summary-top .label{color:rgba(255,255,255,0.6)}
+.summary-top{padding:20px 24px;border-bottom:1.5px solid var(--border);background:var(--text);color:var(--on-ink)}
+.summary-top .label{color:var(--on-ink-dim)}
 .summary-body{padding:0 24px}
 .summary-row{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--border-light)}
 .summary-row:last-of-type{border-bottom:none}
-.summary-key{font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim)}
+.summary-key{font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--text-dim)}
 .summary-val{font-size:13px;font-weight:600;color:var(--text);text-align:right;max-width:180px}
-.summary-price-section{border-top:1.5px solid var(--border);padding:16px 24px;background:var(--surface-alt)}
-.summary-price-row{display:flex;justify-content:space-between;padding:5px 0;font-size:13px;color:var(--text-dim)}
-.summary-total-row{display:flex;justify-content:space-between;padding:14px 0 4px;font-family:var(--font);font-size:22px;font-weight:800;letter-spacing:-0.02em;border-top:1px solid var(--border-light);margin-top:8px}
+/* Greige rather than the lift: this band sits INSIDE a white card, where
+   #FEFAEC would be invisible. Its rows take --ink-dim, because --text-dim is
+   3.36 on greige and fails. */
+.summary-price-section{border-top:1.5px solid var(--border);padding:16px 24px;background:var(--greige)}
+.summary-price-row{display:flex;justify-content:space-between;padding:5px 0;font-size:13px;color:var(--ink-dim)}
+.summary-total-row{display:flex;justify-content:space-between;padding:14px 0 4px;font-family:var(--font-display);font-size:22px;font-weight:800;letter-spacing:-0.02em;border-top:1px solid var(--border-light);margin-top:8px}
 .summary-note{padding:14px 24px;font-family:var(--font-mono);font-size:10px;color:var(--text-dim);line-height:1.6;border-top:1.5px solid var(--border)}
 .summary-cta{padding:16px 24px;border-top:1px solid var(--border-light)}
 .summary-addons-section{padding:12px 24px;border-bottom:1px solid var(--border-light)}
 .config-step{margin-bottom:40px;padding-bottom:40px;border-bottom:1.5px solid var(--border-light)}
 .config-step:last-child{border-bottom:none}
-.config-step-label{font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:6px}
-.config-step-q{font-family:var(--font);font-size:clamp(18px,2vw,24px);font-weight:700;letter-spacing:-0.01em;margin-bottom:16px}
+.config-step-label{font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--text-dim);margin-bottom:6px}
+.config-step-q{font-family:var(--font-display);font-size:clamp(18px,2vw,24px);font-weight:700;letter-spacing:-0.01em;margin-bottom:16px}
 .options-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;counter-reset:opt}
 .options-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;counter-reset:opt}
 .option-card{display:block;cursor:pointer;counter-increment:opt}
 .option-card input{position:absolute;opacity:0;width:0;height:0}
-.option-inner{border:none;background:var(--surface-alt);padding:14px 16px 16px;padding-top:36px;transition:background 0.15s,color 0.15s,transform 0.1s;font-size:15px;font-weight:600;line-height:1.3;color:var(--text-dim);border-radius:16px;position:relative;min-height:96px;display:flex;flex-direction:column;justify-content:flex-end}
-.option-inner::before{content:counter(opt,decimal-leading-zero);position:absolute;top:14px;left:16px;font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:0.1em;color:var(--text-faint);transition:color 0.15s}
-.option-inner::after{content:'';position:absolute;top:16px;right:16px;width:7px;height:7px;border-radius:50%;background:transparent;border:1.5px solid var(--border-light);transition:background 0.15s,border-color 0.15s}
-.option-card:hover .option-inner{background:#E3E0D9;color:var(--text);transform:translateY(-1px)}
-.option-card input:checked + .option-inner{background:var(--text);color:#fff;transform:translateY(-1px)}
+/* THE OPTION CHIPS ARE THE NETWORK'S GREIGE. They were #F2F0EB, which is the
+   new page ground to within a step — on this ground they would have vanished.
+   Greige is the value both siblings use for exactly this job: a warm secondary
+   block. Type on it is --ink-dim (5.84), never --text-dim (3.36). */
+.option-inner{border:none;background:var(--greige);padding:14px 16px 16px;padding-top:36px;transition:background 0.15s,color 0.15s,transform 0.1s;font-size:15px;font-weight:600;line-height:1.3;color:var(--ink-dim);border-radius:16px;position:relative;min-height:96px;display:flex;flex-direction:column;justify-content:flex-end}
+.option-inner::before{content:counter(opt,decimal-leading-zero);position:absolute;top:14px;left:16px;font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:0.1em;color:var(--ink-dim);transition:color 0.15s}
+.option-inner::after{content:'';position:absolute;top:16px;right:16px;width:7px;height:7px;border-radius:50%;background:transparent;border:1.5px solid var(--ink-dim);transition:background 0.15s,border-color 0.15s}
+.option-card:hover .option-inner{background:var(--greige-deep);color:var(--text);transform:translateY(-1px)}
+.option-card input:checked + .option-inner{background:var(--text);color:var(--on-ink);transform:translateY(-1px)}
 .option-card input:checked + .option-inner::before{color:var(--accent)}
 .option-card input:checked + .option-inner::after{background:var(--accent);border-color:var(--accent)}
-.option-inner .price-tag{display:block;font-family:var(--font-mono);font-size:11px;color:var(--text-faint);margin-top:6px;font-weight:500}
+.option-inner .price-tag{display:block;font-family:var(--font-mono);font-size:11px;color:var(--ink-dim);margin-top:6px;font-weight:500}
 .option-card input:checked + .option-inner .price-tag{color:var(--accent)}
 .price-block{padding:clamp(28px,4vw,48px) 0;border-top:1.5px solid var(--border-light)}
 .price-block:first-child{border-top:none;padding-top:0}
-.price-big{font-family:var(--font);font-size:clamp(32px,4.5vw,64px);font-weight:800;letter-spacing:-0.03em;margin:8px 0}
+.price-big{font-family:var(--font-display);font-size:clamp(32px,4.5vw,64px);font-weight:800;letter-spacing:-0.03em;margin:8px 0}
 .addons-list{display:flex;flex-direction:column}
 .addon-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--border-light);font-size:14px}
 .addon-row:first-child{border-top:1px solid var(--border-light)}
 .addon-price{font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--text-dim);white-space:nowrap}
 .form-grid{display:flex;flex-direction:column;gap:24px;margin-top:40px;max-width:680px}
 .form-group{display:flex;flex-direction:column;gap:6px}
-.form-label{font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim)}
+.form-label{font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--text-dim)}
 .form-input,.form-select,.form-textarea{background:var(--surface);border:1.5px solid var(--border-light);color:var(--text);font-family:var(--font);font-size:15px;padding:12px 16px;width:100%;transition:border-color 0.12s;outline:none;-webkit-appearance:none;border-radius:var(--radius-sm)}
 .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--border)}
 .form-textarea{resize:vertical;min-height:120px;line-height:1.5}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .form-success{display:none;padding:48px 0}
 .form-success.show{display:block}
-footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-top:1.5px solid var(--border);background:var(--text);color:var(--surface)}
+/* ============================================================================
+   THE FOOTER SITS ON THE PAPER, and this is the change that does most of the
+   work of joining the three sites. It ran on a near-black ground with white
+   type at .35, .45 and .55 — values that read as grey noise and that neither
+   sibling has anywhere. sillywizardsguild.com and seriouslywow.com both close
+   on the ground with a single hairline above, and because a footer is on every
+   page of every site it is the component a visitor sees most often. Making it
+   the same component across all three is the cheapest possible family
+   resemblance.
+
+   The near-black surface is not gone from the site — .summary-top and .mtotal
+   still use it, because inside a card and under a thumb it is a component, not
+   a page. This is the page.
+   ========================================================================== */
+footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-top:1px solid var(--border-light);background:var(--bg);color:var(--text)}
 .footer-inner{max-width:var(--max-w);margin:0 auto}
-.footer-logo{font-family:var(--font);font-size:clamp(26px,4vw,52px);font-weight:900;letter-spacing:-0.02em;margin-bottom:8px}
+.footer-logo{font-family:var(--font-display);font-size:clamp(26px,4vw,52px);font-weight:900;letter-spacing:-0.02em;margin-bottom:8px}
 .footer-logo .dot{color:var(--accent)}
 .footer-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;gap:32px}
-.footer-desc{font-size:14px;color:rgba(255,255,255,0.45);line-height:1.6;max-width:420px;margin-top:8px}
-.footer-email{font-family:var(--font-mono);font-size:13px;color:rgba(255,255,255,0.55);text-decoration:none}
-.footer-email:hover{color:#fff}
-.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;border-top:1px solid rgba(255,255,255,0.12);font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,0.35);letter-spacing:0.04em}
-.footer-nav-links{display:flex;gap:24px}
-.footer-nav-link{color:rgba(255,255,255,0.35);text-decoration:none;cursor:pointer;transition:color 0.12s}
-.footer-nav-link:hover{color:rgba(255,255,255,0.7)}
-.footer-guild{display:flex;align-items:center;justify-content:flex-end;gap:12px;margin-top:48px;padding-top:32px;border-top:1px solid rgba(255,255,255,0.08)}
-.footer-guild-text{font-family:var(--font);font-size:14px;font-weight:400;color:rgba(255,255,255,0.55);white-space:nowrap}
-.footer-guild-logo{font-family:'UnifrakturMaguntia',serif;font-size:28px;color:#fff;text-decoration:none;line-height:1;transition:opacity 0.15s;display:inline-block}
-.footer-guild-logo:hover{opacity:0.75}
+.footer-desc{font-size:14px;color:var(--text-dim);line-height:1.6;max-width:420px;margin-top:8px}
+.footer-email{font-family:var(--font-mono);font-size:13px;color:var(--text-dim);text-decoration:none}
+.footer-email:hover{color:var(--accent-dark)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding-top:28px;border-top:1px solid var(--border-light);font-family:var(--font-mono);font-size:11px;color:var(--text-dim);letter-spacing:0.04em}
+.footer-nav-links{display:flex;gap:24px;flex-wrap:wrap}
+.footer-nav-link{color:var(--text-dim);text-decoration:none;cursor:pointer;transition:color 0.12s}
+.footer-nav-link:hover{color:var(--text)}
+/* THE GROUP LINE. Both siblings carry a column naming the other two; Standard
+   Work was the only one of the three that never linked its own network, which
+   for a site whose whole argument is that it belongs to something is a strange
+   omission. Two links, in the mono voice, sitting on the same hairline the rest
+   of the footer uses. */
+.footer-guild{display:flex;align-items:baseline;justify-content:flex-end;gap:12px;flex-wrap:wrap;margin-top:48px;padding-top:32px;border-top:1px solid var(--border-light);gap:14px 32px}
+.footer-guild-text{font-family:var(--font);font-size:14px;font-weight:400;color:var(--text-dim)}
+/* THE BLACKLETTER IS GONE. UnifrakturMaguntia stood in for a Guild reference
+   that did not have a lockup yet. It has one now, and seriouslywow.com retired
+   its own blackletter for the same reason — Standard Work was the last site in
+   the network still setting the Guild's name in a face the Guild does not use.
+   It is the display face at 15px now, which is what the siblings do, and it
+   takes a whole font file off the page. */
+.fg-item{display:inline-flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.fg-label{font-family:var(--font-mono);font-size:11px;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--text-dim)}
+.footer-group-link{font-family:var(--font-display);font-size:15px;font-weight:700;letter-spacing:-0.01em;color:var(--text);text-decoration:none;transition:color 0.12s;white-space:nowrap}
+.footer-group-link:hover{color:var(--accent-dark)}
 .thankyou-wrap{min-height:calc(100vh - 58px);display:flex;align-items:center;padding:var(--pad-section) var(--pad-x)}
 .thankyou-step{display:flex;gap:20px;padding:18px 0;border-bottom:1px solid var(--border-light)}
 .thankyou-step:first-child{border-top:1px solid var(--border-light)}
-.thankyou-num{font-family:var(--font-mono);font-size:11px;font-weight:600;color:var(--accent);letter-spacing:0.06em;flex-shrink:0;width:24px;margin-top:2px}
+.thankyou-num{font-family:var(--font-mono);font-size:11px;font-weight:600;color:var(--accent-dark);letter-spacing:0.06em;flex-shrink:0;width:24px;margin-top:2px}
 .mt-8{margin-top:8px}.mt-16{margin-top:16px}.mt-24{margin-top:24px}.mt-32{margin-top:32px}.mt-40{margin-top:40px}.mt-48{margin-top:48px}
 .mb-8{margin-bottom:8px}.mb-12{margin-bottom:12px}.mb-16{margin-bottom:16px}.mb-24{margin-bottom:24px}.mb-40{margin-bottom:40px}
 .surface-section{background:var(--surface);padding:var(--pad-section) var(--pad-x)}
@@ -176,7 +430,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
   .options-grid{grid-template-columns:1fr 1fr}
   .footer-top{flex-direction:column;align-items:flex-start}
   .footer-bottom{flex-direction:column;gap:12px;text-align:center}
-  .footer-guild{justify-content:flex-start;flex-wrap:wrap}
+  .footer-guild{justify-content:flex-start;flex-wrap:wrap;gap:14px}
 }
 /* ---- WORK VIEW ---- added for case studies. Tokens only, nothing hardcoded. ---- */
 .case-index{margin-top:48px}
@@ -184,25 +438,25 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 .case-row:first-child{border-top:1px solid var(--border-light)}
 .case-row:hover{padding-left:10px;border-color:var(--border)}
 .case-num{font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:0.1em;color:var(--text-faint);transition:color 0.14s}
-.case-row:hover .case-num{color:var(--accent)}
-.case-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;border-radius:var(--radius-sm);background:var(--surface-alt)}
+.case-row:hover .case-num{color:var(--accent-dark)}
+.case-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;border-radius:var(--radius-sm);background:var(--greige)}
 .case-row-text{display:block}
-.case-row-name{display:block;font-family:var(--font);font-size:clamp(19px,2.2vw,28px);font-weight:800;letter-spacing:-0.02em;line-height:1.05}
+.case-row-name{display:block;font-family:var(--font-display);font-size:clamp(19px,2.2vw,28px);font-weight:800;letter-spacing:-0.02em;line-height:1.05}
 .case-row-line{display:block;font-size:15px;color:var(--text-dim);line-height:1.5;margin-top:7px;max-width:60ch}
-.case-row-meta{font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);text-align:right;white-space:nowrap}
-.case-row-arrow{font-family:var(--font);font-size:18px;font-weight:700;color:var(--text-faint);text-align:right;transition:color 0.14s,transform 0.14s}
-.case-row:hover .case-row-arrow{color:var(--accent);transform:translateX(3px)}
+.case-row-meta{font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--text-dim);text-align:right;white-space:nowrap}
+.case-row-arrow{font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--text-faint);text-align:right;transition:color 0.14s,transform 0.14s}
+.case-row:hover .case-row-arrow{color:var(--accent-dark);transform:translateX(3px)}
 .case-detail{display:none}
 .case-detail.active{display:block}
-.case-back{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;text-decoration:none;transition:color 0.12s}
-.case-back:hover{color:var(--accent)}
+.case-back{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--text-dim);cursor:pointer;text-decoration:none;transition:color 0.12s}
+.case-back:hover{color:var(--accent-dark)}
 .case-shot{width:100%;display:block;border-radius:var(--radius);border:1px solid var(--border-light)}
 .case-gallery{display:flex;flex-direction:column;gap:clamp(14px,1.8vw,26px)}
 .case-pair{display:flex;justify-content:space-between;align-items:center;gap:20px;padding-top:28px;margin-top:clamp(48px,6vw,72px);border-top:1.5px solid var(--border-light)}
-.case-pair a{font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;text-decoration:none;transition:color 0.12s}
-.case-pair a:hover{color:var(--accent)}
-.included-item.is-extra .included-title{color:var(--accent)}
-.included-tag{font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);display:block;margin-top:6px}
+.case-pair a{font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--text-dim);cursor:pointer;text-decoration:none;transition:color 0.12s}
+.case-pair a:hover{color:var(--accent-dark)}
+.included-item.is-extra .included-title{color:var(--accent-dark)}
+.included-tag{font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--accent-dark);display:block;margin-top:6px}
 @media(max-width:960px){
   .case-back{min-height:44px;align-items:center}
   .case-pair a{min-height:44px;display:inline-flex;align-items:center}
@@ -214,7 +468,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 @media(max-width:640px){
   .case-row{grid-template-columns:1fr;gap:12px;padding:24px 0}
   .case-row:hover{padding-left:0}
-  .case-num{color:var(--accent)}
+  .case-num{color:var(--accent-dark)}
   .case-row-meta{grid-column:auto;text-align:left}
 }
 
@@ -222,21 +476,23 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 .case-slides{display:flex;flex-direction:column;gap:clamp(40px,5vw,72px)}
 .case-slide{display:block}
 .slide-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border-light)}
-.slide-num{font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:0.1em;color:var(--accent)}
-.slide-title{font-family:var(--font);font-size:clamp(17px,2vw,24px);font-weight:700;letter-spacing:-0.01em}
-.slide-beyond{font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-left:auto}
+.slide-num{font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:0.1em;color:var(--accent-dark)}
+.slide-title{font-family:var(--font-display);font-size:clamp(17px,2vw,24px);font-weight:700;letter-spacing:-0.01em}
+.slide-beyond{font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--accent-dark);margin-left:auto}
 .slide-cap{font-size:15px;color:var(--text-dim);line-height:1.6;margin-top:14px;max-width:62ch}
-.slide-todo{width:100%;aspect-ratio:16/9;border:1.5px dashed var(--border-light);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;background:var(--surface)}
-.slide-todo span{font-family:var(--font-mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-faint)}
+/* A marked empty box, never an <img> pointing at nothing — the same convention
+   as the siblings' .ph placeholders, and the same greige. */
+.slide-todo{width:100%;aspect-ratio:16/9;border:1.5px dashed var(--ink-dim);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;background:var(--greige)}
+.slide-todo span{font-family:var(--font-mono);font-size:11px;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--ink-dim)}
 @media(max-width:640px){.slide-beyond{margin-left:0;flex-basis:100%}}
-.opt-note{display:block;font-family:var(--font-mono);font-size:11px;color:var(--text-faint);margin-top:6px;font-weight:500;line-height:1.4}
+.opt-note{display:block;font-family:var(--font-mono);font-size:11px;color:var(--ink-dim);margin-top:6px;font-weight:500;line-height:1.4}
 .option-card input:checked + .option-inner .opt-note{color:var(--accent)}
 .gate-panel{background:var(--surface);border:1.5px solid var(--accent);border-radius:var(--radius);padding:clamp(24px,3vw,36px)}
 .gate-panel .option-inner{padding-top:18px;min-height:0}
 .gate-panel .option-inner::before{content:none}
-.opt-save{display:block;font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:0.06em;color:var(--text-faint);margin-top:5px}
+.opt-save{display:block;font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:0.06em;color:var(--ink-dim);margin-top:5px}
 .option-card input:checked + .option-inner .opt-save{color:var(--accent)}
-.opt-good{color:var(--accent)!important}
+.opt-good{color:var(--accent-dark)!important}
 .mtotal{display:none}
 @media(max-width:960px){
   .mtotal{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:90;background:var(--text);
@@ -244,18 +500,18 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
     padding:12px var(--pad-x);padding-bottom:calc(12px + env(safe-area-inset-bottom,0px));
     border-top:1.5px solid var(--border);transform:translateY(130%);transition:transform 0.22s ease}
   .mtotal.show{transform:translateY(0)}
-  .mtotal-key{font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.55);display:block}
-  .mtotal-val{font-family:var(--font);font-size:20px;font-weight:800;letter-spacing:-0.02em;color:#fff;display:block;margin-top:2px;white-space:nowrap}
+  .mtotal-key{font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--on-ink-dim);display:block}
+  .mtotal-val{font-family:var(--font-display);font-size:20px;font-weight:800;letter-spacing:-0.02em;color:var(--on-ink);display:block;margin-top:2px;white-space:nowrap}
   .mtotal .btn{padding:11px 20px;font-size:14px;min-height:44px}
 }
 .logo-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,1.6vw,26px);margin-top:clamp(36px,4.5vw,56px);padding-top:clamp(30px,4vw,44px);border-top:1px solid var(--border-light)}
 .logo-cell{display:flex;flex-direction:column;align-items:center;gap:14px;cursor:pointer;text-decoration:none;padding:14px 6px;border-radius:var(--radius-sm);transition:background 0.14s;min-height:44px}
-.logo-cell:hover{background:var(--surface-alt)}
+.logo-cell:hover{background:var(--greige)}
 .logo-mark{display:flex;align-items:center;justify-content:center;height:64px;width:100%}
 .logo-mark img{max-width:100%;object-fit:contain;opacity:0.78;transition:opacity 0.14s}
 .logo-cell:hover .logo-mark img{opacity:1}
-.logo-cat{font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:0.09em;text-transform:uppercase;color:var(--text-faint);text-align:center;line-height:1.45;transition:color 0.14s}
-.logo-cell:hover .logo-cat{color:var(--accent)}
+.logo-cat{font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--text-faint);text-align:center;line-height:1.45;transition:color 0.14s}
+.logo-cell:hover .logo-cat{color:var(--accent-dark)}
 @media(max-width:960px){.logo-strip{grid-template-columns:repeat(3,1fr);gap:20px}}
 @media(max-width:520px){.logo-strip{grid-template-columns:repeat(3,1fr);gap:8px}.logo-mark{height:44px}.logo-cat{font-size:9px}}
 .nav-cta{display:flex;gap:8px;align-items:center;margin-left:22px}
@@ -266,11 +522,17 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 @media(max-width:1100px){.nav-cta .btn{padding:9px 13px;font-size:12px}}
 @media(max-width:860px){.nav-cta{display:none}}
 .do-dont{display:grid;grid-template-columns:3fr 2fr;gap:clamp(28px,5vw,72px);align-items:start}
-.dd-head{color:var(--text)}
-.dd-dot{color:#fff}
-.do-dont .accent-block-items{margin-top:clamp(20px,2.4vw,32px);border-top-color:rgba(0,0,0,0.22)}
-.do-dont .accent-block-item{font-size:clamp(19px,2.1vw,30px);padding:18px 0;border-bottom-color:rgba(0,0,0,0.22)}
-.accent-block-item.is-not{color:rgba(255,255,255,0.72)}
+/* .dd-head and .dd-dot no longer need rules of their own: the swap already
+   makes the head ink and turns .accent the paper value, so the brand dot reads
+   paper-on-orange exactly as it read orange-on-paper everywhere else. */
+.do-dont .accent-block-items{margin-top:clamp(20px,2.4vw,32px)}
+.do-dont .accent-block-item{font-size:clamp(19px,2.1vw,30px);padding:18px 0}
+/* THE SECOND VOICE ON THIS GROUND IS PAPER, NOT A DIMMED INK. rgba(20,20,20,.72)
+   on the orange is 3.37 and fails; paper is 3.49 and is legal here because
+   .do-dont sets 19px at 700, and WCAG large text starts at 18.66px bold. So the
+   "what we don't" column is a genuine second colour rather than a faded first
+   one — which is also the more honest reading of the copy. */
+.accent-block-item.is-not{color:var(--accent)}
 @media(max-width:960px){.do-dont{grid-template-columns:1fr;gap:clamp(32px,6vw,48px)}}
 .two-col--process{gap:clamp(40px,6vw,100px)}
 @media(max-width:960px){
@@ -278,12 +540,12 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
   .two-col--process .process-mini{margin-top:0}
 }
 .dg{width:100%;height:auto;display:block;max-width:720px}
-.dg-lab{font-family:var(--font-mono);font-size:9px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;fill:var(--text-dim)}
-.dg-logo{font-family:var(--font);font-size:14px;font-weight:800;letter-spacing:-0.01em;fill:var(--text)}
-.dg-logo-s{font-family:var(--font);font-size:9px;font-weight:800;fill:var(--text)}
-.dg-h1{font-family:var(--font);font-size:19px;font-weight:800;letter-spacing:-0.02em;fill:var(--text)}
-.dg-h2{font-family:var(--font);font-size:13px;font-weight:700;letter-spacing:-0.01em;fill:var(--text)}
-.dg-h3{font-family:var(--font);font-size:8px;font-weight:700;fill:var(--text)}
+.dg-lab{font-family:var(--font-mono);font-size:9px;font-weight:500;letter-spacing:var(--track-mono);text-transform:uppercase;fill:var(--text-dim)}
+.dg-logo{font-family:var(--font-display);font-size:14px;font-weight:800;letter-spacing:-0.01em;fill:var(--text)}
+.dg-logo-s{font-family:var(--font-display);font-size:9px;font-weight:800;fill:var(--text)}
+.dg-h1{font-family:var(--font-display);font-size:19px;font-weight:800;letter-spacing:-0.02em;fill:var(--text)}
+.dg-h2{font-family:var(--font-display);font-size:13px;font-weight:700;letter-spacing:-0.01em;fill:var(--text)}
+.dg-h3{font-family:var(--font-display);font-size:8px;font-weight:700;fill:var(--text)}
 .dg-below{margin-top:clamp(40px,5vw,60px)}
 .dg-n1,.dg-n2,.dg-n3{animation:dg-cycle 10.5s infinite}
 .dg-n2{animation-delay:-7s}
@@ -297,7 +559,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
   .dg-n1,.dg-n2{animation:none;opacity:0}
   .dg-n3{animation:none;opacity:1}
 }
-.dg-bp{font-family:var(--font);font-size:9px;font-weight:700;letter-spacing:-0.01em;fill:var(--text)}
+.dg-bp{font-family:var(--font-display);font-size:9px;font-weight:700;letter-spacing:-0.01em;fill:var(--text)}
 .dg-aa{font-family:var(--font);font-size:26px;font-weight:800;letter-spacing:-0.03em;fill:var(--text)}
 .dg-sec{font-family:var(--font);font-size:13px;font-weight:800;letter-spacing:-0.01em;fill:var(--text)}
 .dg-fa{font-family:var(--font);font-size:15px;font-weight:800;letter-spacing:-0.02em;fill:var(--text)}
@@ -429,11 +691,16 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
     </div>
   </div>
 
-  <div style="background:var(--accent);padding:var(--pad-section) var(--pad-x);">
-   <div style="max-width:var(--max-w);margin:0 auto;">
+  <!-- This band was written inline and so never saw the token swap: its label
+       was white at .66 (2.70 on the orange) and its line white at .85 (3.24).
+       Both illegal, both invisible in bright light. Carrying .accent-block
+       instead is the same geometry — the class is padding plus a max-width
+       inner — and it inherits the measured values. -->
+  <div class="accent-block">
+   <div class="accent-block-inner">
     <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:16px;">
-      <div><p class="label mb-12" style="color:rgba(255,255,255,0.66);">Our services</p><h2 class="h2" style="color:var(--text);">Choose what fits.</h2></div>
-      <p class="body" style="max-width:320px;color:rgba(255,255,255,0.85);">Fixed scope. Fixed price. Professional results.</p>
+      <div><p class="label mb-12">Our services</p><h2 class="h2">Choose what fits.</h2></div>
+      <p class="body" style="max-width:320px;">Fixed scope. Fixed price. Professional results.</p>
     </div>
     <div class="services-grid">
       <div class="service-card">
@@ -469,12 +736,12 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
     </div>
   </div>
 
-  <div style="background:var(--text);padding:var(--pad-section) var(--pad-x);">
+  <div class="ink-block">
     <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
-      <div><h2 class="h2" style="color:#fff;margin-bottom:10px;">Get to work<span style="color:var(--accent);">.</span></h2><p class="body-lg" style="color:rgba(255,255,255,0.5);">Choose what you need and see the price immediately.</p></div>
+      <div><h2 class="h2" style="margin-bottom:10px;">Get to work<span style="color:var(--accent);">.</span></h2><p class="body-lg">Choose what you need and see the price immediately.</p></div>
       <div style="display:flex;gap:12px;flex-wrap:wrap;">
         <button class="btn btn-accent" onclick="navigate('brand')">→ Order a brand</button>
-        <button class="btn btn-outline" style="border-color:rgba(255,255,255,0.3);color:#fff;" onclick="navigate('website')">→ Order a website</button>
+        <button class="btn btn-outline" onclick="navigate('website')">→ Order a website</button>
       </div>
     </div>
   </div>
@@ -531,12 +798,12 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
     <p class="body-lg muted" style="margin-bottom:14px;">Standard Work is for people who value clear decisions, prefer structure over process, and want professional results without an agency relationship.</p>
     <p class="body-lg muted">If you're looking for workshops or ongoing collaboration, this may not be the right approach.</p>
   </div>
-  <div style="background:var(--text);padding:var(--pad-section) var(--pad-x);">
+  <div class="ink-block">
     <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
-      <div><h2 class="h2" style="color:#fff;margin-bottom:10px;">Ready to begin?</h2><p class="body-lg" style="color:rgba(255,255,255,0.5);">Choose what you need and see the price immediately.</p></div>
+      <div><h2 class="h2" style="margin-bottom:10px;">Ready to begin?</h2><p class="body-lg">Choose what you need and see the price immediately.</p></div>
       <div style="display:flex;gap:12px;flex-wrap:wrap;">
         <button class="btn btn-accent" onclick="navigate('brand')">→ Order a brand</button>
-        <button class="btn btn-outline" style="border-color:rgba(255,255,255,0.3);color:#fff;" onclick="navigate('website')">→ Order a website</button>
+        <button class="btn btn-outline" onclick="navigate('website')">→ Order a website</button>
       </div>
     </div>
   </div>
@@ -636,7 +903,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
       </div>
       <div class="order-summary-wrap">
         <div class="order-summary">
-          <div class="summary-top"><p class="label">Your request</p><p style="font-family:var(--font);font-size:16px;font-weight:700;color:#fff;margin-top:4px;letter-spacing:-0.01em;">Brand Tool Kit</p></div>
+          <div class="summary-top"><p class="label">Your request</p><p style="font-family:var(--font);font-size:16px;font-weight:700;color:var(--on-ink);margin-top:4px;letter-spacing:-0.01em;">Brand Tool Kit</p></div>
           <div class="summary-body" style="padding-top:4px;padding-bottom:4px;">
             <div class="summary-row"><span class="summary-key">Stage</span><span class="summary-val" id="bs-stage">—</span></div>
             <div class="summary-row"><span class="summary-key">Need</span><span class="summary-val" id="bs-need">—</span></div>
@@ -646,7 +913,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           <div id="bs-addons-wrap" style="display:none;" class="summary-addons-section"><p class="summary-key" style="margin-bottom:8px;">Additions</p><div id="bs-addons-list" style="display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--text-dim);"></div></div>
           <div class="summary-price-section">
             <div class="summary-price-row"><span>Base</span><span>12,000 SEK</span></div>
-            <div class="summary-price-row" id="bs-addon-price-row" style="display:none;"><span>Additions</span><span id="bs-addon-price" style="color:var(--accent);">+0 SEK</span></div>
+            <div class="summary-price-row" id="bs-addon-price-row" style="display:none;"><span>Additions</span><span id="bs-addon-price" style="color:var(--accent-dark);">+0 SEK</span></div>
             <div class="summary-total-row"><span>Total</span><span id="bs-total">12,000 SEK</span></div>
             <div style="display:flex;justify-content:flex-end;padding:2px 0 4px;"><span style="font-family:var(--font-mono);font-size:9px;color:var(--text-dim);letter-spacing:0.08em;text-transform:uppercase;">ex. moms · VAT added at checkout</span></div>
           </div>
@@ -664,9 +931,9 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
       </div>
     </div>
   </div>
-  <div style="background:var(--text);padding:var(--pad-section) var(--pad-x);">
+  <div class="ink-block">
     <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
-      <div><h2 class="h2" style="color:#fff;margin-bottom:10px;">Order your brand.</h2><p style="color:rgba(255,255,255,0.5);font-size:16px;">Configure above. You will see the full price before you pay.</p></div>
+      <div><h2 class="h2" style="margin-bottom:10px;">Order your brand.</h2><p style="font-size:16px;">Configure above. You will see the full price before you pay.</p></div>
       <button class="btn btn-accent" onclick="document.getElementById('brand-config').scrollIntoView({behavior:'smooth'})">Get a price →</button>
     </div>
   </div>
@@ -736,7 +1003,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 
           <div id="w-gate" style="display:none;margin-top:32px;">
             <div id="w-gate-brand" class="gate-panel" style="display:none;">
-              <p class="label" style="color:var(--accent);margin-bottom:10px;">Start here</p>
+              <p class="label" style="color:var(--accent-dark);margin-bottom:10px;">Start here</p>
               <h3 class="h3" style="margin-bottom:14px;">You need a brand first.</h3>
               <p class="body muted" style="max-width:620px;margin-bottom:10px;">We don't build websites without one. There is nothing to build from, and a fixed scope has no room to invent it on the way.</p>
               <p class="body muted" style="max-width:620px;margin-bottom:26px;">The brand package gives you all six items. Four of them are what the website runs on.</p>
@@ -746,7 +1013,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
               </div>
             </div>
             <div id="w-gate-prep" class="gate-panel" style="display:none;">
-              <p class="label" style="color:var(--accent);margin-bottom:10px;">Brand prep</p>
+              <p class="label" style="color:var(--accent-dark);margin-bottom:10px;">Brand prep</p>
               <h3 class="h3" style="margin-bottom:14px;"><span id="w-prep-count">0 of 4</span> ready.</h3>
               <p class="body muted" style="max-width:620px;margin-bottom:18px;">Brand prep covers the rest: <span id="w-prep-missing"></span>. Priced by what is missing. Defined scope, no exploration.</p>
               <label class="option-card" style="max-width:320px;display:block;"><input type="checkbox" id="w-prep-check" onchange="this.dataset.touched=1;updateWebSummary()"><div class="option-inner">Brand prep<span class="price-tag" id="w-prep-price">+4,000 SEK</span></div></label>
@@ -806,7 +1073,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
       </div>
       <div class="order-summary-wrap">
         <div class="order-summary">
-          <div class="summary-top"><p class="label">Your request</p><p style="font-family:var(--font);font-size:16px;font-weight:700;color:#fff;margin-top:4px;letter-spacing:-0.01em;">Website</p></div>
+          <div class="summary-top"><p class="label">Your request</p><p style="font-family:var(--font);font-size:16px;font-weight:700;color:var(--on-ink);margin-top:4px;letter-spacing:-0.01em;">Website</p></div>
           <div class="summary-body" style="padding-top:4px;padding-bottom:4px;">
             <div class="summary-row"><span class="summary-key">Start</span><span class="summary-val" id="ws-start">—</span></div>
             <div class="summary-row" id="ws-assets-row" style="display:none;"><span class="summary-key">Assets</span><span class="summary-val" id="ws-assets">—</span></div>
@@ -819,7 +1086,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           <div id="ws-buy">
           <div class="summary-price-section">
             <div class="summary-price-row"><span>Base</span><span>8,000 SEK</span></div>
-            <div class="summary-price-row" id="ws-addon-price-row" style="display:none;"><span>Additions</span><span id="ws-addon-price" style="color:var(--accent);">+0 SEK</span></div>
+            <div class="summary-price-row" id="ws-addon-price-row" style="display:none;"><span>Additions</span><span id="ws-addon-price" style="color:var(--accent-dark);">+0 SEK</span></div>
             <div class="summary-total-row"><span>Total</span><span id="ws-total">8,000 SEK</span></div>
             <div style="display:flex;justify-content:flex-end;padding:2px 0 4px;"><span style="font-family:var(--font-mono);font-size:9px;color:var(--text-dim);letter-spacing:0.08em;text-transform:uppercase;">ex. moms · VAT added at checkout</span></div>
           </div>
@@ -852,9 +1119,9 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
       </div>
     </div>
   </div>
-  <div style="background:var(--text);padding:var(--pad-section) var(--pad-x);">
+  <div class="ink-block">
     <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
-      <div><h2 class="h2" id="w-foot-h" style="color:#fff;margin-bottom:10px;">Order your website.</h2><p id="w-foot-p" style="color:rgba(255,255,255,0.5);font-size:16px;">Configure above. You will see the full price before you pay.</p></div>
+      <div><h2 class="h2" id="w-foot-h" style="margin-bottom:10px;">Order your website.</h2><p id="w-foot-p" style="font-size:16px;">Configure above. You will see the full price before you pay.</p></div>
       <button class="btn btn-accent" id="w-foot-btn" onclick="document.getElementById('website-config').scrollIntoView({behavior:'smooth'})">Get a price →</button>
     </div>
   </div>
@@ -915,12 +1182,12 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
       </div>
     </div>
 
-    <div style="background:var(--text);padding:var(--pad-section) var(--pad-x);">
+    <div class="ink-block">
       <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
-        <div><h2 class="h2" style="color:#fff;margin-bottom:10px;">Get to work<span style="color:var(--accent);">.</span></h2><p class="body-lg" style="color:rgba(255,255,255,0.5);">Choose what you need and see the price immediately.</p></div>
+        <div><h2 class="h2" style="margin-bottom:10px;">Get to work<span style="color:var(--accent);">.</span></h2><p class="body-lg">Choose what you need and see the price immediately.</p></div>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
           <button class="btn btn-accent" onclick="navigate('brand')">&rarr; Order a brand</button>
-          <button class="btn btn-outline" style="border-color:rgba(255,255,255,0.3);color:#fff;" onclick="navigate('website')">&rarr; Order a website</button>
+          <button class="btn btn-outline" onclick="navigate('website')">&rarr; Order a website</button>
         </div>
       </div>
     </div>
@@ -946,11 +1213,11 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         <a onclick="showCase('90110')">90110 &rarr;</a>
       </div>
     </div>
-      <div style="background:var(--text);padding:var(--pad-section) var(--pad-x);margin-top:clamp(56px,7vw,88px);">
+      <div class="ink-block" style="margin-top:clamp(56px,7vw,88px);">
         <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
           <div>
-            <h2 class="h2" style="color:#fff;margin-bottom:10px;">This is the Brand package.</h2>
-            <p class="body-lg" style="color:rgba(255,255,255,0.5);">12,000 SEK ex. moms. Same six items, fixed scope.</p>
+            <h2 class="h2" style="margin-bottom:10px;">This is the Brand package.</h2>
+            <p class="body-lg">12,000 SEK ex. moms. Same six items, fixed scope.</p>
           </div>
           <div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-accent" onclick="navigate('brand')">&rarr; Order a brand</button></div>
         </div>
@@ -977,11 +1244,11 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         <a onclick="showCase('eddy')">Eddy &rarr;</a>
       </div>
     </div>
-      <div style="background:var(--text);padding:var(--pad-section) var(--pad-x);margin-top:clamp(56px,7vw,88px);">
+      <div class="ink-block" style="margin-top:clamp(56px,7vw,88px);">
         <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
           <div>
-            <h2 class="h2" style="color:#fff;margin-bottom:10px;">This is the Brand package.</h2>
-            <p class="body-lg" style="color:rgba(255,255,255,0.5);">12,000 SEK ex. moms. Same six items, fixed scope.</p>
+            <h2 class="h2" style="margin-bottom:10px;">This is the Brand package.</h2>
+            <p class="body-lg">12,000 SEK ex. moms. Same six items, fixed scope.</p>
           </div>
           <div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-accent" onclick="navigate('brand')">&rarr; Order a brand</button></div>
         </div>
@@ -1008,11 +1275,11 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         <a onclick="showCase('harry')">Harry da BBQ &rarr;</a>
       </div>
     </div>
-      <div style="background:var(--text);padding:var(--pad-section) var(--pad-x);margin-top:clamp(56px,7vw,88px);">
+      <div class="ink-block" style="margin-top:clamp(56px,7vw,88px);">
         <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
           <div>
-            <h2 class="h2" style="color:#fff;margin-bottom:10px;">This is the Brand package.</h2>
-            <p class="body-lg" style="color:rgba(255,255,255,0.5);">12,000 SEK ex. moms. Same six items, fixed scope.</p>
+            <h2 class="h2" style="margin-bottom:10px;">This is the Brand package.</h2>
+            <p class="body-lg">12,000 SEK ex. moms. Same six items, fixed scope.</p>
           </div>
           <div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-accent" onclick="navigate('brand')">&rarr; Order a brand</button></div>
         </div>
@@ -1143,7 +1410,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         </form>
       </div>
       <div class="form-success" id="contact-success">
-        <p class="label mb-16" style="color:var(--accent);">Received</p>
+        <p class="label mb-16" style="color:var(--accent-dark);">Received</p>
         <p class="h2" style="margin-bottom:14px;">Thanks.</p>
         <p class="body-lg muted" style="margin-bottom:8px;">Your Standard Work request has been received.</p>
         <p class="body muted" style="margin-bottom:32px;">We'll review the scope and come back with the next step.</p>
@@ -1160,7 +1427,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 <div id="page-thank-you" class="page">
   <div class="thankyou-wrap">
     <div style="max-width:640px;">
-      <p class="label mb-24" style="color:var(--accent);">Confirmed</p>
+      <p class="label mb-24" style="color:var(--accent-dark);">Confirmed</p>
       <h1 class="h1" style="margin-bottom:16px;">Thanks. Request received<span class="accent">.</span></h1>
       <p class="body-lg muted" style="margin-bottom:40px;">We'll review the scope and come back with the next step.</p>
       <div>
@@ -1201,9 +1468,18 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         <a class="footer-nav-link" onclick="navigate('contact')">Contact</a>
       </div>
     </div>
+    <!-- THE NETWORK LINE. Filippos's sentence is untouched and still governs
+         only the Guild, because "a part of the guild of" is not true of
+         Seriously, Wow. — that is a sibling studio, not a guild, and letting one
+         sentence introduce both would have made the footer say something false.
+         "Sister studio" is the only new copy on the page: two words, in the mono
+         label voice both siblings use for exactly this. Delete the second .fg-item
+         and the line reads as it always did. -->
     <div class="footer-guild">
-      <span class="footer-guild-text">Standard Work is a part of the guild of</span>
-      <a href="https://www.sillywizardsguild.com" target="_blank" rel="noopener" class="footer-guild-logo">Silly Wizards</a>
+      <span class="fg-item"><span class="footer-guild-text">Standard Work is a part of the guild of</span>
+        <a class="footer-group-link" href="https://www.sillywizardsguild.com" target="_blank" rel="noopener">Silly Wizards Guild</a></span>
+      <span class="fg-item"><span class="fg-label">Sister studio</span>
+        <a class="footer-group-link" href="https://seriouslywow.com" target="_blank" rel="noopener">Seriously, Wow.</a></span>
     </div>
   </div>
 </footer>
@@ -1283,7 +1559,7 @@ function updateBrandSummary(){
   addons.forEach(a=>{at+=parseInt(a.dataset.price||0);an.push(a.value)});
   if(rushDue('b-deadline','b-deadline-date')){at+=RUSH;an.push('Rush delivery')}
   const aw=document.getElementById('bs-addons-wrap'),al=document.getElementById('bs-addons-list');
-  if(an.length>0){aw.style.display='block';al.innerHTML=an.map(n=>`<span style="display:flex;align-items:center;gap:6px;"><span style="color:var(--accent);font-weight:600;">+</span>${n}</span>`).join('')}else{aw.style.display='none'}
+  if(an.length>0){aw.style.display='block';al.innerHTML=an.map(n=>`<span style="display:flex;align-items:center;gap:6px;"><span style="color:var(--accent-dark);font-weight:600;">+</span>${n}</span>`).join('')}else{aw.style.display='none'}
   const pr=document.getElementById('bs-addon-price-row');
   if(at>0){pr.style.display='flex';document.getElementById('bs-addon-price').textContent='+'+at.toLocaleString('sv-SE')+' SEK'}else{pr.style.display='none'}
   const bt=(BRAND_BASE+at).toLocaleString('sv-SE')+' SEK';
@@ -1340,7 +1616,7 @@ function updateWebSummary(){
   if(prep.checked){at+=pd;an.unshift('Brand prep')}
   const rp=sumPriced(['w-build','w-copy']);at+=rp.total;rp.list.forEach(x=>an.push(x[0]));
   const aw=document.getElementById('ws-addons-wrap'),al=document.getElementById('ws-addons-list');
-  if(an.length>0){aw.style.display='block';al.innerHTML=an.map(n=>`<span style="display:flex;align-items:center;gap:6px;"><span style="color:var(--accent);font-weight:600;">+</span>${n}</span>`).join('')}else{aw.style.display='none'}
+  if(an.length>0){aw.style.display='block';al.innerHTML=an.map(n=>`<span style="display:flex;align-items:center;gap:6px;"><span style="color:var(--accent-dark);font-weight:600;">+</span>${n}</span>`).join('')}else{aw.style.display='none'}
   const pr=document.getElementById('ws-addon-price-row');
   if(at>0){pr.style.display='flex';document.getElementById('ws-addon-price').textContent='+'+at.toLocaleString('sv-SE')+' SEK'}else{pr.style.display='none'}
   const wt=(WEB_BASE+at).toLocaleString('sv-SE')+' SEK';
