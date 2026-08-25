@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Standard Work™</title>
+<title>Standard Work™ — Work view + brand gate prototype</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
@@ -178,6 +178,131 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
   .footer-bottom{flex-direction:column;gap:12px;text-align:center}
   .footer-guild{justify-content:flex-start;flex-wrap:wrap}
 }
+/* ---- WORK VIEW ---- added for case studies. Tokens only, nothing hardcoded. ---- */
+.case-index{margin-top:48px}
+.case-row{display:grid;grid-template-columns:34px minmax(200px,300px) 1fr auto 22px;gap:clamp(14px,2.2vw,36px);align-items:center;padding:18px 0;border-bottom:1px solid var(--border-light);cursor:pointer;text-decoration:none;color:inherit;transition:padding-left 0.14s,border-color 0.14s}
+.case-row:first-child{border-top:1px solid var(--border-light)}
+.case-row:hover{padding-left:10px;border-color:var(--border)}
+.case-num{font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:0.1em;color:var(--text-faint);transition:color 0.14s}
+.case-row:hover .case-num{color:var(--accent)}
+.case-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;border-radius:var(--radius-sm);background:var(--surface-alt)}
+.case-row-text{display:block}
+.case-row-name{display:block;font-family:var(--font);font-size:clamp(19px,2.2vw,28px);font-weight:800;letter-spacing:-0.02em;line-height:1.05}
+.case-row-line{display:block;font-size:15px;color:var(--text-dim);line-height:1.5;margin-top:7px;max-width:60ch}
+.case-row-meta{font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);text-align:right;white-space:nowrap}
+.case-row-arrow{font-family:var(--font);font-size:18px;font-weight:700;color:var(--text-faint);text-align:right;transition:color 0.14s,transform 0.14s}
+.case-row:hover .case-row-arrow{color:var(--accent);transform:translateX(3px)}
+.case-detail{display:none}
+.case-detail.active{display:block}
+.case-back{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;text-decoration:none;transition:color 0.12s}
+.case-back:hover{color:var(--accent)}
+.case-shot{width:100%;display:block;border-radius:var(--radius);border:1px solid var(--border-light)}
+.case-gallery{display:flex;flex-direction:column;gap:clamp(14px,1.8vw,26px)}
+.case-pair{display:flex;justify-content:space-between;align-items:center;gap:20px;padding-top:28px;margin-top:clamp(48px,6vw,72px);border-top:1.5px solid var(--border-light)}
+.case-pair a{font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;text-decoration:none;transition:color 0.12s}
+.case-pair a:hover{color:var(--accent)}
+.included-item.is-extra .included-title{color:var(--accent)}
+.included-tag{font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);display:block;margin-top:6px}
+@media(max-width:960px){
+  .case-back{min-height:44px;align-items:center}
+  .case-pair a{min-height:44px;display:inline-flex;align-items:center}
+  .case-pair{padding-top:16px}
+  .case-row{grid-template-columns:28px 180px 1fr;gap:18px}
+  .case-row-meta{grid-column:2 / -1;text-align:left;margin-top:2px}
+  .case-row-arrow{display:none}
+}
+@media(max-width:640px){
+  .case-row{grid-template-columns:1fr;gap:12px;padding:24px 0}
+  .case-row:hover{padding-left:0}
+  .case-num{color:var(--accent)}
+  .case-row-meta{grid-column:auto;text-align:left}
+}
+
+/* ---- CASE SLIDES ---- standardised deliverable, six per case ---- */
+.case-slides{display:flex;flex-direction:column;gap:clamp(40px,5vw,72px)}
+.case-slide{display:block}
+.slide-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border-light)}
+.slide-num{font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:0.1em;color:var(--accent)}
+.slide-title{font-family:var(--font);font-size:clamp(17px,2vw,24px);font-weight:700;letter-spacing:-0.01em}
+.slide-beyond{font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-left:auto}
+.slide-cap{font-size:15px;color:var(--text-dim);line-height:1.6;margin-top:14px;max-width:62ch}
+.slide-todo{width:100%;aspect-ratio:16/9;border:1.5px dashed var(--border-light);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;background:var(--surface)}
+.slide-todo span{font-family:var(--font-mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-faint)}
+@media(max-width:640px){.slide-beyond{margin-left:0;flex-basis:100%}}
+.opt-note{display:block;font-family:var(--font-mono);font-size:11px;color:var(--text-faint);margin-top:6px;font-weight:500;line-height:1.4}
+.option-card input:checked + .option-inner .opt-note{color:var(--accent)}
+.gate-panel{background:var(--surface);border:1.5px solid var(--accent);border-radius:var(--radius);padding:clamp(24px,3vw,36px)}
+.gate-panel .option-inner{padding-top:18px;min-height:0}
+.gate-panel .option-inner::before{content:none}
+.opt-save{display:block;font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:0.06em;color:var(--text-faint);margin-top:5px}
+.option-card input:checked + .option-inner .opt-save{color:var(--accent)}
+.opt-good{color:var(--accent)!important}
+.mtotal{display:none}
+@media(max-width:960px){
+  .mtotal{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:90;background:var(--text);
+    align-items:center;justify-content:space-between;gap:14px;
+    padding:12px var(--pad-x);padding-bottom:calc(12px + env(safe-area-inset-bottom,0px));
+    border-top:1.5px solid var(--border);transform:translateY(130%);transition:transform 0.22s ease}
+  .mtotal.show{transform:translateY(0)}
+  .mtotal-key{font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.55);display:block}
+  .mtotal-val{font-family:var(--font);font-size:20px;font-weight:800;letter-spacing:-0.02em;color:#fff;display:block;margin-top:2px;white-space:nowrap}
+  .mtotal .btn{padding:11px 20px;font-size:14px;min-height:44px}
+}
+.logo-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,1.6vw,26px);margin-top:clamp(36px,4.5vw,56px);padding-top:clamp(30px,4vw,44px);border-top:1px solid var(--border-light)}
+.logo-cell{display:flex;flex-direction:column;align-items:center;gap:14px;cursor:pointer;text-decoration:none;padding:14px 6px;border-radius:var(--radius-sm);transition:background 0.14s;min-height:44px}
+.logo-cell:hover{background:var(--surface-alt)}
+.logo-mark{display:flex;align-items:center;justify-content:center;height:64px;width:100%}
+.logo-mark img{max-width:100%;object-fit:contain;opacity:0.78;transition:opacity 0.14s}
+.logo-cell:hover .logo-mark img{opacity:1}
+.logo-cat{font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:0.09em;text-transform:uppercase;color:var(--text-faint);text-align:center;line-height:1.45;transition:color 0.14s}
+.logo-cell:hover .logo-cat{color:var(--accent)}
+@media(max-width:960px){.logo-strip{grid-template-columns:repeat(3,1fr);gap:20px}}
+@media(max-width:520px){.logo-strip{grid-template-columns:repeat(3,1fr);gap:8px}.logo-mark{height:44px}.logo-cat{font-size:9px}}
+.nav-cta{display:flex;gap:8px;align-items:center;margin-left:22px}
+.nav-cta .btn{padding:9px 17px;font-size:13px;font-weight:700;white-space:nowrap}
+.nav-right{display:flex;align-items:center}
+.nav-mobile-actions{display:flex;flex-direction:column;gap:10px;margin-top:14px;padding-top:30px;border-top:1px solid var(--border-light)}
+.nav-mobile-actions .btn{width:100%;justify-content:flex-start;font-size:16px;padding:15px 24px}
+@media(max-width:1100px){.nav-cta .btn{padding:9px 13px;font-size:12px}}
+@media(max-width:860px){.nav-cta{display:none}}
+.do-dont{display:grid;grid-template-columns:3fr 2fr;gap:clamp(28px,5vw,72px);align-items:start}
+.dd-head{color:var(--text)}
+.dd-dot{color:#fff}
+.do-dont .accent-block-items{margin-top:clamp(20px,2.4vw,32px);border-top-color:rgba(0,0,0,0.22)}
+.do-dont .accent-block-item{font-size:clamp(19px,2.1vw,30px);padding:18px 0;border-bottom-color:rgba(0,0,0,0.22)}
+.accent-block-item.is-not{color:rgba(255,255,255,0.72)}
+@media(max-width:960px){.do-dont{grid-template-columns:1fr;gap:clamp(32px,6vw,48px)}}
+.two-col--process{gap:clamp(40px,6vw,100px)}
+@media(max-width:960px){
+  .two-col--process{gap:30px}
+  .two-col--process .process-mini{margin-top:0}
+}
+.dg{width:100%;height:auto;display:block;max-width:720px}
+.dg-lab{font-family:var(--font-mono);font-size:9px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;fill:var(--text-dim)}
+.dg-logo{font-family:var(--font);font-size:14px;font-weight:800;letter-spacing:-0.01em;fill:var(--text)}
+.dg-logo-s{font-family:var(--font);font-size:9px;font-weight:800;fill:var(--text)}
+.dg-h1{font-family:var(--font);font-size:19px;font-weight:800;letter-spacing:-0.02em;fill:var(--text)}
+.dg-h2{font-family:var(--font);font-size:13px;font-weight:700;letter-spacing:-0.01em;fill:var(--text)}
+.dg-h3{font-family:var(--font);font-size:8px;font-weight:700;fill:var(--text)}
+.dg-below{margin-top:clamp(40px,5vw,60px)}
+.dg-n1,.dg-n2,.dg-n3{animation:dg-cycle 10.5s infinite}
+.dg-n2{animation-delay:-7s}
+.dg-n1{animation-delay:-3.5s}
+@keyframes dg-cycle{
+  0%,28%{opacity:1}
+  33%,95%{opacity:0}
+  100%{opacity:1}
+}
+@media(prefers-reduced-motion:reduce){
+  .dg-n1,.dg-n2{animation:none;opacity:0}
+  .dg-n3{animation:none;opacity:1}
+}
+.dg-bp{font-family:var(--font);font-size:9px;font-weight:700;letter-spacing:-0.01em;fill:var(--text)}
+.dg-aa{font-family:var(--font);font-size:26px;font-weight:800;letter-spacing:-0.03em;fill:var(--text)}
+.dg-sec{font-family:var(--font);font-size:13px;font-weight:800;letter-spacing:-0.01em;fill:var(--text)}
+.dg-fa{font-family:var(--font);font-size:15px;font-weight:800;letter-spacing:-0.02em;fill:var(--text)}
+.dg-fname{font-family:var(--font);font-size:11px;font-weight:700;letter-spacing:-0.01em;fill:var(--text)}
+.dg-fsub{font-family:var(--font-mono);font-size:9px;letter-spacing:0.06em;fill:var(--text-dim)}
 </style>
 </head>
 <body>
@@ -185,12 +310,17 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 <nav>
   <div class="nav-inner">
     <a class="nav-logo" onclick="navigate('home')">SW<span class="dot">.</span></a>
-    <div class="nav-links">
-      <a class="nav-link" onclick="navigate('how-it-works')">How it works</a>
-      <a class="nav-link" onclick="navigate('brand')">Brand</a>
-      <a class="nav-link" onclick="navigate('website')">Website</a>
-      <a class="nav-link" onclick="navigate('pricing')">Pricing</a>
-      <a class="nav-link" onclick="navigate('contact')">Contact</a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a class="nav-link" onclick="navigate('how-it-works')">How it works</a>
+        <a class="nav-link" onclick="navigate('work')">See the work</a>
+        <a class="nav-link" onclick="navigate('pricing')">Fixed pricing</a>
+        <a class="nav-link" onclick="navigate('contact')">Contact</a>
+      </div>
+      <div class="nav-cta">
+        <button class="btn btn-accent" onclick="navigate('brand')">&rarr; Order a brand</button>
+        <button class="btn btn-outline" onclick="navigate('website')">&rarr; Order a website</button>
+      </div>
     </div>
     <div class="nav-hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
   </div>
@@ -198,10 +328,13 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 <div class="nav-mobile" id="mobileMenu">
   <a class="nav-link" onclick="navigate('home');toggleMenu()">Home</a>
   <a class="nav-link" onclick="navigate('how-it-works');toggleMenu()">How it works</a>
-  <a class="nav-link" onclick="navigate('brand');toggleMenu()">Brand</a>
-  <a class="nav-link" onclick="navigate('website');toggleMenu()">Website</a>
-  <a class="nav-link" onclick="navigate('pricing');toggleMenu()">Pricing</a>
+  <a class="nav-link" onclick="navigate('work');toggleMenu()">See the work</a>
+  <a class="nav-link" onclick="navigate('pricing');toggleMenu()">Fixed pricing</a>
   <a class="nav-link" onclick="navigate('contact');toggleMenu()">Contact</a>
+  <div class="nav-mobile-actions">
+    <button class="btn btn-accent" onclick="navigate('brand');toggleMenu()">&rarr; Order a brand</button>
+    <button class="btn btn-outline" onclick="navigate('website');toggleMenu()">&rarr; Order a website</button>
+  </div>
 </div>
 
 <!-- HOME -->
@@ -212,18 +345,13 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         <div>
           <p class="label mb-16">Productized design service</p>
           <div class="display" style="margin-bottom:clamp(28px,4vw,52px);">Standard<br>Work<span class="dot">™</span></div>
-          <p class="h3" style="max-width:580px;margin-bottom:clamp(20px,3vw,32px);font-weight:500;color:var(--text-dim);">Build a brand and website for your business without agency processes and extra costs.</p>
-          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:clamp(28px,4vw,44px);">
-            <p class="body-lg" style="font-weight:600;">No workshops.</p>
-            <p class="body-lg" style="font-weight:600;">No long briefs.</p>
-            <p class="body-lg" style="font-weight:600;">No inflated fees.</p>
-          </div>
-          <p class="body muted">Just a small number of good decisions executed properly.</p>
+          <p class="h3" style="max-width:580px;margin-bottom:clamp(20px,3vw,32px);font-weight:500;color:var(--text-dim);">Order a brand and website for your business without agency processes and extra costs.</p>
+
         </div>
         <div class="hero-cta-box">
           <p class="hero-cta-label">Know what you need?</p>
-          <button class="btn btn-accent" onclick="navigate('brand')">→ Build a brand</button>
-          <button class="btn btn-outline" onclick="navigate('website')">→ Make a website</button>
+          <button class="btn btn-accent" onclick="navigate('brand')">→ Order a brand</button>
+          <button class="btn btn-outline" onclick="navigate('website')">→ Order a website</button>
         </div>
       </div>
     </div>
@@ -232,25 +360,58 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
   <div class="accent-block">
     <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(-45deg,transparent,transparent 6px,rgba(0,0,0,0.06) 6px,rgba(0,0,0,0.06) 7px);pointer-events:none;"></div>
     <div class="accent-block-inner">
-      <p class="label" style="margin-bottom:16px;">What we do</p>
-      <h2 style="font-family:var(--font);font-size:clamp(20px,2.5vw,32px);font-weight:700;color:#fff;letter-spacing:-0.01em;">STANDARD WORK<span style="color:rgba(255,255,255,0.5);">™</span> helps you:</h2>
-      <div class="accent-block-items">
-        <div class="accent-block-item">Build a brand for your business.</div>
-        <div class="accent-block-item">Create a simple, well-designed website that presents it clearly.</div>
-        <div class="accent-block-item">Understand exactly what you're paying for before you begin.</div>
+      <div class="do-dont">
+        <div>
+          <h2 class="h2 dd-head">What we do<span class="dd-dot">.</span></h2>
+          <div class="accent-block-items">
+            <div class="accent-block-item">Build a brand for your business.</div>
+            <div class="accent-block-item">Create a simple, well-designed website for it.</div>
+            <div class="accent-block-item">Fix the price before we start.</div>
+          </div>
+        </div>
+        <div>
+          <h2 class="h2 dd-head">What we don't<span class="dd-dot">.</span></h2>
+          <div class="accent-block-items">
+            <div class="accent-block-item is-not">Endless meetings.</div>
+            <div class="accent-block-item is-not">Complicated workshops.</div>
+            <div class="accent-block-item is-not">Hidden costs.</div>
+          </div>
+        </div>
       </div>
-      <p class="accent-note">We don't sell exploration. We sell clearly defined outcomes. Everything is fixed in scope and priced upfront.</p>
+      <p class="accent-note">Just a small number of good decisions, executed properly.</p>
     </div>
   </div>
 
-  <div class="surface-section" style="border-bottom:1.5px solid var(--border-light);">
+
+<div style="background:var(--surface);padding:var(--pad-section) var(--pad-x);">
+  <div style="max-width:var(--max-w);margin:0 auto;">
+    <p class="label mb-12">Work we've done</p><h2 class="h2">Work that works<span class="accent">.</span></h2>
+    <div class="logo-strip">
+          <a class="logo-cell" onclick="goCase('harry')" title="Harry da BBQ">
+            <span class="logo-mark"><img src="work/harry.webp" alt="Harry da BBQ" style="max-height:44px"></span>
+            <span class="logo-cat">Smoked meat</span>
+          </a>
+          <a class="logo-cell" onclick="goCase('90110')" title="90110">
+            <span class="logo-mark"><img src="work/90110.webp" alt="90110" style="max-height:62px"></span>
+            <span class="logo-cat">Emergency callout</span>
+          </a>
+          <a class="logo-cell" onclick="goCase('eddy')" title="Eddy">
+            <span class="logo-mark"><img src="work/eddy.webp" alt="Eddy" style="max-height:46px"></span>
+            <span class="logo-cat">Process software</span>
+          </a>
+    </div>
+    <div style="margin-top:clamp(32px,4vw,48px);">
+      <button class="btn btn-outline" onclick="navigate('work')">See the work &rarr;</button>
+    </div>
+  </div>
+</div>
+  <div style="padding:var(--pad-section) var(--pad-x);border-bottom:1.5px solid var(--border-light);">
     <div style="max-width:var(--max-w);margin:0 auto;">
-      <div class="two-col" style="gap:clamp(40px,6vw,100px);">
+      <div class="two-col two-col--process">
         <div>
           <p class="label mb-16">The process</p>
-          <h2 class="h2" style="margin-bottom:20px;">Calm and predictable.</h2>
-          <p class="body-lg muted" style="margin-bottom:32px;">You make a few practical choices. We guide them and do the work. No meetings by default. No open-ended processes.</p>
-          <button class="btn btn-outline" onclick="navigate('how-it-works')">See the full process →</button>
+          <h2 class="h2" style="margin-bottom:20px;">How Standard Work works.</h2>
+          <p class="body-lg muted">You make a few practical choices. We guide them and do the work. No meetings by default. No open-ended processes.</p>
         </div>
         <div>
           <div class="process-mini">
@@ -260,42 +421,47 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
             <div class="process-mini-item"><span class="process-mini-num">04</span><span class="body-lg" style="font-weight:600;">We do the work</span></div>
             <div class="process-mini-item"><span class="process-mini-num">05</span><span class="body-lg" style="font-weight:600;">Review, refine, and deliver</span></div>
           </div>
+          <div style="margin-top:clamp(26px,3.2vw,40px);">
+            <button class="btn btn-outline" onclick="navigate('how-it-works')">See the full process →</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div style="padding:var(--pad-section) var(--pad-x);max-width:var(--max-w);margin:0 auto;">
+  <div style="background:var(--accent);padding:var(--pad-section) var(--pad-x);">
+   <div style="max-width:var(--max-w);margin:0 auto;">
     <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:16px;">
-      <div><p class="label mb-12">Our services</p><h2 class="h2">Choose what fits.</h2></div>
-      <p class="body muted" style="max-width:320px;">Fixed scope. Fixed price. Professional results.</p>
+      <div><p class="label mb-12" style="color:rgba(255,255,255,0.66);">Our services</p><h2 class="h2" style="color:var(--text);">Choose what fits.</h2></div>
+      <p class="body" style="max-width:320px;color:rgba(255,255,255,0.85);">Fixed scope. Fixed price. Professional results.</p>
     </div>
     <div class="services-grid">
       <div class="service-card">
-        <div><div class="service-card-badge">Brand</div><h3 class="service-card-title">Brand for<br>Your Business</h3></div>
-        <p class="service-card-desc">Create the essential elements your business needs to look coherent and credible. Logo, type, colour, voice — all of it, without the process overhead.</p>
+        <div><div class="service-card-badge">Brand</div><h3 class="service-card-title">We build the brand tool kit your business needs.</h3></div>
+        <p class="service-card-desc">Logo, type, colour, voice. All of it, without the process overhead.</p>
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;padding-top:16px;border-top:1px solid var(--border-light);">
           <span class="service-card-price">From 12,000 SEK <span style="font-family:var(--font-mono);font-size:11px;font-weight:400;color:var(--text-dim);">ex. moms</span></span>
-          <button class="btn btn-accent" onclick="navigate('brand')">→ Build a brand</button>
+          <button class="btn btn-accent" onclick="navigate('brand')">→ Order a brand</button>
         </div>
       </div>
       <div class="service-card">
-        <div><div class="service-card-badge">Website</div><h3 class="service-card-title">Website for<br>Your Business</h3></div>
-        <p class="service-card-desc">A simple, scrollable website that explains what you do and how to contact you. Designed. Built. Published.</p>
+        <div><div class="service-card-badge">Website</div><h3 class="service-card-title">We create websites that represent your business.</h3></div>
+        <p class="service-card-desc">One page that explains what you do and how to reach you. Designed, built and published.</p>
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;padding-top:16px;border-top:1px solid var(--border-light);">
           <span class="service-card-price">From 8,000 SEK <span style="font-family:var(--font-mono);font-size:11px;font-weight:400;color:var(--text-dim);">ex. moms</span></span>
-          <button class="btn btn-outline" onclick="navigate('website')">→ Make a website</button>
+          <button class="btn btn-outline" onclick="navigate('website')">→ Order a website</button>
         </div>
       </div>
     </div>
+   </div>
   </div>
 
   <div class="alt-section">
     <div style="max-width:var(--max-w);margin:0 auto;">
       <div class="two-col">
-        <div><p class="label mb-16">Behind the work</p><h2 class="h2">Not automated<span class="accent">.</span></h2></div>
+        <div><p class="label mb-16">Behind the work</p><h2 class="h2">Humans in the loop<span class="accent">.</span></h2></div>
         <div>
-          <p class="body-lg muted" style="margin-bottom:20px;">Behind the system is a small group of experienced art directors, designers, writers, and developers who review and refine the work before it's delivered.</p>
+          <p class="body-lg muted" style="margin-bottom:20px;">Behind the Standard Work system is a small group of experienced art directors, designers, writers, and developers who review and refine the work before it's delivered.</p>
           <p class="body-lg muted" style="margin-bottom:20px;">The tools are modern. The structure is fixed. Quality is ensured by people who have done this work for years.</p>
           <p class="body-lg muted">This allows us to deliver properly finished work without the overhead, meetings, or cost structure of a traditional agency.</p>
         </div>
@@ -307,8 +473,8 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
     <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
       <div><h2 class="h2" style="color:#fff;margin-bottom:10px;">Get to work<span style="color:var(--accent);">.</span></h2><p class="body-lg" style="color:rgba(255,255,255,0.5);">Choose what you need and see the price immediately.</p></div>
       <div style="display:flex;gap:12px;flex-wrap:wrap;">
-        <button class="btn btn-accent" onclick="navigate('brand')">→ Build a brand</button>
-        <button class="btn btn-outline" style="border-color:rgba(255,255,255,0.3);color:#fff;" onclick="navigate('website')">→ Make a website</button>
+        <button class="btn btn-accent" onclick="navigate('brand')">→ Order a brand</button>
+        <button class="btn btn-outline" style="border-color:rgba(255,255,255,0.3);color:#fff;" onclick="navigate('website')">→ Order a website</button>
       </div>
     </div>
   </div>
@@ -323,13 +489,13 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         <div>
           <p class="label mb-16">Process</p>
           <h1 class="h1" style="margin-bottom:clamp(20px,3vw,36px);">How it works<span class="accent">.</span></h1>
-          <p class="body-lg muted" style="max-width:540px;margin-bottom:14px;">STANDARD WORK is designed to be calm and predictable. No workshops. No discovery phases. No open-ended processes.</p>
+          <p class="body-lg muted" style="max-width:540px;margin-bottom:14px;">Standard Work is designed to be calm and predictable. No workshops. No discovery phases. No open-ended processes.</p>
           <p class="body-lg muted" style="max-width:540px;">Everything is defined before work begins.</p>
         </div>
         <div class="hero-cta-box">
           <p class="hero-cta-label">Ready to start?</p>
-          <button class="btn btn-accent" onclick="navigate('brand')">→ Build a brand</button>
-          <button class="btn btn-outline" onclick="navigate('website')">→ Make a website</button>
+          <button class="btn btn-accent" onclick="navigate('brand')">→ Order a brand</button>
+          <button class="btn btn-outline" onclick="navigate('website')">→ Order a website</button>
         </div>
       </div>
     </div>
@@ -337,7 +503,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
   <div style="padding:var(--pad-section) var(--pad-x);max-width:var(--max-w);margin:0 auto;">
     <p class="label mb-40">Five steps</p>
     <div class="step-header"><span class="step-num">01</span><span class="step-title">Choose what you need</span></div>
-    <div class="step-body"><p class="body-lg muted" style="max-width:620px;">Select the service that fits your situation: a brand, a website, or both. You'll see the full price and scope immediately.</p></div>
+    <div class="step-body"><p class="body-lg muted" style="max-width:620px;">Start with the brand, or go straight to a website if you already have one. You'll see the full price and scope immediately.</p></div>
     <div class="step-header"><span class="step-num">02</span><span class="step-title">Answer a few practical questions</span></div>
     <div class="step-body"><p class="body-lg muted" style="max-width:620px;">You'll be guided through a short configuration flow. Defaults are provided. You only need to adjust what matters. This usually takes a few minutes.</p></div>
     <div class="step-header"><span class="step-num">03</span><span class="step-title">Review and confirm</span></div>
@@ -362,15 +528,15 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
   <div style="padding:var(--pad-section) var(--pad-x);max-width:720px;margin:0 auto;">
     <p class="label mb-16">A note on fit</p>
     <h2 class="h2" style="margin-bottom:20px;">This is for people who value clarity.</h2>
-    <p class="body-lg muted" style="margin-bottom:14px;">STANDARD WORK is for people who value clear decisions, prefer structure over process, and want professional results without an agency relationship.</p>
+    <p class="body-lg muted" style="margin-bottom:14px;">Standard Work is for people who value clear decisions, prefer structure over process, and want professional results without an agency relationship.</p>
     <p class="body-lg muted">If you're looking for workshops or ongoing collaboration, this may not be the right approach.</p>
   </div>
   <div style="background:var(--text);padding:var(--pad-section) var(--pad-x);">
     <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
       <div><h2 class="h2" style="color:#fff;margin-bottom:10px;">Ready to begin?</h2><p class="body-lg" style="color:rgba(255,255,255,0.5);">Choose what you need and see the price immediately.</p></div>
       <div style="display:flex;gap:12px;flex-wrap:wrap;">
-        <button class="btn btn-accent" onclick="navigate('brand')">→ Build a brand</button>
-        <button class="btn btn-outline" style="border-color:rgba(255,255,255,0.3);color:#fff;" onclick="navigate('website')">→ Make a website</button>
+        <button class="btn btn-accent" onclick="navigate('brand')">→ Order a brand</button>
+        <button class="btn btn-outline" style="border-color:rgba(255,255,255,0.3);color:#fff;" onclick="navigate('website')">→ Order a website</button>
       </div>
     </div>
   </div>
@@ -383,38 +549,22 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
       <div class="hero-split">
         <div>
           <p class="label mb-16">Brand</p>
-          <h1 class="h1" style="margin-bottom:clamp(16px,2vw,24px);">Brand for Your Business<span class="accent">.</span></h1>
-          <p class="h3" style="font-weight:500;color:var(--text-dim);margin-bottom:clamp(20px,3vw,32px);max-width:580px;">Build the essential elements your business needs to look coherent and credible.</p>
+          <h1 class="h1" style="margin-bottom:clamp(22px,3vw,34px);max-width:17ch;">Standard Work builds the brand tool kit your business needs to look coherent and credible<span class="accent">.</span></h1>
           <p class="body-lg muted" style="max-width:540px;margin-bottom:14px;">This service helps you define and create a complete, usable brand — without workshops, long briefs, or agency processes.</p>
           <p class="body-lg muted" style="max-width:540px;margin-bottom:32px;">You make a small number of clear choices. We guide them and execute the work professionally.</p>
-          <button class="btn btn-accent" onclick="document.getElementById('brand-config').scrollIntoView({behavior:'smooth'})">Configure your brand →</button>
+          <button class="btn btn-accent" onclick="document.getElementById('brand-config').scrollIntoView({behavior:'smooth'})">Get a price →</button>
         </div>
         <div class="hero-cta-box">
-          <p class="hero-cta-label">Already decided?</p>
-          <button class="btn btn-accent" onclick="navigate('brand')">→ Build a brand</button>
-          <button class="btn btn-outline" onclick="navigate('website')">→ Make a website</button>
+          <p class="hero-cta-label">Need a site too?</p>
+          <button class="btn btn-outline" onclick="navigate('website')">→ Order a website</button>
         </div>
-      </div>
-    </div>
-  </div>
-  <div style="padding:var(--pad-section) var(--pad-x);max-width:var(--max-w);margin:0 auto;">
-    <div class="two-col">
-      <div><p class="label mb-16">What this is</p><h2 class="h2">Practical brand definition<span class="accent">.</span></h2></div>
-      <div>
-        <p class="body-lg muted" style="margin-bottom:16px;">Designed for:</p>
-        <ol style="list-style:decimal;padding-left:20px;display:flex;flex-direction:column;gap:10px;color:var(--text-dim);font-size:16px;line-height:1.6;">
-          <li>New businesses that need a solid starting point</li>
-          <li>Existing businesses that need a cleaner, more consistent brand</li>
-          <li>Individuals and freelancers who want to present themselves professionally</li>
-        </ol>
-        <p class="body muted" style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border-light);">This is not brand strategy consulting. It is practical brand definition.</p>
       </div>
     </div>
   </div>
   <div class="alt-section">
     <div style="max-width:var(--max-w);margin:0 auto;">
       <p class="label mb-16">What's included</p>
-      <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:16px;"><h2 class="h2">Base package</h2><span style="font-family:var(--font);font-size:clamp(22px,3vw,40px);font-weight:800;letter-spacing:-0.03em;">12,000 SEK <span style="font-family:var(--font-mono);font-size:12px;font-weight:400;color:var(--text-dim);">ex. moms</span></span></div>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:16px;"><h2 class="h2">Basic Brand Tool Kit</h2><span style="font-family:var(--font);font-size:clamp(22px,3vw,40px);font-weight:800;letter-spacing:-0.03em;">12,000 SEK <span style="font-family:var(--font-mono);font-size:12px;font-weight:400;color:var(--text-dim);">ex. moms</span></span></div>
       <div class="included-list">
         <div class="included-item"><div class="included-title">Brand direction</div><div class="included-desc">Keywords and statements describing what your business does, how it operates, and why it exists. Guides all design decisions.</div></div>
         <div class="included-item"><div class="included-title">Logo</div><div class="included-desc">A professionally designed logo based on the agreed direction. Clean, usable, and appropriate for your business.</div></div>
@@ -422,6 +572,10 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         <div class="included-item"><div class="included-title">Colour palette</div><div class="included-desc">Primary, secondary, and accent colours. Defined for consistency across use.</div></div>
         <div class="included-item"><div class="included-title">Imagery direction</div><div class="included-desc">Guidance for photography, illustration, or AI-generated imagery. References optional.</div></div>
         <div class="included-item"><div class="included-title">Tone of voice</div><div class="included-desc">Keywords and short examples showing how your brand should sound and what to avoid.</div></div>
+      </div>
+      <div class="dg-below">
+        <p class="label mb-24">Anatomy</p>
+        <svg class="dg" viewBox="0 0 508 551" role="img" aria-label="What a Standard Work brand package delivers: a PDF of at least six pages covering brand direction, logo, typography, colour palette, imagery direction and tone of voice, plus a folder of assets containing the logo as SVG and PNG, the typeface, an image pack and an editable tone of voice document."><text x="0" y="13" class="dg-lab">What lands in your hands</text><text x="0" y="36" class="dg-sec">The guidelines</text><text x="112" y="36" class="dg-lab">PDF, six pages or more</text><rect x="0" y="46" width="156" height="116" rx="4" fill="var(--surface)" stroke="var(--border)" stroke-width="1.4"/><text x="11" y="66" class="dg-bp">Brand direction</text><rect x="11" y="77" width="134" height="5" rx="2" fill="var(--border-light)"/><rect x="11" y="88" width="115.24" height="5" rx="2" fill="var(--border-light)"/><rect x="11" y="99" width="127.3" height="5" rx="2" fill="var(--border-light)"/><rect x="11" y="110" width="83.08" height="5" rx="2" fill="var(--border-light)"/><rect x="176" y="46" width="156" height="116" rx="4" fill="var(--surface)" stroke="var(--border)" stroke-width="1.4"/><text x="187" y="66" class="dg-bp">Logo</text><rect x="187" y="81" width="34" height="34" rx="2" fill="var(--border-light)"/><rect x="229" y="89" width="18" height="18" rx="2" fill="var(--border-light)"/><rect x="253" y="91" width="14" height="14" rx="2" fill="var(--border-light)"/><rect x="187" y="125" width="93.8" height="4" rx="2" fill="var(--border-light)"/><rect x="187" y="135" width="67" height="4" rx="2" fill="var(--border-light)"/><rect x="352" y="46" width="156" height="116" rx="4" fill="var(--surface)" stroke="var(--border)" stroke-width="1.4"/><text x="363" y="66" class="dg-bp">Typography</text><text x="363" y="103" class="dg-aa">Aa</text><rect x="409" y="83" width="88" height="5" rx="2" fill="var(--border-light)"/><rect x="409" y="94" width="70.4" height="4" rx="2" fill="var(--border-light)"/><rect x="363" y="119" width="134" height="4" rx="2" fill="var(--border-light)"/><rect x="363" y="129" width="104.52" height="4" rx="2" fill="var(--border-light)"/><rect x="363" y="139" width="120.6" height="4" rx="2" fill="var(--border-light)"/><rect x="0" y="182" width="156" height="116" rx="4" fill="var(--surface)" stroke="var(--border)" stroke-width="1.4"/><text x="11" y="202" class="dg-bp">Colour palette</text><rect x="11" y="215" width="23.6" height="26" rx="2" fill="var(--text)"/><rect x="38.6" y="215" width="23.6" height="26" rx="2" fill="var(--border-light)"/><rect x="66.2" y="215" width="23.6" height="26" rx="2" fill="var(--border-light)"/><rect x="93.8" y="215" width="23.6" height="26" rx="2" fill="var(--border-light)"/><rect x="121.4" y="215" width="23.6" height="26" rx="2" fill="var(--border-light)"/><rect x="11" y="249" width="109.88" height="4" rx="2" fill="var(--border-light)"/><rect x="11" y="259" width="80.4" height="4" rx="2" fill="var(--border-light)"/><rect x="176" y="182" width="156" height="116" rx="4" fill="var(--surface)" stroke="var(--border)" stroke-width="1.4"/><text x="187" y="202" class="dg-bp">Imagery direction</text><rect x="187" y="215" width="63" height="36" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M187 215 L250 251 M250 215 L187 251" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><rect x="258" y="215" width="63" height="36" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M258 215 L321 251 M321 215 L258 251" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><rect x="187" y="259" width="99.16" height="4" rx="2" fill="var(--border-light)"/><rect x="187" y="269" width="73.7" height="4" rx="2" fill="var(--border-light)"/><rect x="352" y="182" width="156" height="116" rx="4" fill="var(--surface)" stroke="var(--border)" stroke-width="1.4"/><text x="363" y="202" class="dg-bp">Tone of voice</text><rect x="363" y="215" width="45.56" height="7" rx="2" fill="var(--text)"/><rect x="363" y="229" width="134" height="4" rx="2" fill="var(--border-light)"/><rect x="363" y="239" width="117.92" height="4" rx="2" fill="var(--border-light)"/><rect x="363" y="249" width="127.3" height="4" rx="2" fill="var(--border-light)"/><rect x="363" y="263" width="61.64" height="4" rx="2" fill="var(--border-light)"/><text x="0" y="328" class="dg-sec">The assets</text><text x="92" y="328" class="dg-lab">One folder</text><path d="M0 351 h74 v-13 h434 v205 H0 Z" fill="var(--surface)" stroke="var(--border)" stroke-width="1.4" stroke-linejoin="round"/><rect x="16" y="370" width="15" height="15" rx="2" fill="var(--border-light)"/><circle cx="40" cy="377.5" r="5.5" fill="none" stroke="var(--border-light)" stroke-width="1.6"/><text x="70" y="377" class="dg-fname">Logo</text><text x="70" y="389" class="dg-fsub">SVG and PNG</text><line x1="16" y1="399" x2="492" y2="399" stroke="var(--border-light)" stroke-width="1"/><text x="16" y="422" class="dg-fa">Aa</text><text x="70" y="417" class="dg-fname">Typeface</text><text x="70" y="429" class="dg-fsub">The font file</text><line x1="16" y1="439" x2="492" y2="439" stroke="var(--border-light)" stroke-width="1"/><rect x="16" y="449" width="20" height="16" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M16 449 L36 465 M36 449 L16 465" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><rect x="40" y="449" width="20" height="16" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M40 449 L60 465 M60 449 L40 465" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><text x="70" y="457" class="dg-fname">Image pack</text><text x="70" y="469" class="dg-fsub">Illustration or photography</text><line x1="16" y1="479" x2="492" y2="479" stroke="var(--border-light)" stroke-width="1"/><rect x="16" y="488" width="14" height="18" rx="2" fill="none" stroke="var(--border-light)" stroke-width="1.3"/><rect x="19" y="492" width="8" height="2" rx="2" fill="var(--border-light)"/><rect x="19" y="496" width="8" height="2" rx="2" fill="var(--border-light)"/><rect x="19" y="500" width="5" height="2" rx="2" fill="var(--border-light)"/><text x="70" y="497" class="dg-fname">Tone of voice</text><text x="70" y="509" class="dg-fsub">Editable document</text></svg>
       </div>
     </div>
   </div>
@@ -473,16 +627,16 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           <p class="config-step-label">05 / Deadline</p><p class="config-step-q">When do you need it?</p>
           <div class="options-grid">
             <label class="option-card"><input type="radio" name="b-deadline" value="No hard deadline" onchange="updateBrandSummary()"><div class="option-inner">No hard deadline</div></label>
-            <label class="option-card"><input type="radio" name="b-deadline" value="Within 2 weeks" onchange="updateBrandSummary()"><div class="option-inner">Within 2 weeks</div></label>
+            <label class="option-card"><input type="radio" name="b-deadline" value="Within 2 weeks" onchange="updateBrandSummary()"><div class="option-inner">Within 2 weeks<span class="price-tag">+1,000 SEK</span><span class="opt-note">Rush</span></div></label>
             <label class="option-card"><input type="radio" name="b-deadline" value="Within 1 month" onchange="updateBrandSummary()"><div class="option-inner">Within 1 month</div></label>
             <label class="option-card"><input type="radio" name="b-deadline" value="Specific date" onchange="updateBrandSummary();document.getElementById('b-date-wrap').style.display='block'"><div class="option-inner">Specific date</div></label>
           </div>
-          <div id="b-date-wrap" style="margin-top:12px;display:none;"><input type="date" class="form-input" style="max-width:240px;" id="b-deadline-date" onchange="updateBrandSummary()"></div>
+          <div id="b-date-wrap" style="margin-top:12px;display:none;"><input type="date" class="form-input" style="max-width:240px;" id="b-deadline-date" onchange="updateBrandSummary()"><p class="body muted" style="margin-top:10px;max-width:620px;">Anything inside 14 days carries a 1,000 SEK rush fee, added automatically.</p></div>
         </div>
       </div>
       <div class="order-summary-wrap">
         <div class="order-summary">
-          <div class="summary-top"><p class="label">Your request</p><p style="font-family:var(--font);font-size:16px;font-weight:700;color:#fff;margin-top:4px;letter-spacing:-0.01em;">Brand for Your Business</p></div>
+          <div class="summary-top"><p class="label">Your request</p><p style="font-family:var(--font);font-size:16px;font-weight:700;color:#fff;margin-top:4px;letter-spacing:-0.01em;">Brand Tool Kit</p></div>
           <div class="summary-body" style="padding-top:4px;padding-bottom:4px;">
             <div class="summary-row"><span class="summary-key">Stage</span><span class="summary-val" id="bs-stage">—</span></div>
             <div class="summary-row"><span class="summary-key">Need</span><span class="summary-val" id="bs-need">—</span></div>
@@ -496,7 +650,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
             <div class="summary-total-row"><span>Total</span><span id="bs-total">12,000 SEK</span></div>
             <div style="display:flex;justify-content:flex-end;padding:2px 0 4px;"><span style="font-family:var(--font-mono);font-size:9px;color:var(--text-dim);letter-spacing:0.08em;text-transform:uppercase;">ex. moms · VAT added at checkout</span></div>
           </div>
-          <div class="summary-note">Final scope confirmed before work begins. 50% to start, 50% on delivery.</div>
+          <div class="summary-note">Final scope confirmed before work begins. 50% to start, 50% on delivery.<br><a onclick="navigate('pricing')" style="color:var(--text);text-decoration:underline;cursor:pointer;">Cancellation terms</a></div>
           <div class="summary-cta"><button class="btn btn-accent" style="width:100%;justify-content:center;" id="brand-checkout-btn" onclick="startCheckout('brand')">Get started →</button></div>
         </div>
       </div>
@@ -505,33 +659,15 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
   <div class="alt-section">
     <div style="max-width:var(--max-w);margin:0 auto;">
       <div class="two-col">
-        <div><p class="label mb-16">What's not included</p><h2 class="h2">Clearly defined before work begins.</h2></div>
+        <div><p class="label mb-16">What's not included</p><h2 class="h2">No surprises later.</h2></div>
         <ul class="list-clean"><li>Workshops or discovery phases</li><li>Open-ended exploration</li><li>Ongoing collaboration</li><li>Marketing or performance strategy</li><li>Naming (available as an add-on)</li></ul>
       </div>
     </div>
   </div>
-  <div style="padding:var(--pad-section) var(--pad-x);max-width:var(--max-w);margin:0 auto;">
-    <p class="label mb-16">Pricing</p>
-    <div class="price-block">
-      <h2 class="h2" style="margin-bottom:4px;">Brand for Your Business</h2>
-      <div class="price-big">12,000 SEK</div>
-      <p class="label" style="margin-top:4px;margin-bottom:16px;">ex. moms</p>
-      <p class="body muted" style="margin-bottom:24px;">Optional additions available during configuration. The total price updates live.</p>
-      <div class="addons-list mt-24" style="max-width:600px;">
-        <div class="addon-row"><span>Naming</span><span class="addon-price">+3,000 SEK</span></div>
-        <div class="addon-row"><span>Brand summary (1–2 page PDF)</span><span class="addon-price">+1,500 SEK</span></div>
-        <div class="addon-row"><span>Social starter templates</span><span class="addon-price">+2,000 SEK</span></div>
-        <div class="addon-row"><span>Extended imagery pack</span><span class="addon-price">+1,500 SEK</span></div>
-        <div class="addon-row"><span>Extra revision round</span><span class="addon-price">+1,500 SEK</span></div>
-      </div>
-    </div>
-    <div class="price-block"><h2 class="h3" style="margin-bottom:8px;">Payment</h2><p class="body muted">50% to start — 50% on final delivery. You'll see the exact amount before confirming.</p></div>
-    <div class="price-block"><h2 class="h3" style="margin-bottom:8px;">Cancellation &amp; refunds</h2><p class="body muted">Cancel before work begins for a full refund. Once work has started, the upfront payment is non-refundable. Final files are released after the remaining balance is paid.</p></div>
-  </div>
   <div style="background:var(--text);padding:var(--pad-section) var(--pad-x);">
     <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
-      <div><h2 class="h2" style="color:#fff;margin-bottom:10px;">Start building your brand.</h2><p style="color:rgba(255,255,255,0.5);font-size:16px;">Configure above, then continue to the enquiry.</p></div>
-      <button class="btn btn-accent" onclick="document.getElementById('brand-config').scrollIntoView({behavior:'smooth'})">Configure your brand →</button>
+      <div><h2 class="h2" style="color:#fff;margin-bottom:10px;">Order your brand.</h2><p style="color:rgba(255,255,255,0.5);font-size:16px;">Configure above. You will see the full price before you pay.</p></div>
+      <button class="btn btn-accent" onclick="document.getElementById('brand-config').scrollIntoView({behavior:'smooth'})">Get a price →</button>
     </div>
   </div>
 </div>
@@ -543,44 +679,32 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
       <div class="hero-split">
         <div>
           <p class="label mb-16">Website</p>
-          <h1 class="h1" style="margin-bottom:clamp(16px,2vw,24px);">Website for Your Business<span class="accent">.</span></h1>
-          <p class="h3" style="font-weight:500;color:var(--text-dim);margin-bottom:clamp(20px,3vw,32px);max-width:580px;">Create a clear, professional website that explains what you do.</p>
-          <p class="body-lg muted" style="max-width:540px;margin-bottom:14px;">A simple, well-structured website designed to present your business clearly and credibly.</p>
-          <p class="body-lg muted" style="max-width:540px;margin-bottom:32px;">No strategy workshops. No unnecessary features. Just a website that does its job.</p>
-          <button class="btn btn-accent" onclick="document.getElementById('website-config').scrollIntoView({behavior:'smooth'})">Configure your website →</button>
+          <h1 class="h1" style="margin-bottom:clamp(22px,3vw,34px);max-width:15ch;">Standard Work creates websites that represent what you do<span class="accent">.</span></h1>
+          <p class="body-lg muted" style="max-width:540px;margin-bottom:14px;">No strategy workshops. No unnecessary features. Just a finished website that does its job.</p>
+          <p class="body-lg" style="max-width:560px;margin-bottom:32px;"><strong style="color:var(--text);">To build your website we always start with your brand.</strong> If you have a logo, a typeface, a colour palette and an imagery direction, we can start. If not, we build the brand first.</p>
+          <button class="btn btn-accent" onclick="document.getElementById('website-config').scrollIntoView({behavior:'smooth'})">Get a price →</button>
         </div>
         <div class="hero-cta-box">
-          <p class="hero-cta-label">Already decided?</p>
-          <button class="btn btn-outline" onclick="navigate('brand')">→ Build a brand</button>
-          <button class="btn btn-accent" onclick="navigate('website')">→ Make a website</button>
+          <p class="hero-cta-label">No brand yet?</p>
+          <button class="btn btn-outline" onclick="navigate('brand')">→ Order a brand</button>
         </div>
       </div>
     </div>
   </div>
-  <div style="padding:var(--pad-section) var(--pad-x);max-width:var(--max-w);margin:0 auto;">
-    <div class="two-col">
-      <div><p class="label mb-16">What this is</p><h2 class="h2">A clear business website<span class="accent">.</span></h2></div>
-      <div>
-        <p class="body-lg muted" style="margin-bottom:16px;">Designed for:</p>
-        <ol style="list-style:decimal;padding-left:20px;display:flex;flex-direction:column;gap:10px;color:var(--text-dim);font-size:16px;line-height:1.6;">
-          <li>Businesses that need a clear online presence</li>
-          <li>Brands that want a simple, well-designed site</li>
-          <li>Founders who want something finished, not ongoing</li>
-        </ol>
-        <p class="body muted" style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border-light);">This is not a marketing platform. It's a clear presentation of your business.</p>
-      </div>
-    </div>
-  </div>
-  <div class="alt-section">
+<div class="alt-section">
     <div style="max-width:var(--max-w);margin:0 auto;">
       <p class="label mb-16">What's included</p>
-      <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:16px;"><h2 class="h2">Base package</h2><span style="font-family:var(--font);font-size:clamp(22px,3vw,40px);font-weight:800;letter-spacing:-0.03em;">8,000 SEK <span style="font-family:var(--font-mono);font-size:12px;font-weight:400;color:var(--text-dim);">ex. moms</span></span></div>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:16px;"><h2 class="h2">One Page Website</h2><span style="font-family:var(--font);font-size:clamp(22px,3vw,40px);font-weight:800;letter-spacing:-0.03em;">8,000 SEK <span style="font-family:var(--font-mono);font-size:12px;font-weight:400;color:var(--text-dim);">ex. moms</span></span></div>
       <div class="included-list">
         <div class="included-item"><div class="included-title">One scrollable page</div><div class="included-desc">A single-page scrollable website — the most effective format for small businesses and founders.</div></div>
         <div class="included-item"><div class="included-title">Clear content sections</div><div class="included-desc">Structured content areas for your offer, about section, and contact details.</div></div>
-        <div class="included-item"><div class="included-title">Brand-aligned visuals</div><div class="included-desc">Visual design aligned with your existing brand or Standard Work brand package.</div></div>
+        <div class="included-item"><div class="included-title">Brand-aligned visuals</div><div class="included-desc">Built from your brand: logo, typeface, colour palette, imagery direction. Yours, or from a Standard Work brand package.</div></div>
         <div class="included-item"><div class="included-title">Contact details</div><div class="included-desc">Clear, functional contact section. Email link or basic contact form.</div></div>
         <div class="included-item"><div class="included-title">Desktop and mobile</div><div class="included-desc">Fully responsive layout. Works on all screen sizes.</div></div>
+      </div>
+      <div class="dg-below">
+        <p class="label mb-24">Anatomy</p>
+        <svg class="dg" viewBox="0 0 514 644" role="img" aria-label="Wireframe anatomy of a Standard Work website: header, what you do, your offer, about, contact and footer on one scrollable page, shown at desktop and mobile widths."><text x="0" y="15" class="dg-lab">Desktop</text><text x="408" y="15" class="dg-lab">Mobile</text><rect x="0" y="24" width="392" height="612" rx="6" fill="var(--surface)" stroke="var(--border)" stroke-width="1.6"/><text x="14" y="51" class="dg-logo">LOGO</text><rect x="246" y="45" width="28" height="4" rx="2" fill="var(--border-light)"/><rect x="282" y="45" width="24" height="4" rx="2" fill="var(--border-light)"/><rect x="314" y="45" width="20" height="4" rx="2" fill="var(--border-light)"/><rect x="340" y="39" width="38" height="15" rx="7.5" fill="none" stroke="var(--text-dim)" stroke-width="1.2"/><line x1="0" y1="70" x2="392" y2="70" stroke="var(--border-light)" stroke-width="1"/><text x="14" y="110" class="dg-h1">What you do</text><rect x="14" y="124" width="168" height="5" rx="2" fill="var(--border-light)"/><rect x="14" y="136" width="138" height="5" rx="2" fill="var(--border-light)"/><rect x="14" y="148" width="152" height="5" rx="2" fill="var(--border-light)"/><rect x="14" y="164" width="68" height="17" rx="8.5" fill="none" stroke="var(--text-dim)" stroke-width="1.2"/><rect x="228" y="94" width="150" height="100" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M228 94 L378 194 M378 94 L228 194" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><line x1="0" y1="212" x2="392" y2="212" stroke="var(--border-light)" stroke-width="1"/><text x="196" y="240" class="dg-h2" text-anchor="middle">Your offer</text><g class="dg-n1"><rect x="14" y="252" width="364" height="62" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M14 252 L378 314 M378 252 L14 314" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><rect x="14" y="324" width="225.68" height="6" rx="2" fill="var(--border-light)"/><rect x="14" y="338" width="320.32" height="4" rx="2" fill="var(--border-light)"/></g><g class="dg-n2"><rect x="14" y="252" width="176" height="62" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M14 252 L190 314 M190 252 L14 314" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><rect x="14" y="324" width="109.12" height="6" rx="2" fill="var(--border-light)"/><rect x="14" y="338" width="154.88" height="4" rx="2" fill="var(--border-light)"/><rect x="202" y="252" width="176" height="62" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M202 252 L378 314 M378 252 L202 314" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><rect x="202" y="324" width="109.12" height="6" rx="2" fill="var(--border-light)"/><rect x="202" y="338" width="154.88" height="4" rx="2" fill="var(--border-light)"/></g><g class="dg-n3"><rect x="14" y="252" width="113.333" height="62" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M14 252 L127.333 314 M127.333 252 L14 314" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><rect x="14" y="324" width="70.2667" height="6" rx="2" fill="var(--border-light)"/><rect x="14" y="338" width="99.7333" height="4" rx="2" fill="var(--border-light)"/><rect x="139.333" y="252" width="113.333" height="62" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M139.333 252 L252.667 314 M252.667 252 L139.333 314" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><rect x="139.333" y="324" width="70.2667" height="6" rx="2" fill="var(--border-light)"/><rect x="139.333" y="338" width="99.7333" height="4" rx="2" fill="var(--border-light)"/><rect x="264.667" y="252" width="113.333" height="62" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M264.667 252 L378 314 M378 252 L264.667 314" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><rect x="264.667" y="324" width="70.2667" height="6" rx="2" fill="var(--border-light)"/><rect x="264.667" y="338" width="99.7333" height="4" rx="2" fill="var(--border-light)"/></g><line x1="0" y1="368" x2="392" y2="368" stroke="var(--border-light)" stroke-width="1"/><rect x="14" y="390" width="144" height="84" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M14 390 L158 474 M158 390 L14 474" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><text x="174" y="402" class="dg-h2">About</text><rect x="174" y="414" width="204" height="5" rx="2" fill="var(--border-light)"/><rect x="174" y="426" width="178" height="5" rx="2" fill="var(--border-light)"/><rect x="174" y="438" width="152" height="5" rx="2" fill="var(--border-light)"/><line x1="0" y1="492" x2="392" y2="492" stroke="var(--border-light)" stroke-width="1"/><text x="14" y="522" class="dg-h2">Contact</text><rect x="14" y="534" width="168" height="5" rx="2" fill="var(--border-light)"/><rect x="14" y="550" width="84" height="17" rx="8.5" fill="none" stroke="var(--text-dim)" stroke-width="1.2"/><rect x="258" y="534" width="120" height="5" rx="2" fill="var(--border-light)"/><rect x="290" y="548" width="88" height="5" rx="2" fill="var(--border-light)"/><line x1="0" y1="582" x2="392" y2="582" stroke="var(--border-light)" stroke-width="1"/><text x="14" y="614" class="dg-logo">LOGO</text><rect x="266" y="602" width="42" height="4" rx="2" fill="var(--border-light)"/><rect x="266" y="612" width="34" height="4" rx="2" fill="var(--border-light)"/><rect x="322" y="602" width="42" height="4" rx="2" fill="var(--border-light)"/><rect x="322" y="612" width="28" height="4" rx="2" fill="var(--border-light)"/><rect x="408" y="24" width="104" height="612" rx="4" fill="var(--surface)" stroke="var(--border)" stroke-width="1.3"/><text x="416" y="49" class="dg-logo-s">LOGO</text><rect x="488" y="42" width="16" height="3" rx="2" fill="var(--border-light)"/><rect x="488" y="48" width="16" height="3" rx="2" fill="var(--border-light)"/><line x1="408" y1="70" x2="512" y2="70" stroke="var(--border-light)" stroke-width="1"/><text x="416" y="96" class="dg-h3">What you do</text><rect x="416" y="106" width="88" height="58" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M416 106 L504 164 M504 106 L416 164" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><rect x="416" y="172" width="40" height="13" rx="6.5" fill="none" stroke="var(--text-dim)" stroke-width="1.2"/><line x1="408" y1="212" x2="512" y2="212" stroke="var(--border-light)" stroke-width="1"/><text x="416" y="234" class="dg-h3">Your offer</text><rect x="416" y="244" width="88" height="44" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M416 244 L504 288 M504 244 L416 288" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><rect x="416" y="296" width="61.6" height="4" rx="2" fill="var(--border-light)"/><rect x="416" y="308" width="88" height="44" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M416 308 L504 352 M504 308 L416 352" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><line x1="408" y1="368" x2="512" y2="368" stroke="var(--border-light)" stroke-width="1"/><text x="416" y="390" class="dg-h3">About</text><rect x="416" y="398" width="88" height="48" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M416 398 L504 446 M504 398 L416 446" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><rect x="416" y="456" width="79.2" height="4" rx="2" fill="var(--border-light)"/><rect x="416" y="466" width="61.6" height="4" rx="2" fill="var(--border-light)"/><line x1="408" y1="492" x2="512" y2="492" stroke="var(--border-light)" stroke-width="1"/><text x="416" y="516" class="dg-h3">Contact</text><rect x="416" y="526" width="74.8" height="4" rx="2" fill="var(--border-light)"/><rect x="416" y="538" width="48" height="13" rx="6.5" fill="none" stroke="var(--text-dim)" stroke-width="1.2"/><line x1="408" y1="582" x2="512" y2="582" stroke="var(--border-light)" stroke-width="1"/><text x="416" y="608" class="dg-logo-s">LOGO</text><rect x="416" y="616" width="52.8" height="3" rx="2" fill="var(--border-light)"/></svg>
       </div>
     </div>
   </div>
@@ -591,7 +715,47 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
     <div class="package-layout">
       <div class="package-content">
         <div class="config-step">
-          <p class="config-step-label">01 / Website type</p><p class="config-step-q">What kind of site do you need?</p>
+          <p class="config-step-label">01 / Starting point</p><p class="config-step-q">Do you have a brand to build from?</p>
+          <div class="options-grid">
+            <label class="option-card"><input type="radio" name="w-start" value="A Standard Work brand" onchange="updateWebSummary()"><div class="option-inner">A Standard Work brand<span class="opt-note opt-good">The perfect starting point</span></div></label>
+            <label class="option-card"><input type="radio" name="w-start" value="An existing brand" onchange="updateWebSummary()"><div class="option-inner">An existing brand<span class="opt-note">Brand prep from +750 SEK if pieces are missing</span></div></label>
+            <label class="option-card"><input type="radio" name="w-start" value="Not yet" onchange="updateWebSummary()"><div class="option-inner">Not yet<span class="opt-note">We build the brand first</span></div></label>
+          </div>
+          <p class="body muted" style="margin-top:16px;max-width:620px;">A website needs something to be built from. Four of the six items in the brand package, to be exact.</p>
+
+          <div id="w-assets-wrap" style="display:none;margin-top:32px;padding-top:26px;border-top:1px solid var(--border-light);">
+            <p class="config-step-label">Brand assets</p><p class="config-step-q">Tick what you can send us.</p>
+            <div class="options-grid-2">
+            <label class="option-card"><input type="checkbox" name="w-asset" value="Logo" data-fix="the logo redrawn to vector" data-price="1500" onchange="updateWebSummary()"><div class="option-inner">Logo<span class="opt-note">SVG, EPS, AI or PDF. PNG at 2000px+</span><span class="opt-save">Saves 1,500 SEK</span></div></label>
+            <label class="option-card"><input type="checkbox" name="w-asset" value="Typeface" data-fix="a licensed web equivalent" data-price="1000" onchange="updateWebSummary()"><div class="option-inner">Typeface<span class="opt-note">With a web licence</span><span class="opt-save">Saves 1,000 SEK</span></div></label>
+            <label class="option-card"><input type="checkbox" name="w-asset" value="Colour palette" data-fix="the palette extended for screen and contrast checked" data-price="750" onchange="updateWebSummary()"><div class="option-inner">Colour palette<span class="opt-note">Hex values</span><span class="opt-save">Saves 750 SEK</span></div></label>
+            <label class="option-card"><input type="checkbox" name="w-asset" value="Imagery direction" data-fix="the imagery direction written down" data-price="750" onchange="updateWebSummary()"><div class="option-inner">Imagery direction<span class="opt-note">Written down</span><span class="opt-save">Saves 750 SEK</span></div></label>
+            </div>
+            <p class="body muted" style="margin-top:14px;max-width:620px;">Imagery direction is not the same as imagery. If you have the direction but no usable photography, add an Image pack in step 06.</p>
+          </div>
+
+          <div id="w-gate" style="display:none;margin-top:32px;">
+            <div id="w-gate-brand" class="gate-panel" style="display:none;">
+              <p class="label" style="color:var(--accent);margin-bottom:10px;">Start here</p>
+              <h3 class="h3" style="margin-bottom:14px;">You need a brand first.</h3>
+              <p class="body muted" style="max-width:620px;margin-bottom:10px;">We don't build websites without one. There is nothing to build from, and a fixed scope has no room to invent it on the way.</p>
+              <p class="body muted" style="max-width:620px;margin-bottom:26px;">The brand package gives you all six items. Four of them are what the website runs on.</p>
+              <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                <button class="btn btn-accent" onclick="navigate('brand')">&rarr; Order a brand</button>
+                <button class="btn btn-outline" onclick="navigate('contact')">Ask us about it &rarr;</button>
+              </div>
+            </div>
+            <div id="w-gate-prep" class="gate-panel" style="display:none;">
+              <p class="label" style="color:var(--accent);margin-bottom:10px;">Brand prep</p>
+              <h3 class="h3" style="margin-bottom:14px;"><span id="w-prep-count">0 of 4</span> ready.</h3>
+              <p class="body muted" style="max-width:620px;margin-bottom:18px;">Brand prep covers the rest: <span id="w-prep-missing"></span>. Priced by what is missing. Defined scope, no exploration.</p>
+              <label class="option-card" style="max-width:320px;display:block;"><input type="checkbox" id="w-prep-check" onchange="this.dataset.touched=1;updateWebSummary()"><div class="option-inner">Brand prep<span class="price-tag" id="w-prep-price">+4,000 SEK</span></div></label>
+              <p class="body muted" id="w-prep-warn" style="display:none;margin-top:14px;max-width:620px;">Without it, you will need to supply the missing items yourself before work can start.</p>
+            </div>
+          </div>
+        </div>
+        <div class="config-step">
+          <p class="config-step-label">02 / Website type</p><p class="config-step-q">What kind of site do you need?</p>
           <div class="options-grid">
             <label class="option-card"><input type="radio" name="w-type" value="Business website" onchange="updateWebSummary()"><div class="option-inner">Business website</div></label>
             <label class="option-card"><input type="radio" name="w-type" value="Freelance / personal" onchange="updateWebSummary()"><div class="option-inner">Freelance / personal</div></label>
@@ -601,62 +765,81 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           </div>
         </div>
         <div class="config-step">
-          <p class="config-step-label">02 / Build &amp; publish</p><p class="config-step-q">What level of support do you need?</p>
+          <p class="config-step-label">03 / Build &amp; publish</p><p class="config-step-q">What level of support do you need?</p>
           <div class="options-grid">
-            <label class="option-card"><input type="radio" name="w-build" value="Design only" onchange="updateWebSummary()"><div class="option-inner">Design only</div></label>
+            <label class="option-card"><input type="radio" name="w-build" value="Design only" onchange="updateWebSummary()"><div class="option-inner">Design only<span class="opt-note">Same price. You get the files and a build spec.</span></div></label>
             <label class="option-card"><input type="radio" name="w-build" value="Design and build" onchange="updateWebSummary()"><div class="option-inner">Design and build</div></label>
-            <label class="option-card"><input type="radio" name="w-build" value="Design, build, publish" onchange="updateWebSummary()"><div class="option-inner">Design, build, publish</div></label>
+            <label class="option-card"><input type="radio" name="w-build" value="Design, build, publish" data-price="1000" data-label="Publishing" onchange="updateWebSummary()"><div class="option-inner">Design, build, publish<span class="price-tag">+1,000 SEK</span><span class="opt-note">Domain, hosting, deploy</span></div></label>
             <label class="option-card"><input type="radio" name="w-build" value="Not sure yet" onchange="updateWebSummary()"><div class="option-inner">Not sure yet</div></label>
           </div>
         </div>
         <div class="config-step">
-          <p class="config-step-label">03 / Platform preference</p><p class="config-step-q">Any platform preference?</p>
+          <p class="config-step-label">04 / Platform preference</p><p class="config-step-q">Any platform preference?</p>
           <div class="options-grid">
             <label class="option-card"><input type="radio" name="w-platform" value="Framer" onchange="updateWebSummary()"><div class="option-inner">Framer</div></label>
             <label class="option-card"><input type="radio" name="w-platform" value="Webflow" onchange="updateWebSummary()"><div class="option-inner">Webflow</div></label>
             <label class="option-card"><input type="radio" name="w-platform" value="Readymag" onchange="updateWebSummary()"><div class="option-inner">Readymag</div></label>
-            <label class="option-card"><input type="radio" name="w-platform" value="Shopify" onchange="updateWebSummary()"><div class="option-inner">Shopify</div></label>
-            <label class="option-card"><input type="radio" name="w-platform" value="No preference" onchange="updateWebSummary()"><div class="option-inner">No preference</div></label>
+            <label class="option-card"><input type="radio" name="w-platform" value="No preference" onchange="updateWebSummary()"><div class="option-inner">No preference<span class="opt-note">We pick what fits</span></div></label>
           </div>
+          <p class="body muted" style="margin-top:14px;max-width:620px;">Platform subscriptions are paid by you, directly to the platform. We don't resell them. No Shopify — we don't build e-commerce.</p>
         </div>
         <div class="config-step">
-          <p class="config-step-label">04 / Content status</p><p class="config-step-q">Where is your copy?</p>
+          <p class="config-step-label">05 / Content status</p><p class="config-step-q">Where is your copy?</p>
           <div class="options-grid">
             <label class="option-card"><input type="radio" name="w-copy" value="All copy ready" onchange="updateWebSummary()"><div class="option-inner">All copy ready</div></label>
-            <label class="option-card"><input type="radio" name="w-copy" value="Rough copy" onchange="updateWebSummary()"><div class="option-inner">Rough copy</div></label>
-            <label class="option-card"><input type="radio" name="w-copy" value="Need help writing" onchange="updateWebSummary()"><div class="option-inner">Need help writing</div></label>
+            <label class="option-card"><input type="radio" name="w-copy" value="Rough copy" data-price="1000" data-label="Copy editing" onchange="updateWebSummary()"><div class="option-inner">Rough copy<span class="price-tag">+1,000 SEK</span><span class="opt-note">We edit what you have</span></div></label>
+            <label class="option-card"><input type="radio" name="w-copy" value="Need help writing" data-price="2000" data-label="Copy support" onchange="updateWebSummary()"><div class="option-inner">Need help writing<span class="price-tag">+2,000 SEK</span><span class="opt-note">Same as the Copy support add-on</span></div></label>
             <label class="option-card"><input type="radio" name="w-copy" value="Not sure yet" onchange="updateWebSummary()"><div class="option-inner">Not sure yet</div></label>
           </div>
         </div>
         <div class="config-step">
-          <p class="config-step-label">05 / Optional additions</p><p class="config-step-q">Add what you need. Each item updates the price.</p>
+          <p class="config-step-label">06 / Optional additions</p><p class="config-step-q">Add what you need. Each item updates the price.</p>
           <div class="options-grid-2">
             <label class="option-card"><input type="checkbox" name="w-addon" value="Extra page" data-price="2000" onchange="updateWebSummary()"><div class="option-inner">Extra page<span class="price-tag">+2,000 SEK</span></div></label>
-            <label class="option-card"><input type="checkbox" name="w-addon" value="Copy support" data-price="2000" onchange="updateWebSummary()"><div class="option-inner">Copy support<span class="price-tag">+2,000 SEK</span></div></label>
+            <label class="option-card"><input type="checkbox" name="w-addon" value="Copy support" data-price="2000" onchange="updateWebSummary()"><div class="option-inner">Copy support<span class="price-tag">+2,000 SEK</span><span class="opt-note">Needs a tone of voice to write against</span></div></label>
             <label class="option-card"><input type="checkbox" name="w-addon" value="Multilingual setup" data-price="2000" onchange="updateWebSummary()"><div class="option-inner">Multilingual setup<span class="price-tag">+2,000 SEK</span></div></label>
             <label class="option-card"><input type="checkbox" name="w-addon" value="Image pack" data-price="1500" onchange="updateWebSummary()"><div class="option-inner">Image pack<span class="price-tag">+1,500 SEK</span></div></label>
+            <label class="option-card"><input type="checkbox" name="w-addon" value="SEO setup" data-price="1500" onchange="updateWebSummary()"><div class="option-inner">SEO setup<span class="price-tag">+1,500 SEK</span><span class="opt-note">Titles, meta, sitemap, Search Console</span></div></label>
             <label class="option-card"><input type="checkbox" name="w-addon" value="Extra revision round" data-price="1500" onchange="updateWebSummary()"><div class="option-inner">Extra revision round<span class="price-tag">+1,500 SEK</span></div></label>
           </div>
         </div>
       </div>
       <div class="order-summary-wrap">
         <div class="order-summary">
-          <div class="summary-top"><p class="label">Your request</p><p style="font-family:var(--font);font-size:16px;font-weight:700;color:#fff;margin-top:4px;letter-spacing:-0.01em;">Website for Your Business</p></div>
+          <div class="summary-top"><p class="label">Your request</p><p style="font-family:var(--font);font-size:16px;font-weight:700;color:#fff;margin-top:4px;letter-spacing:-0.01em;">Website</p></div>
           <div class="summary-body" style="padding-top:4px;padding-bottom:4px;">
+            <div class="summary-row"><span class="summary-key">Start</span><span class="summary-val" id="ws-start">—</span></div>
+            <div class="summary-row" id="ws-assets-row" style="display:none;"><span class="summary-key">Assets</span><span class="summary-val" id="ws-assets">—</span></div>
             <div class="summary-row"><span class="summary-key">Type</span><span class="summary-val" id="ws-type">—</span></div>
             <div class="summary-row"><span class="summary-key">Build</span><span class="summary-val" id="ws-build">—</span></div>
             <div class="summary-row"><span class="summary-key">Platform</span><span class="summary-val" id="ws-platform">—</span></div>
             <div class="summary-row" style="border-bottom:none;"><span class="summary-key">Copy</span><span class="summary-val" id="ws-copy">—</span></div>
           </div>
           <div id="ws-addons-wrap" style="display:none;" class="summary-addons-section"><p class="summary-key" style="margin-bottom:8px;">Additions</p><div id="ws-addons-list" style="display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--text-dim);"></div></div>
+          <div id="ws-buy">
           <div class="summary-price-section">
             <div class="summary-price-row"><span>Base</span><span>8,000 SEK</span></div>
             <div class="summary-price-row" id="ws-addon-price-row" style="display:none;"><span>Additions</span><span id="ws-addon-price" style="color:var(--accent);">+0 SEK</span></div>
             <div class="summary-total-row"><span>Total</span><span id="ws-total">8,000 SEK</span></div>
             <div style="display:flex;justify-content:flex-end;padding:2px 0 4px;"><span style="font-family:var(--font-mono);font-size:9px;color:var(--text-dim);letter-spacing:0.08em;text-transform:uppercase;">ex. moms · VAT added at checkout</span></div>
           </div>
-          <div class="summary-note">Final scope confirmed before work begins. 50% to start, 50% on delivery.</div>
+          <div class="summary-note">Final scope confirmed before work begins. 50% to start, 50% on delivery.<br><a onclick="navigate('pricing')" style="color:var(--text);text-decoration:underline;cursor:pointer;">Cancellation terms</a></div>
           <div class="summary-cta"><button class="btn btn-accent" style="width:100%;justify-content:center;" id="website-checkout-btn" onclick="startCheckout('website')">Get started →</button></div>
+          </div>
+          <div id="ws-route" style="display:none;">
+            <div class="summary-price-section">
+              <div class="summary-price-row"><span>Brand Tool Kit</span><span>12,000 SEK</span></div>
+              <div class="summary-price-row"><span>Website</span><span>8,000 SEK</span></div>
+              <div class="summary-total-row" style="font-size:18px;"><span>Bought separately</span><span>20,000 SEK</span></div>
+              <div style="display:flex;justify-content:flex-end;padding:2px 0 4px;"><span style="font-family:var(--font-mono);font-size:9px;color:var(--text-dim);letter-spacing:0.08em;text-transform:uppercase;">ex. moms &middot; VAT added at checkout</span></div>
+            </div>
+            <div class="summary-note">Start with the brand. Order the website once it is delivered.</div>
+            <div class="summary-cta">
+              <button class="btn btn-accent" style="width:100%;justify-content:center;" onclick="navigate('brand')">Start with the brand &rarr;</button>
+              <button class="btn btn-outline" style="width:100%;justify-content:center;margin-top:8px;" onclick="navigate('contact')">Ask us about it &rarr;</button>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -664,34 +847,176 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
   <div class="alt-section">
     <div style="max-width:var(--max-w);margin:0 auto;">
       <div class="two-col">
-        <div><p class="label mb-16">What's not included</p><h2 class="h2">Clearly defined before work begins.</h2></div>
-        <ul class="list-clean"><li>E-commerce</li><li>Performance marketing</li><li>SEO optimisation (basic setup as add-on)</li><li>Advanced functionality</li><li>Ongoing updates or maintenance</li></ul>
+        <div><p class="label mb-16">What's not included</p><h2 class="h2">No surprises later.</h2></div>
+        <ul class="list-clean"><li>E-commerce</li><li>Performance marketing</li><li>Ongoing SEO and content marketing</li><li>Advanced functionality</li><li>Ongoing updates or maintenance</li></ul>
       </div>
     </div>
-  </div>
-  <div style="padding:var(--pad-section) var(--pad-x);max-width:var(--max-w);margin:0 auto;">
-    <p class="label mb-16">Pricing</p>
-    <div class="price-block">
-      <h2 class="h2" style="margin-bottom:4px;">Website for Your Business</h2>
-      <div class="price-big">8,000 SEK</div>
-      <p class="label" style="margin-top:4px;margin-bottom:16px;">ex. moms</p>
-      <p class="body muted" style="margin-bottom:24px;">Optional additions available during configuration. The total price updates live.</p>
-      <div class="addons-list mt-24" style="max-width:600px;">
-        <div class="addon-row"><span>Extra page</span><span class="addon-price">+2,000 SEK per page</span></div>
-        <div class="addon-row"><span>Copy support</span><span class="addon-price">+2,000 SEK</span></div>
-        <div class="addon-row"><span>Multilingual setup</span><span class="addon-price">+2,000 SEK</span></div>
-        <div class="addon-row"><span>Image pack</span><span class="addon-price">+1,500 SEK</span></div>
-        <div class="addon-row"><span>Extra revision round</span><span class="addon-price">+1,500 SEK</span></div>
-      </div>
-    </div>
-    <div class="price-block"><h2 class="h3" style="margin-bottom:8px;">Payment</h2><p class="body muted">50% to start — 50% on final delivery.</p></div>
-    <div class="price-block"><h2 class="h3" style="margin-bottom:8px;">Cancellation &amp; refunds</h2><p class="body muted">Cancel before work begins for a full refund. Once work has started, the upfront payment is non-refundable. Final files are released after the remaining balance is paid.</p></div>
   </div>
   <div style="background:var(--text);padding:var(--pad-section) var(--pad-x);">
     <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
-      <div><h2 class="h2" style="color:#fff;margin-bottom:10px;">Start building your website.</h2><p style="color:rgba(255,255,255,0.5);font-size:16px;">Configure above, then continue to the enquiry.</p></div>
-      <button class="btn btn-accent" onclick="document.getElementById('website-config').scrollIntoView({behavior:'smooth'})">Configure your website →</button>
+      <div><h2 class="h2" id="w-foot-h" style="color:#fff;margin-bottom:10px;">Order your website.</h2><p id="w-foot-p" style="color:rgba(255,255,255,0.5);font-size:16px;">Configure above. You will see the full price before you pay.</p></div>
+      <button class="btn btn-accent" id="w-foot-btn" onclick="document.getElementById('website-config').scrollIntoView({behavior:'smooth'})">Get a price →</button>
     </div>
+  </div>
+</div>
+
+<!-- WORK -->
+<div id="page-work" class="page">
+  <div id="work-index">
+    <div style="background:var(--surface);border-bottom:1.5px solid var(--border);">
+      <div style="max-width:var(--max-w);margin:0 auto;padding:clamp(56px,8vw,100px) var(--pad-x);">
+        <div class="hero-split">
+          <div>
+            <p class="label mb-16">Case studies</p>
+            <h1 class="h1" style="margin-bottom:clamp(20px,3vw,32px);">Work that works<span class="accent">.</span></h1>
+            <p class="body-lg muted" style="max-width:560px;">EV charging nobody had heard of. A subtitling company with no name. An emergency service that wasn't 112. Each one had the Standard Work treatment: a small number of good decisions, executed properly.</p>
+          </div>
+          <div class="hero-cta-box">
+            <p class="hero-cta-label">Seen enough?</p>
+            <button class="btn btn-accent" onclick="navigate('brand')">&rarr; Order a brand</button>
+            <button class="btn btn-outline" onclick="navigate('website')">&rarr; Order a website</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:clamp(48px,6vw,88px) var(--pad-x) var(--pad-section);max-width:var(--max-w);margin:0 auto;">
+      <div class="case-index" style="margin-top:0;">
+        <a class="case-row" onclick="showCase('harry')">
+          <span class="case-num">01</span>
+          <img class="case-thumb" loading="lazy" src="work/harry-thumb.webp" alt="Harry da BBQ">
+          <span class="case-row-text">
+            <span class="case-row-name">Harry da BBQ</span>
+            <span class="case-row-line">A smoker in the forest with a name nobody outside Sweden could say.</span>
+          </span>
+          <span class="case-row-meta">Brand · Naming · Application</span>
+          <span class="case-row-arrow">&rarr;</span>
+        </a>
+        <a class="case-row" onclick="showCase('90110')">
+          <span class="case-num">02</span>
+          <img class="case-thumb" loading="lazy" src="work/90110-thumb.webp" alt="90110">
+          <span class="case-row-text">
+            <span class="case-row-name">90110</span>
+            <span class="case-row-line">The fourth emergency service. Everything that is not a 112 call.</span>
+          </span>
+          <span class="case-row-meta">Brand</span>
+          <span class="case-row-arrow">&rarr;</span>
+        </a>
+        <a class="case-row" onclick="showCase('eddy')">
+          <span class="case-num">03</span>
+          <img class="case-thumb" loading="lazy" src="work/eddy-thumb.webp" alt="Eddy">
+          <span class="case-row-text">
+            <span class="case-row-name">Eddy</span>
+            <span class="case-row-line">Process software. Complicated to use, simple to look at.</span>
+          </span>
+          <span class="case-row-meta">Brand</span>
+          <span class="case-row-arrow">&rarr;</span>
+        </a>
+      </div>
+    </div>
+
+    <div style="background:var(--text);padding:var(--pad-section) var(--pad-x);">
+      <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
+        <div><h2 class="h2" style="color:#fff;margin-bottom:10px;">Get to work<span style="color:var(--accent);">.</span></h2><p class="body-lg" style="color:rgba(255,255,255,0.5);">Choose what you need and see the price immediately.</p></div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <button class="btn btn-accent" onclick="navigate('brand')">&rarr; Order a brand</button>
+          <button class="btn btn-outline" style="border-color:rgba(255,255,255,0.3);color:#fff;" onclick="navigate('website')">&rarr; Order a website</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-detail" id="case-harry">
+    <div style="background:var(--surface);border-bottom:1.5px solid var(--border);">
+      <div style="max-width:var(--max-w);margin:0 auto;padding:clamp(28px,4vw,44px) var(--pad-x) clamp(48px,6vw,80px);">
+        <a class="case-back" onclick="showCase(null)">&larr; All work</a>
+        <p class="label" style="margin-top:clamp(28px,4vw,44px);margin-bottom:14px;">Brand · Naming · Application</p>
+        <h1 class="h1" style="margin-bottom:clamp(14px,2vw,22px);">Harry da BBQ<span class="accent">.</span></h1>
+        <p class="h3" style="font-weight:500;color:var(--text-dim);max-width:640px;margin-bottom:clamp(18px,2.5vw,28px);">A BBQ smokehouse on Sweden's wild west coast, going bigger.</p>
+        <p class="body-lg muted" style="max-width:600px;">Harryda BBQ was a delicious secret: a smoker deep in the forest producing meat worth driving for. Two problems. Outside Sweden the name was unsayable. And BBQ is a loud category to be quiet in.</p>
+      </div>
+    </div>
+    <div style="padding:clamp(40px,5vw,72px) var(--pad-x) 0;max-width:var(--max-w);margin:0 auto;">
+      <img class="case-shot" loading="lazy" src="work/harry-hero.webp" alt="Harry da BBQ">
+    </div>
+    <div style="padding:clamp(40px,5vw,72px) var(--pad-x) 0;max-width:var(--max-w);margin:0 auto;">
+      <div class="case-slides"><div class="case-slide"><div class="slide-head"><span class="slide-num">01</span><span class="slide-title">Brand direction</span></div><img class="case-shot" loading="lazy" src="work/harry-s01.webp" alt="Brand direction"><p class="slide-cap">The Manifeasto. If it isn't smoked, smoke it. If it's smoked, eat it. If it tastes good, repeat it.</p></div><div class="case-slide"><div class="slide-head"><span class="slide-num">02</span><span class="slide-title">Logo</span></div><img class="case-shot" loading="lazy" src="work/harry-s02.webp" alt="Logo"><p class="slide-cap">A wordmark built to be read through smoke and across a car park. Holds on a shutter, an apron and a van door.</p></div><div class="case-slide"><div class="slide-head"><span class="slide-num">03</span><span class="slide-title">Typography</span></div><img class="case-shot" loading="lazy" src="work/harry-s03.webp" alt="Typography"><p class="slide-cap">Raleway Black Italic for the shouting, Shrikhand for the accents. Two faces, one job each.</p></div><div class="case-slide"><div class="slide-head"><span class="slide-num">04</span><span class="slide-title">Colour palette</span></div><img class="case-shot" loading="lazy" src="work/harry-s04.webp" alt="Colour palette"><p class="slide-cap">Perky Pink, Ruby Red, Bark Black and Smokey Smoke. Named so they get used properly.</p></div><div class="case-slide"><div class="slide-head"><span class="slide-num">05</span><span class="slide-title">Imagery direction</span></div><img class="case-shot" loading="lazy" src="work/harry-s05.webp" alt="Imagery direction"><p class="slide-cap">Smoke, and people in it. Food shot close and hot, never styled cold.</p></div><div class="case-slide"><div class="slide-head"><span class="slide-num">06</span><span class="slide-title">Tone of voice</span></div><img class="case-shot" loading="lazy" src="work/harry-s06.webp" alt="Tone of voice"><p class="slide-cap">Sassy and succulent. Serious about the meat, never solemn about it.</p></div><div class="case-slide"><div class="slide-head"><span class="slide-num">07</span><span class="slide-title">Naming</span><span class="slide-beyond">Beyond the base package</span></div><img class="case-shot" loading="lazy" src="work/harry-s07.webp" alt="Naming"><p class="slide-cap">Harryda became Harry da BBQ. One pun, and the name works in every language it needs to.</p></div><div class="case-slide"><div class="slide-head"><span class="slide-num">08</span><span class="slide-title">Merchandise</span><span class="slide-beyond">Beyond the base package</span></div><img class="case-shot" loading="lazy" src="work/harry-s08.webp" alt="Merchandise"><p class="slide-cap">Aprons and tees for the crew, built off the same wordmark.</p></div><div class="case-slide"><div class="slide-head"><span class="slide-num">09</span><span class="slide-title">Signage and livery</span><span class="slide-beyond">Beyond the base package</span></div><img class="case-shot" loading="lazy" src="work/harry-s09.webp" alt="Signage and livery"><p class="slide-cap">The container, the shutter and the van. All pink, all unmissable.</p></div></div>
+      <div class="case-pair">
+        <a onclick="showCase('eddy')">&larr; Eddy</a>
+        <a onclick="showCase('90110')">90110 &rarr;</a>
+      </div>
+    </div>
+      <div style="background:var(--text);padding:var(--pad-section) var(--pad-x);margin-top:clamp(56px,7vw,88px);">
+        <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
+          <div>
+            <h2 class="h2" style="color:#fff;margin-bottom:10px;">This is the Brand package.</h2>
+            <p class="body-lg" style="color:rgba(255,255,255,0.5);">12,000 SEK ex. moms. Same six items, fixed scope.</p>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-accent" onclick="navigate('brand')">&rarr; Order a brand</button></div>
+        </div>
+      </div>
+  </div>
+
+  <div class="case-detail" id="case-90110">
+    <div style="background:var(--surface);border-bottom:1.5px solid var(--border);">
+      <div style="max-width:var(--max-w);margin:0 auto;padding:clamp(28px,4vw,44px) var(--pad-x) clamp(48px,6vw,80px);">
+        <a class="case-back" onclick="showCase(null)">&larr; All work</a>
+        <p class="label" style="margin-top:clamp(28px,4vw,44px);margin-bottom:14px;">Brand</p>
+        <h1 class="h1" style="margin-bottom:clamp(14px,2vw,22px);">90110<span class="accent">.</span></h1>
+        <p class="h3" style="font-weight:500;color:var(--text-dim);max-width:640px;margin-bottom:clamp(18px,2.5vw,28px);">Help for the emergencies that are not emergencies.</p>
+        <p class="body-lg muted" style="max-width:600px;">A fallen tree across the drive. Three feet of snow on the street. Nobody obvious to call. 90110 had to make an unfamiliar number feel as automatic as the three that came before it.</p>
+      </div>
+    </div>
+    <div style="padding:clamp(40px,5vw,72px) var(--pad-x) 0;max-width:var(--max-w);margin:0 auto;">
+      <img class="case-shot" loading="lazy" src="work/90110-hero.webp" alt="90110">
+    </div>
+    <div style="padding:clamp(40px,5vw,72px) var(--pad-x) 0;max-width:var(--max-w);margin:0 auto;">
+      <div class="case-slides"><div class="case-slide"><div class="slide-head"><span class="slide-num">01</span><span class="slide-title">Brand direction</span></div><img class="case-shot" loading="lazy" src="work/90110-s01.webp" alt="Brand direction"><p class="slide-cap">A written manifesto. Consider it done.</p></div><div class="case-slide"><div class="slide-head"><span class="slide-num">02</span><span class="slide-title">Logo</span></div><img class="case-shot" loading="lazy" src="work/90110-s02.webp" alt="Logo"><p class="slide-cap">A shield mark that holds at any size, from a van door to a phone screen.</p></div><div class="case-slide"><div class="slide-head"><span class="slide-num">03</span><span class="slide-title">Typography</span></div><img class="case-shot" loading="lazy" src="work/90110-s03.webp" alt="Typography"><p class="slide-cap">Manuka. Solid and bold. Chosen to behave like the service.</p></div><div class="case-slide"><div class="slide-head"><span class="slide-num">04</span><span class="slide-title">Colour palette</span></div><img class="case-shot" loading="lazy" src="work/90110-s04.webp" alt="Colour palette"><p class="slide-cap">Six steps of near-black to light grey, numbered and fixed.</p></div><div class="case-slide"><div class="slide-head"><span class="slide-num">05</span><span class="slide-title">Imagery direction</span></div><img class="case-shot" loading="lazy" src="work/90110-s05.webp" alt="Imagery direction"><p class="slide-cap">Night, weather, and the moment before help arrives.</p></div><div class="case-slide"><div class="slide-head"><span class="slide-num">06</span><span class="slide-title">Tone of voice</span></div><img class="case-shot" loading="lazy" src="work/90110-s06.webp" alt="Tone of voice"><p class="slide-cap">Blunt, short, no hedging. The brand prints its own rule on the wall.</p></div><div class="case-slide"><div class="slide-head"><span class="slide-num">07</span><span class="slide-title">Merchandise</span><span class="slide-beyond">Beyond the base package</span></div><img class="case-shot" loading="lazy" src="work/90110-s07.webp" alt="Merchandise"><p class="slide-cap">A cap and workwear with the shield applied small. Kit for people who turn up at night.</p></div></div>
+      <div class="case-pair">
+        <a onclick="showCase('harry')">&larr; Harry da BBQ</a>
+        <a onclick="showCase('eddy')">Eddy &rarr;</a>
+      </div>
+    </div>
+      <div style="background:var(--text);padding:var(--pad-section) var(--pad-x);margin-top:clamp(56px,7vw,88px);">
+        <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
+          <div>
+            <h2 class="h2" style="color:#fff;margin-bottom:10px;">This is the Brand package.</h2>
+            <p class="body-lg" style="color:rgba(255,255,255,0.5);">12,000 SEK ex. moms. Same six items, fixed scope.</p>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-accent" onclick="navigate('brand')">&rarr; Order a brand</button></div>
+        </div>
+      </div>
+  </div>
+
+  <div class="case-detail" id="case-eddy">
+    <div style="background:var(--surface);border-bottom:1.5px solid var(--border);">
+      <div style="max-width:var(--max-w);margin:0 auto;padding:clamp(28px,4vw,44px) var(--pad-x) clamp(48px,6vw,80px);">
+        <a class="case-back" onclick="showCase(null)">&larr; All work</a>
+        <p class="label" style="margin-top:clamp(28px,4vw,44px);margin-bottom:14px;">Brand</p>
+        <h1 class="h1" style="margin-bottom:clamp(14px,2vw,22px);">Eddy<span class="accent">.</span></h1>
+        <p class="h3" style="font-weight:500;color:var(--text-dim);max-width:640px;margin-bottom:clamp(18px,2.5vw,28px);">A coordination tool that builds process flows across separate digital touchpoints.</p>
+        <p class="body-lg muted" style="max-width:600px;">A genuinely complicated service that needed a brand simple enough to make it look easy. Six words defined the whole system before a single mark was drawn.</p>
+      </div>
+    </div>
+    <div style="padding:clamp(40px,5vw,72px) var(--pad-x) 0;max-width:var(--max-w);margin:0 auto;">
+      <img class="case-shot" loading="lazy" src="work/eddy-hero.webp" alt="Eddy">
+    </div>
+    <div style="padding:clamp(40px,5vw,72px) var(--pad-x) 0;max-width:var(--max-w);margin:0 auto;">
+      <div class="case-slides"><div class="case-slide"><div class="slide-head"><span class="slide-num">01</span><span class="slide-title">Brand direction</span></div><img class="case-shot" loading="lazy" src="work/eddy-s01.webp" alt="Brand direction"><p class="slide-cap">Efficient, adaptable, dependable, resourceful, impactful, open. Six words, agreed first.</p></div><div class="case-slide"><div class="slide-head"><span class="slide-num">02</span><span class="slide-title">Logo</span></div><img class="case-shot" loading="lazy" src="work/eddy-s02.webp" alt="Logo"><p class="slide-cap">One mark built from a loop. Wordmark, app icon and favicon out of the same shape.</p></div><div class="case-slide"><div class="slide-head"><span class="slide-num">03</span><span class="slide-title">Typography</span></div><img class="case-shot" loading="lazy" src="work/eddy-s03.webp" alt="Typography"><p class="slide-cap">Urbanist. Six weights, one family, no exceptions.</p></div><div class="case-slide"><div class="slide-head"><span class="slide-num">04</span><span class="slide-title">Colour palette</span></div><img class="case-shot" loading="lazy" src="work/eddy-s04.webp" alt="Colour palette"><p class="slide-cap">Blue, pink and cream. Warm enough to soften a piece of process software.</p></div><div class="case-slide"><div class="slide-head"><span class="slide-num">05</span><span class="slide-title">Imagery direction</span></div><img class="case-shot" loading="lazy" src="work/eddy-s05.webp" alt="Imagery direction"><p class="slide-cap">Product screens shot plainly. The interface is the hero.</p></div><div class="case-slide"><div class="slide-head"><span class="slide-num">06</span><span class="slide-title">Tone of voice</span></div><img class="case-shot" loading="lazy" src="work/eddy-s06.webp" alt="Tone of voice"><p class="slide-cap">Process to the people. Plain language for a technical product.</p></div><div class="case-slide"><div class="slide-head"><span class="slide-num">07</span><span class="slide-title">Merchandise</span><span class="slide-beyond">Beyond the base package</span></div><img class="case-shot" loading="lazy" src="work/eddy-s07.webp" alt="Merchandise"><p class="slide-cap">A tee and a hoodie carrying the mark on its own. The loop holds at chest size with no wordmark under it.</p></div></div>
+      <div class="case-pair">
+        <a onclick="showCase('90110')">&larr; 90110</a>
+        <a onclick="showCase('harry')">Harry da BBQ &rarr;</a>
+      </div>
+    </div>
+      <div style="background:var(--text);padding:var(--pad-section) var(--pad-x);margin-top:clamp(56px,7vw,88px);">
+        <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
+          <div>
+            <h2 class="h2" style="color:#fff;margin-bottom:10px;">This is the Brand package.</h2>
+            <p class="body-lg" style="color:rgba(255,255,255,0.5);">12,000 SEK ex. moms. Same six items, fixed scope.</p>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-accent" onclick="navigate('brand')">&rarr; Order a brand</button></div>
+        </div>
+      </div>
   </div>
 </div>
 
@@ -701,15 +1026,15 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
     <div style="max-width:var(--max-w);margin:0 auto;padding:clamp(56px,8vw,100px) var(--pad-x);">
       <div class="hero-split">
         <div>
-          <p class="label mb-16">Pricing</p>
+          <p class="label mb-16">Fixed pricing</p>
           <h1 class="h1" style="margin-bottom:clamp(16px,2vw,24px);">Fixed pricing. Clear outcomes<span class="accent">.</span></h1>
           <p class="body-lg muted" style="max-width:540px;margin-bottom:14px;">Every service has a clearly defined scope, a set price, and a clear outcome. You'll see the full cost before you begin.</p>
           <p class="body-lg muted" style="max-width:540px;">No proposals. No negotiations. No surprises.</p>
         </div>
         <div class="hero-cta-box">
           <p class="hero-cta-label">Ready to start?</p>
-          <button class="btn btn-accent" onclick="navigate('brand')">→ Build a brand</button>
-          <button class="btn btn-outline" onclick="navigate('website')">→ Make a website</button>
+          <button class="btn btn-accent" onclick="navigate('brand')">→ Order a brand</button>
+          <button class="btn btn-outline" onclick="navigate('website')">→ Order a website</button>
         </div>
       </div>
     </div>
@@ -717,7 +1042,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
   <div style="padding:var(--pad-section) var(--pad-x);max-width:var(--max-w);margin:0 auto;">
     <div class="price-block" style="border-top:none;padding-top:0;">
       <p class="label mb-16">Brand</p>
-      <h2 class="h2" style="margin-bottom:4px;">Brand for Your Business</h2>
+      <h2 class="h2" style="margin-bottom:4px;">Brand Tool Kit</h2>
       <div class="price-big">12,000 SEK</div>
       <p class="label" style="margin-top:4px;margin-bottom:16px;">ex. moms</p>
       <p class="body muted" style="max-width:640px;margin-bottom:20px;">A guided way to define and create the essential elements your business needs to look coherent and credible.</p>
@@ -738,10 +1063,10 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
     </div>
     <div class="price-block">
       <p class="label mb-16">Website</p>
-      <h2 class="h2" style="margin-bottom:4px;">Website for Your Business</h2>
+      <h2 class="h2" style="margin-bottom:4px;">Website</h2>
       <div class="price-big">8,000 SEK</div>
       <p class="label" style="margin-top:4px;margin-bottom:16px;">ex. moms</p>
-      <p class="body muted" style="max-width:640px;margin-bottom:20px;">A simple, scrollable website that presents your business clearly. We design and build — and can launch and host upon request.</p>
+      <p class="body muted" style="max-width:640px;margin-bottom:20px;">A simple, scrollable website that presents your business. Design, build and publish are all defined options in the configurator.</p>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 32px;max-width:560px;margin-bottom:28px;">
         <span class="body muted">One scrollable page</span><span class="body muted">Clear content sections</span>
         <span class="body muted">Brand-aligned visuals</span><span class="body muted">Contact details</span>
@@ -753,13 +1078,16 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         <div class="addon-row"><span>Copy support</span><span class="addon-price">+2,000 SEK</span></div>
         <div class="addon-row"><span>Multilingual setup</span><span class="addon-price">+2,000 SEK</span></div>
         <div class="addon-row"><span>Image pack</span><span class="addon-price">+1,500 SEK</span></div>
+        <div class="addon-row"><span>SEO setup <span style="color:var(--text-faint);">— titles, meta, sitemap, Search Console</span></span><span class="addon-price">+1,500 SEK</span></div>
         <div class="addon-row"><span>Extra revision round</span><span class="addon-price">+1,500 SEK</span></div>
+        <div class="addon-row"><span>Brand prep <span style="color:var(--text-faint);">— priced per missing item</span></span><span class="addon-price">+750 to 4,000 SEK</span></div>
       </div>
+      <p class="body muted" style="margin-top:20px;max-width:640px;">A website needs a logo, a typeface, a colour palette and an imagery direction. If you do not have all four, Brand prep supplies what is missing. If you have none of them, start with the brand package.</p>
       <div style="margin-top:28px;"><button class="btn btn-outline" onclick="navigate('website')">→ Configure and start</button></div>
     </div>
     <div class="price-block"><h2 class="h3" style="margin-bottom:12px;">Payment</h2><p class="body muted" style="margin-bottom:6px;">50% to start — 50% on final delivery.</p><p class="body muted">You'll see the exact amounts before confirming.</p></div>
     <div class="price-block"><h2 class="h3" style="margin-bottom:12px;">Cancellation &amp; refunds</h2><p class="body muted" style="margin-bottom:6px;">Cancel before work begins for a full refund.</p><p class="body muted" style="margin-bottom:6px;">Once work has started, the upfront payment is non-refundable.</p><p class="body muted">Final files are released after the remaining balance is paid.</p></div>
-    <div class="price-block"><h2 class="h3" style="margin-bottom:12px;">A note on scope</h2><p class="body muted" style="max-width:640px;">STANDARD WORK is designed for clarity and completion. If you need additional work beyond the defined scope, it can be added separately once the initial project is complete.</p></div>
+    <div class="price-block"><h2 class="h3" style="margin-bottom:12px;">A note on scope</h2><p class="body muted" style="max-width:640px;">Standard Work is designed for clarity and completion. If you need additional work beyond the defined scope, it can be added separately once the initial project is complete.</p></div>
   </div>
 </div>
 
@@ -771,13 +1099,13 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         <div style="max-width:640px;">
           <p class="label mb-16">Contact</p>
           <h1 class="h1" style="margin-bottom:clamp(16px,2vw,24px);">Contact<span class="accent">.</span></h1>
-          <p class="body-lg muted" style="margin-bottom:14px;">STANDARD WORK is designed to be self-serve. We don't offer consultations by default.</p>
+          <p class="body-lg muted" style="margin-bottom:14px;">Standard Work is designed to be self-serve. We don't offer consultations by default.</p>
           <p class="body-lg muted">If you have a specific question before starting, you can reach us here. Most questions are answered on the site.</p>
         </div>
         <div class="hero-cta-box">
           <p class="hero-cta-label">Ready to start?</p>
-          <button class="btn btn-accent" onclick="navigate('brand')">→ Build a brand</button>
-          <button class="btn btn-outline" onclick="navigate('website')">→ Make a website</button>
+          <button class="btn btn-accent" onclick="navigate('brand')">→ Order a brand</button>
+          <button class="btn btn-outline" onclick="navigate('website')">→ Order a website</button>
         </div>
       </div>
     </div>
@@ -808,7 +1136,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
             <div class="form-group"><label class="form-label">Company</label><input class="form-input" type="text" name="company" placeholder="Company or project name"></div>
             <div class="form-group"><label class="form-label">Website or social</label><input class="form-input" type="text" name="website" placeholder="Any existing presence"></div>
           </div>
-          <div class="form-group"><label class="form-label">What do you need?</label><select class="form-select" name="service"><option value="" disabled selected>Select a service</option><option>Brand for Your Business</option><option>Website for Your Business</option><option>Brand and Website</option><option>Not sure yet</option></select></div>
+          <div class="form-group"><label class="form-label">What do you need?</label><select class="form-select" name="service"><option value="" disabled selected>Select a service</option><option>Brand Tool Kit</option><option>Website</option><option>Brand first, website after</option><option>Not sure yet</option></select></div>
           <div class="form-group"><label class="form-label">Current situation</label><textarea class="form-textarea" name="situation" placeholder="Brief description of where you are now..."></textarea></div>
           <div class="form-group"><label class="form-label">Anything else we should know?</label><textarea class="form-textarea" name="other" placeholder="Deadline, budget, specific questions..."></textarea></div>
           <div><button type="submit" class="btn btn-accent" id="submit-btn">Submit project request →</button></div>
@@ -840,11 +1168,21 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         <div class="thankyou-step"><span class="thankyou-num">02</span><p class="body">We come back with confirmation, timeline, and payment details.</p></div>
         <div class="thankyou-step"><span class="thankyou-num">03</span><p class="body">Once you confirm and pay 50% upfront, work begins.</p></div>
       </div>
+      <div style="margin-top:56px;padding-top:32px;border-top:1.5px solid var(--border-light);max-width:560px;">
+        <p class="label mb-12">While you're here</p>
+        <h2 class="h3" style="margin-bottom:12px;">A brand is what a website is built from.</h2>
+        <p class="body muted" style="margin-bottom:20px;">You have just ordered the four things a site needs. If you want one, this is the moment it gets easy.</p>
+        <button class="btn btn-outline" onclick="navigate('website')">&rarr; Order a website</button>
+      </div>
       <div style="margin-top:48px;"><button class="btn btn-outline" onclick="navigate('home')">← Back to home</button></div>
     </div>
   </div>
 </div>
 
+<div class="mtotal" id="mtotal">
+  <div><span class="mtotal-key" id="mtotal-key">Total</span><span class="mtotal-val" id="mtotal-val">—</span></div>
+  <button class="btn btn-accent" id="mtotal-btn">Review &rarr;</button>
+</div>
 <template id="footer-template">
 <footer>
   <div class="footer-inner">
@@ -856,10 +1194,10 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
       <a href="mailto:hello@standardwork.design" class="footer-email">hello@standardwork.design</a>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 Standard Work™</span>
+      <span>© <span id="yr">2026</span> Standard Work™</span>
       <div class="footer-nav-links">
         <a class="footer-nav-link" onclick="navigate('how-it-works')">How it works</a>
-        <a class="footer-nav-link" onclick="navigate('pricing')">Pricing</a>
+        <a class="footer-nav-link" onclick="navigate('pricing')">Fixed pricing</a>
         <a class="footer-nav-link" onclick="navigate('contact')">Contact</a>
       </div>
     </div>
@@ -872,16 +1210,62 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 </template>
 
 <script>
-const PAGES=['home','how-it-works','brand','website','pricing','contact','thank-you'];
+const PAGES=['home','how-it-works','brand','website','work','pricing','contact','thank-you'];
+const CASES=['harry','90110','eddy'];
 const BRAND_BASE=12000,WEB_BASE=8000;
 function navigate(page){
   PAGES.forEach(p=>{const el=document.getElementById('page-'+p);if(el)el.classList.remove('active')});
   const t=document.getElementById('page-'+page);
   if(t){t.classList.add('active');if(!t.querySelector('footer')){const clone=document.getElementById('footer-template').content.cloneNode(true);t.appendChild(clone);}}
+  if(page==='work')setCase(null);
   window.scrollTo(0,0);window.location.hash=page;
   document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
   const al=document.querySelector(`.nav-link[onclick*="'${page}'"]`);if(al)al.classList.add('active');
 }
+function setCase(slug){
+  const idx=document.getElementById('work-index');if(idx)idx.style.display=slug?'none':'block';
+  CASES.forEach(c=>{const el=document.getElementById('case-'+c);if(el)el.classList.toggle('active',c===slug)});
+}
+function showCase(slug){setCase(slug);window.scrollTo(0,0);window.location.hash=slug?('work-'+slug):'work';}
+function mTotal(label,value,cta,fn){
+  const b=document.getElementById('mtotal');if(!b)return;
+  document.getElementById('mtotal-key').textContent=label;
+  document.getElementById('mtotal-val').textContent=value;
+  const btn=document.getElementById('mtotal-btn');btn.textContent=cta;btn.onclick=fn;
+}
+(function(){
+  let inCfg=false,seeSum=false;
+  const sync=()=>{const b=document.getElementById('mtotal');if(b)b.classList.toggle('show',inCfg&&!seeSum)};
+  const wire=()=>{
+    ['brand-config','website-config'].forEach(id=>{const el=document.getElementById(id);if(!el)return;
+      new IntersectionObserver(e=>{inCfg=e[0].isIntersecting;sync()},{rootMargin:'-56px 0px -160px 0px'}).observe(el)});
+    document.querySelectorAll('.order-summary').forEach(el=>{
+      new IntersectionObserver(e=>{seeSum=e[0].isIntersecting;sync()},{threshold:0.25}).observe(el)});
+  };
+  if(document.readyState!=='loading')wire();else document.addEventListener('DOMContentLoaded',wire);
+})();
+const PUBLISH=1000,ROUGH_COPY=1000,WRITE_COPY=2000,RUSH=1000,RUSH_DAYS=14;/* PLACEHOLDER — must match PRICING.md */
+function sumPriced(names){
+  let t=0;const list=[];
+  names.forEach(n=>document.querySelectorAll(`input[name="${n}"]:checked`).forEach(i=>{
+    const p=parseInt(i.dataset.price||0);if(p){t+=p;list.push([i.dataset.label||i.value,p])}
+  }));
+  return {total:t,list};
+}
+function rushDue(radioName,dateId){
+  const r=document.querySelector(`input[name="${radioName}"]:checked`);
+  if(!r)return false;
+  if(r.value==='Within 2 weeks')return true;
+  if(r.value==='Specific date'){
+    const v=document.getElementById(dateId).value;
+    if(!v)return false;
+    const days=(new Date(v)-new Date().setHours(0,0,0,0))/86400000;
+    return days>=0&&days<RUSH_DAYS;
+  }
+  return false;
+}
+function goCase(slug){navigate('work');showCase(slug);}
+(function(){const y=document.getElementById('yr');if(y)y.textContent=new Date().getFullYear();})();
 function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
 function updateBrandSummary(){
   const stage=document.querySelector('input[name="b-stage"]:checked');
@@ -897,29 +1281,72 @@ function updateBrandSummary(){
   document.getElementById('bs-deadline').textContent=dlText;
   let at=0;const an=[];
   addons.forEach(a=>{at+=parseInt(a.dataset.price||0);an.push(a.value)});
+  if(rushDue('b-deadline','b-deadline-date')){at+=RUSH;an.push('Rush delivery')}
   const aw=document.getElementById('bs-addons-wrap'),al=document.getElementById('bs-addons-list');
   if(an.length>0){aw.style.display='block';al.innerHTML=an.map(n=>`<span style="display:flex;align-items:center;gap:6px;"><span style="color:var(--accent);font-weight:600;">+</span>${n}</span>`).join('')}else{aw.style.display='none'}
   const pr=document.getElementById('bs-addon-price-row');
   if(at>0){pr.style.display='flex';document.getElementById('bs-addon-price').textContent='+'+at.toLocaleString('sv-SE')+' SEK'}else{pr.style.display='none'}
-  document.getElementById('bs-total').textContent=(BRAND_BASE+at).toLocaleString('sv-SE')+' SEK';
+  const bt=(BRAND_BASE+at).toLocaleString('sv-SE')+' SEK';
+  document.getElementById('bs-total').textContent=bt;
+  mTotal('Brand total',bt,'Review \u2192',()=>document.querySelector('#brand-config .order-summary').scrollIntoView({behavior:'smooth',block:'center'}));
 }
+const PREP_MAX=4000;/* PLACEHOLDER — must match PRICING.md before merge */
+function prepDue(){
+  let t=0;
+  document.querySelectorAll('input[name="w-asset"]').forEach(a=>{if(!a.checked)t+=parseInt(a.dataset.price||0)});
+  return t;
+}
+let wPrepShown=false;
 function updateWebSummary(){
+  const start=document.querySelector('input[name="w-start"]:checked');
+  const sv=start?start.value:null;
+  const assets=[...document.querySelectorAll('input[name="w-asset"]')];
+  const have=assets.filter(a=>a.checked), missing=assets.filter(a=>!a.checked);
+  const own=sv==='An existing brand';
+  document.getElementById('w-assets-wrap').style.display=own?'block':'none';
+  const needBrand=sv==='Not yet', needPrep=own&&missing.length>0;
+  const prep=document.getElementById('w-prep-check');
+  document.getElementById('w-gate').style.display=(needBrand||needPrep)?'block':'none';
+  document.getElementById('w-gate-brand').style.display=needBrand?'block':'none';
+  document.getElementById('w-gate-prep').style.display=needPrep?'block':'none';
+  if(needPrep){
+    if(!wPrepShown&&!prep.dataset.touched)prep.checked=true;
+    document.getElementById('w-prep-count').textContent=have.length+' of 4';
+    document.getElementById('w-prep-missing').textContent=missing.map(m=>m.dataset.fix).join(', ');
+  }else{prep.checked=false;prep.dataset.touched='';}
+  wPrepShown=needPrep;
+  document.getElementById('w-prep-warn').style.display=(needPrep&&!prep.checked)?'block':'none';
+  document.getElementById('ws-buy').style.display=needBrand?'none':'block';
+  document.getElementById('ws-route').style.display=needBrand?'block':'none';
+  const fh=document.getElementById('w-foot-h'),fp=document.getElementById('w-foot-p'),fb=document.getElementById('w-foot-btn');
+  if(needBrand){fh.textContent='Start with the brand.';fp.textContent='A website needs one to be built from.';fb.textContent='→ Order a brand';fb.onclick=()=>navigate('brand');}
+  else{fh.textContent='Order your website.';fp.textContent='Configure above. You will see the full price before you pay.';fb.textContent='Get a price →';fb.onclick=()=>document.getElementById('website-config').scrollIntoView({behavior:'smooth'});}
   const type=document.querySelector('input[name="w-type"]:checked');
   const build=document.querySelector('input[name="w-build"]:checked');
   const platform=document.querySelector('input[name="w-platform"]:checked');
   const copy=document.querySelector('input[name="w-copy"]:checked');
   const addons=document.querySelectorAll('input[name="w-addon"]:checked');
+  document.getElementById('ws-start').textContent=sv||'—';
+  const ar=document.getElementById('ws-assets-row');
+  if(own){ar.style.display='flex';document.getElementById('ws-assets').textContent=have.length+' of 4 ready';}else{ar.style.display='none';}
   document.getElementById('ws-type').textContent=type?type.value:'—';
   document.getElementById('ws-build').textContent=build?build.value:'—';
   document.getElementById('ws-platform').textContent=platform?platform.value:'—';
   document.getElementById('ws-copy').textContent=copy?copy.value:'—';
   let at=0;const an=[];
   addons.forEach(a=>{at+=parseInt(a.dataset.price||0);an.push(a.value)});
+  const pd=prepDue();
+  if(needPrep){document.getElementById('w-prep-price').textContent='+'+pd.toLocaleString('sv-SE')+' SEK';}
+  if(prep.checked){at+=pd;an.unshift('Brand prep')}
+  const rp=sumPriced(['w-build','w-copy']);at+=rp.total;rp.list.forEach(x=>an.push(x[0]));
   const aw=document.getElementById('ws-addons-wrap'),al=document.getElementById('ws-addons-list');
   if(an.length>0){aw.style.display='block';al.innerHTML=an.map(n=>`<span style="display:flex;align-items:center;gap:6px;"><span style="color:var(--accent);font-weight:600;">+</span>${n}</span>`).join('')}else{aw.style.display='none'}
   const pr=document.getElementById('ws-addon-price-row');
   if(at>0){pr.style.display='flex';document.getElementById('ws-addon-price').textContent='+'+at.toLocaleString('sv-SE')+' SEK'}else{pr.style.display='none'}
-  document.getElementById('ws-total').textContent=(WEB_BASE+at).toLocaleString('sv-SE')+' SEK';
+  const wt=(WEB_BASE+at).toLocaleString('sv-SE')+' SEK';
+  document.getElementById('ws-total').textContent=wt;
+  if(needBrand)mTotal('Brand first','12 000 SEK','→ Order a brand',()=>navigate('brand'));
+  else mTotal('Website total',wt,'Review →',()=>document.querySelector('#website-config .order-summary').scrollIntoView({behavior:'smooth',block:'center'}));
 }
 function startCheckout(type){
   const isBrand=type==='brand';
@@ -928,8 +1355,10 @@ function startCheckout(type){
   const addons=document.querySelectorAll(`input[name="${addonName}"]:checked`);
   let addonTotal=0;
   addons.forEach(a=>{addonTotal+=parseInt(a.dataset.price||0)});
+  if(!isBrand){const p=document.getElementById('w-prep-check');if(p&&p.checked)addonTotal+=prepDue();
+    addonTotal+=sumPriced(['w-build','w-copy']).total;}
+  if(isBrand&&rushDue('b-deadline','b-deadline-date'))addonTotal+=RUSH;
   const total=base+addonTotal;
-  const description=isBrand?'Brand for Your Business':'Website for Your Business';
   const cancelPath=isBrand?'#brand':'#website';
   const btn=document.getElementById(isBrand?'brand-checkout-btn':'website-checkout-btn');
   btn.disabled=true;btn.textContent='Preparing checkout…';
@@ -954,7 +1383,9 @@ function submitContact(e){
     .then(()=>{form.style.display='none';document.getElementById('contact-success').classList.add('show');})
     .catch(()=>{btn.disabled=false;btn.textContent='Submit project request →';alert('Something went wrong — please email us at hello@standardwork.design');});
 }
-(function(){const hash=window.location.hash.replace('#','');navigate(PAGES.includes(hash)?hash:'home');})();
+(function(){const hash=window.location.hash.replace('#','');
+  if(hash.indexOf('work-')===0&&CASES.indexOf(hash.slice(5))>-1){navigate('work');showCase(hash.slice(5));return;}
+  navigate(PAGES.includes(hash)?hash:'home');})();
 </script>
 </body>
 </html>
