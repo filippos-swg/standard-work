@@ -214,10 +214,30 @@ palette and imagery the least. SEO matches Image pack at 1,500. All are now in
 agreeing, where ten had been absent from a file calling itself the single source
 of truth.
 
-**Rush stays open.** 1,000 on a 12,000 package is 8.3%, where a queue-jump
-premium normally runs 15–25%; and it applies to Brand only, because the Website
-configurator has no deadline step, so a rushed website is free. The rate and the
-asymmetry are both still Filippos's.
+**Rush is 3,000. Filippos, 2026-08-26.** Up from 1,000, which was 8.3% of a
+12,000 package where a queue-jump premium runs 15–25%. 3,000 is 25% — the top of
+that band, and a rate that makes clearing a fortnight worth clearing. Changed in
+three places: the `RUSH` constant, the option's price tag, and the sentence under
+the date picker.
+
+**The Brand-only asymmetry stays open, deliberately.** Rush exists on Brand and
+not on Website, because the Website configurator has no deadline step. Closing it
+means adding a seventh question to a flow that was just shortened on purpose —
+a product decision rather than a number, so it is logged rather than decided.
+
+**There is a test suite again: `tests.html`. 2026-08-26.**
+The handover describes nine test files and 126 assertions; none of them were in
+the package. This replaces them with 74 assertions covering what has actually
+broken here — prices drifting from `PRICING.md`, a service billable twice, the
+checkout payload and receipt names, routing, deep links, the gate's arithmetic,
+the disclosure, and an assertion that no CTA points at the view it is already on.
+
+It drives the real `index.html` in an iframe rather than importing anything,
+because the single-file-no-build rule is a logged decision and an iframe is the
+only way to exercise the real page without breaking it. Needs a server, not a
+double-click. Trade-off: it cannot see past the `fetch` to Stripe — VAT, the
+deposit landing, the receipt wording — so the manual transaction below stays
+open no matter how green this file is.
 
 **Copy is priced once, in the copy step. The duplicate add-on is deleted.
 2026-08-26.**
@@ -269,16 +289,13 @@ decision to keep `#E84500` rather than separate it from the Guild's red.
 
 ## Open — Filippos, not settled here
 
-- **The rush surcharge.** 1,000 on a 12,000 package is 8.3%; a queue-jump
-  premium normally runs 15–25%. And it applies to Brand only — the Website
-  configurator has no deadline step, so a rushed website is free. Both the rate
-  and the asymmetry are open. Flagged in `PRICING.md` too, so the number is not
-  mistaken for settled.
+- **Rush is Brand-only.** The rate is settled at 3,000; the asymmetry is not.
+  The Website configurator has no deadline step, so a rushed website is free.
+  Closing it means a seventh question in a flow that was deliberately shortened.
 - **A real Stripe transaction with add-ons selected** has not been verified.
   Nothing automated can prove the charge matches the order summary, and it is
   the one path where a bug costs money.
-- **The handover claims nine test files and 126 assertions.** They are not in the
-  package and not in this repo — only `review/prototype-opens-anywhere.html`
-  shipped. The behaviour was re-verified by hand against the pristine build
-  instead (see the commit message); the suite itself should be recovered from
-  Simon.
+- **Simon's nine test files, if they are worth recovering.** They were never in
+  the package. `tests.html` now covers the same ground with 74 assertions, so
+  this is no longer blocking — but 126 assertions is more than we wrote, and his
+  may cover cases we do not know to check.

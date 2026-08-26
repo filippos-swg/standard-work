@@ -1062,11 +1062,11 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           <p class="config-step-label">05 / Deadline</p><p class="config-step-q">When do you need it?</p>
           <div class="options-grid">
             <label class="option-card"><input type="radio" name="b-deadline" value="No hard deadline" onchange="updateBrandSummary()"><div class="option-inner">No hard deadline</div></label>
-            <label class="option-card"><input type="radio" name="b-deadline" value="Within 2 weeks" onchange="updateBrandSummary()"><div class="option-inner">Within 2 weeks<span class="price-tag">+1,000 SEK</span><span class="opt-note">Rush</span></div></label>
+            <label class="option-card"><input type="radio" name="b-deadline" value="Within 2 weeks" onchange="updateBrandSummary()"><div class="option-inner">Within 2 weeks<span class="price-tag">+3,000 SEK</span><span class="opt-note">Rush</span></div></label>
             <label class="option-card"><input type="radio" name="b-deadline" value="Within 1 month" onchange="updateBrandSummary()"><div class="option-inner">Within 1 month</div></label>
             <label class="option-card"><input type="radio" name="b-deadline" value="Specific date" onchange="updateBrandSummary();document.getElementById('b-date-wrap').style.display='block'"><div class="option-inner">Specific date</div></label>
           </div>
-          <div id="b-date-wrap" style="margin-top:12px;display:none;"><input type="date" class="form-input" style="max-width:240px;" id="b-deadline-date" onchange="updateBrandSummary()"><p class="body muted" style="margin-top:10px;max-width:620px;">Anything inside 14 days carries a 1,000 SEK rush fee, added automatically.</p></div>
+          <div id="b-date-wrap" style="margin-top:12px;display:none;"><input type="date" class="form-input" style="max-width:240px;" id="b-deadline-date" onchange="updateBrandSummary()"><p class="body muted" style="margin-top:10px;max-width:620px;">Anything inside 14 days carries a 3,000 SEK rush fee, added automatically.</p></div>
         </div>
       </div>
       <div class="order-summary-wrap">
@@ -1726,7 +1726,12 @@ function mTotal(label,value,cta,fn){
   };
   if(document.readyState!=='loading')wire();else document.addEventListener('DOMContentLoaded',wire);
 })();
-const PUBLISH=1000,ROUGH_COPY=1000,WRITE_COPY=2000,RUSH=1000,RUSH_DAYS=14;/* PLACEHOLDER — must match PRICING.md */
+/* All six match PRICING.md, reconciled 2026-08-26. RUSH went 1,000 -> 3,000
+   on Filippos's call: 1,000 was 8.3% of a 12,000 package where a queue-jump
+   premium runs 15–25%, and 3,000 is 25%. STILL BRAND-ONLY — the Website
+   configurator has no deadline step, so a rushed website is free. That
+   asymmetry is logged, not fixed. */
+const PUBLISH=1000,ROUGH_COPY=1000,WRITE_COPY=2000,RUSH=3000,RUSH_DAYS=14;
 function sumPriced(names){
   let t=0;const list=[];
   names.forEach(n=>document.querySelectorAll(`input[name="${n}"]:checked`).forEach(i=>{

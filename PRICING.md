@@ -7,11 +7,16 @@
 
 Currency: SEK. All prices are **ex. moms (excluding VAT)**. VAT is added at checkout.
 
-Last updated: 2026-08-26 · v0.3
+Last updated: 2026-08-26 · v0.4
 
-**This file is now complete.** Every priced control in `index.html` appears
-below — 18 items, reconciled against the build on 2026-08-26. It had been
-claiming to be the single source of truth while ten of them were absent.
+**This file is now complete, and `tests.html` enforces it.** Every priced control
+in `index.html` appears below — 19 items, reconciled against the build on
+2026-08-26. It had been claiming to be the single source of truth while ten of
+them were absent.
+
+The numbers below are also written into the `EXPECTED` block at the top of
+`tests.html`. **Change a price in all three places** — this file, `index.html`,
+and that block — or the suite fails, which is exactly what it is for.
 
 ---
 
@@ -29,12 +34,17 @@ word on a fixed-price premium product. Decided 2026-08-26.
 | Social starter templates | +2,000 | Add-on | Step 06 |
 | Extended imagery pack | +1,500 | Add-on | Step 06 |
 | Extra revision round | +1,500 | Add-on | Step 06 |
-| Rush delivery — inside 14 days | +1,000 | Surcharge | Step 05, automatic | ⚠
+| Rush delivery — inside 14 days | +3,000 | Surcharge | Step 05, automatic | ⚠
 
-⚠ **Rush is not settled.** 1,000 on a 12,000 package is 8.3%, where a queue-jump
-premium normally runs 15–25%. It also applies to Brand only — the Website
-configurator has no deadline step, so a rushed website is currently free. Both
-the rate and that asymmetry are open. Filippos, 2026-08-26.
+**The rate is settled.** 3,000 is 25% of the package — the top of the normal
+band for jumping a queue, and up from 1,000, which was 8.3% and undercharged for
+the disruption. Filippos, 2026-08-26.
+
+⚠ **The asymmetry is not.** Rush applies to **Brand only**. The Website
+configurator has no deadline step at all, so a rushed website is still free.
+Closing that means adding a deadline question to a flow that is already six
+steps and was deliberately shortened — so it is a product decision, not a
+number. Left open on purpose rather than fixed quietly.
 
 **Base includes:** logo, typography, colour palette, brand direction, imagery direction, tone of voice.
 
