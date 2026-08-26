@@ -7,7 +7,7 @@
 
 Currency: SEK. All prices are **ex. moms (excluding VAT)**. VAT is added at checkout.
 
-Last updated: 2026-06-16 · v0.1
+Last updated: 2026-08-26 · v0.2
 
 ---
 
@@ -32,12 +32,23 @@ Last updated: 2026-06-16 · v0.1
 |---|---|---|
 | Base package | 8,000 | Base |
 | Extra page | +2,000 | Add-on |
-| Copy support | +2,000 | Add-on |
+| Copy editing — you supply rough copy | +1,000 | Copy step |
+| Copy writing — we write it | +2,000 | Copy step |
 | Multilingual setup | +2,000 | Add-on |
 | Image pack | +1,500 | Add-on |
 | Extra revision round | +1,500 | Add-on |
 
 **Base includes:** one scrollable page, content sections, brand-aligned visuals, contact, desktop + mobile.
+
+**Copy is priced once, in the configurator's copy step — not as an add-on.**
+It was in both places and both were added to the total, so a client who said
+they needed copy help and then ticked the add-on paid 2,000 twice for one job.
+The add-on is gone; the copy step owns it and carries two tiers where the add-on
+had one. Fixed 2026-08-26 — see `aios/DECISIONS.md`.
+
+The prices themselves are unchanged: writing was 2,000 as an add-on and is 2,000
+in the copy step. Editing at 1,000 is a tier the add-on never had, and it is one
+of the placeholder numbers still awaiting your audit.
 
 ---
 

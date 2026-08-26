@@ -179,6 +179,27 @@ half the site outside this repo behind a vendor and a manual upload step.
 Filippos owns the master repo and wants one place. Trade-off: the repo is no
 longer text-only, and image churn will show in history.
 
+**Copy is priced once, in the copy step. The duplicate add-on is deleted.
+2026-08-26.**
+"Need help writing" in step 05 and the "Copy support" add-on in step 06 were the
+same service at the same price, and `startCheckout` added both: 8,000 → 10,000 →
+12,000 for one job, with "Copy support" listed twice in the order summary.
+
+THE HISTORY DECIDED WHICH ONE GOES. Before the 2026-08-25 handover the copy step
+was an unpriced question — it captured the answer for the brief and charged
+nothing — and the add-on was the only place copy was billed. The handover put
+`data-price` on the step without removing the add-on. So the step is the newer,
+better instrument (three tiers: ready, rough copy edited at 1,000, written from
+scratch at 2,000, against the add-on's single 2,000) and the add-on is what the
+change should have taken with it.
+
+Simon knew: the step carried a note reading "Same as the Copy support add-on".
+The duplicate was labelled rather than removed. That note is gone with it.
+
+No price moved. Writing was 2,000 and is 2,000. Trade-off: the add-on grid loses
+a row, and anyone who had learned to buy copy there now meets it one step
+earlier — which is the step that asks about copy, so it is where it belonged.
+
 **The accent is a surface, not a ration. Filippos, 2026-08-26.**
 The rationing clause above is withdrawn. The 2026-08-25 handover puts two
 full-bleed accent sections on the homepage, and Simon's latest stands.
@@ -207,16 +228,6 @@ decision to keep `#E84500` rather than separate it from the Guild's red.
 ---
 
 ## Open — Filippos, not settled here
-
-- **Copy help is billable twice — this one is a defect, not a price question.**
-  Step 05 `w-copy` "Need help writing" is `+2,000` and carries
-  `data-label="Copy support"`. Step 06 `w-addon` "Copy support" is another
-  `+2,000`. Both are summed in `startCheckout`, so a client who says they need
-  copy and then ticks the copy add-on pays **4,000 for one job**, and the order
-  summary lists "Copy support" twice. Reproduced: 8,000 → 10,000 → 12,000.
-  Present in the pristine handover as well, so it predates the visual pass —
-  verified by running the same probe against both builds. Either make the two
-  mutually exclusive or delete one of them.
 
 - **Rush is Brand-only.** `startCheckout` guards the 1,000 rush fee with
   `isBrand`, and the Website configurator has no deadline step at all. A rushed
