@@ -185,7 +185,7 @@ Checked in the prototype: no JS errors, no broken images, no banned language fro
 
 ---
 
-## Append to `aios/DECISIONS.md`
+## Append to `aios/LOG.md`
 
 Under **Product**:
 

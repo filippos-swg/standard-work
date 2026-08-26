@@ -13,6 +13,23 @@ because rewriting it would have been the one thing a migration must not do. Date
 
 ---
 
+## 2026-08-26 — Tasks 001 and 004–008 closed; 009 opened
+
+TASK_001 (deploy v0.1) had read **In progress** since July while
+standardwork.design has been live and serving — checked this date. Simon's
+TASK_004–008 read **Proposed** while every one of them is implemented in
+`brand-dna-2026-08`: the Work view, the brand gate, the mobile fixes, incremental
+prep pricing and the copy pass. All six move to `aios/tasks/done/`.
+
+They were not open. A task set that describes work already shipped is the same
+class of falsehood a hand-written handoff is, which is why v2.0 has a countable
+exit condition per task rather than a status somebody remembers to change.
+
+`TASK_009` opens in their place: verify checkout end to end with a real
+transaction. It is the one thing blocking the merge of this branch.
+
+---
+
 ## 2026-08-26 — Open, and blocking nothing
 **Status:** OPEN
 

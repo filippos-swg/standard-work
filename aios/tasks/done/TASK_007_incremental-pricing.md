@@ -82,7 +82,7 @@ Six, anchored, all in `index.html`:
 
 ---
 
-## Append to `aios/DECISIONS.md`
+## Append to `aios/LOG.md`
 
 Under **Product**:
 

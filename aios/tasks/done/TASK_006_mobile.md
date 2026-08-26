@@ -114,7 +114,7 @@ At 390px, iPhone user agent, touch enabled:
 
 ---
 
-## Append to `aios/DECISIONS.md`
+## Append to `aios/LOG.md`
 
 Under **Brand / Design**:
 

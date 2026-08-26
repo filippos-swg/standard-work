@@ -215,7 +215,7 @@ Plus a 390px audit on every view: no horizontal overflow anywhere.
 
 ---
 
-## Append to `aios/DECISIONS.md`
+## Append to `aios/LOG.md`
 
 > **"Order" is the verb, not "Build" or "Make".** (2026-08-22)
 > The old CTAs were imperatives aimed at the reader and implied self-serve on a page that looks like a configurator. Trade-off: "order" is transactional. Intended — the business is transactional, and the site already said "your order" everywhere else.
