@@ -1,6 +1,6 @@
 <!-- GENERATED — do not edit. Edits are overwritten at next close. -->
-Generated 2026-08-26 11:53 +0200 · HEAD 65661b1 · branch brand-dna-2026-08 · host Souths-MacBook-Air.local · generator v2.0
-STALENESS RULE: if `git rev-parse HEAD` ≠ 65661b1, or the tree is dirty, this file is HISTORY. Regenerate before acting on it.
+Generated 2026-08-26 11:53 +0200 · HEAD 0f83b11 · branch brand-dna-2026-08 · host Souths-MacBook-Air.local · generator v2.0
+STALENESS RULE: if `git rev-parse HEAD` ≠ 0f83b11, or the tree is dirty, this file is HISTORY. Regenerate before acting on it.
 
 ## 1 · Identity
 <sub>CLAUDE.md, the five human lines — the only human input in this file</sub>
@@ -14,16 +14,16 @@ STALENESS RULE: if `git rev-parse HEAD` ≠ 65661b1, or the tree is dirty, this 
 ## 2 · Head
 <sub>git rev-parse HEAD · git log -1 · git rev-list --left-right --count @{u}...HEAD</sub>
 
-> **As of `65661b1`.** The close commits this file after generating it, so the counts below are one commit old the moment they land. Re-run `aios-state` for current numbers.
+> **As of `0f83b11`.** The close commits this file after generating it, so the counts below are one commit old the moment they land. Re-run `aios-state` for current numbers.
 
-- **brand-dna-2026-08 @ 65661b1** — Unify the one long-form date in TASK_008 to ISO
+- **brand-dna-2026-08 @ 0f83b11** — Unify the last long-form date to ISO
 - Committed 2026-08-26 11:53 by Filippos Arvanitakis
-- Upstream: origin/brand-dna-2026-08 · **1 ahead**, 0 behind
+- Upstream: origin/brand-dna-2026-08 · **3 ahead**, 0 behind
 
 ## 3 · Working tree
 <sub>git status --porcelain + a filesystem diff against git ls-files</sub>
 
-> **As of `65661b1`, before this file was committed.** `aios/STATE.md` and `aios/CLOSING` appear here for that reason and are not real dirt.
+> **As of `0f83b11`, before this file was committed.** `aios/STATE.md` and `aios/CLOSING` appear here for that reason and are not real dirt.
 
 - Clean.
 
@@ -33,12 +33,12 @@ STALENESS RULE: if `git rev-parse HEAD` ≠ 65661b1, or the tree is dirty, this 
 - None. Every branch has an upstream.
 
 ## 5 · Since last close
-<sub>git log 5ab194d..HEAD</sub>
+<sub>git log 65661b1..HEAD</sub>
 
-- `65661b1` 2026-08-26 — Unify the one long-form date in TASK_008 to ISO
-- `561814d` 2026-08-26 — Generate aios/STATE.md
+- `0f83b11` 2026-08-26 — Unify the last long-form date to ISO
+- `a62c4cd` 2026-08-26 — Generate aios/STATE.md
 
-Close marker: 65661b1a55dc1acc505422e07d435c18c04f3d86
+Close marker: 0f83b118c7e5fb531ea2b89db0259f8a47ec6d02
 
 ## 6 · Awaiting judgment
 <sub>aios/LOG.md headings + **Status:** lines — headings, dates and statuses only, never bodies</sub>
