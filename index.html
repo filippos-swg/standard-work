@@ -496,7 +496,63 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 
 /* The hero CTA and its disclosure stack, so the link reads as subordinate to
    the button rather than as a second button beside it. */
-.hero-actions{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+/* THE PACKAGE HERO'S FOOT IS SHORTER THAN ITS HEAD. Both package heroes used
+   clamp(56px,8vw,100px) top and bottom, which left 101px between the disclosure
+   link and the section rule — the link read as marooned rather than as the last
+   thing in the hero. The top is untouched; only the foot comes in, because the
+   thing that needed fixing was the distance to the rule and not the hero's
+   overall weight. Shared by the Brand and Website pages, which carry the same
+   hero and the same disclosure. */
+.package-hero{padding-bottom:clamp(28px,3.4vw,44px) !important}
+
+/* inline-flex so the column is only as wide as the button, which is what the
+   link then centres against. As a block it would be full-width and "centred"
+   would mean centred in the hero, not under the button. */
+/* STRETCH, NOT CENTRE, and the button opts out of it. align-items:center looks
+   right only while the link is the narrower of the two — it is on desktop, at
+   175px against the button's 185. On a phone the button shrinks to about 136px
+   and the link does not, so `center` started centring the BUTTON against the
+   link and knocked the primary CTA off the text column's left edge.
+
+   Stretching instead makes the link's box the width of the column while the
+   button keeps its natural width at the left. The link then centres its own
+   content: under the button where the button is wider, and flush with the hero
+   where it is not. Correct at both ends without a breakpoint. */
+.hero-actions{display:inline-flex;flex-direction:column;align-items:stretch;gap:14px}
+.hero-actions > .btn{align-self:flex-start}
+
+/* ============================================================================
+   THE ARROW IS ITS OWN ELEMENT, and that is a fix rather than tidiness. .btn
+   declares gap:8px, but the arrow and the label were one text node separated by
+   a plain space — so the gap never applied and the real distance was whatever a
+   space measured: 2.9px in the nav. The arrow read as glued to the word.
+
+   THE NEGATIVE MARGIN IS AN OPTICAL CORRECTION, NOT A NUDGE. The content box of
+   these buttons is already perfectly centred — measured, 18.5px of padding on
+   both sides. What is off-centre is the WORDS, because an arrow is much lighter
+   than a letter and the eye centres on the text: in the nav the label sat 34.3px
+   from the left edge and 18.5px from the right. Truly centring the words is not
+   solvable — it needs padding-left to go negative — so this takes back about a
+   third of an em on the arrow's side, which is the usual compromise for a
+   leading mark. In em, so it tracks the button's size from 13px in the nav to
+   17px in the hero without a second value.
+   ========================================================================== */
+.btn-ico{flex:none;line-height:1}
+/* LEAD AND TRAIL ARE EXPLICIT CLASSES, not :first-child/:last-child. Those two
+   count ELEMENT children, and the arrow is the only element in the button — the
+   label beside it is a bare text node — so a leading arrow matched :last-child
+   as well and took both corrections. The right one pulled the label back toward
+   the arrow and ate most of the 8px gap this change exists to create. */
+.btn > .btn-ico--lead{margin-left:-.45em}
+.btn > .btn-ico--trail{margin-right:-.45em}
+/* The nav CTAs already drop to 13px of padding at this width. Taking another
+   .45em off would leave the arrow about 7px from a 20px-radius edge, which
+   crowds the curve — the correction is worth less than the collision costs, so
+   it is mostly given back here. */
+@media(max-width:1100px){
+  .nav-cta .btn > .btn-ico--lead{margin-left:-.2em}
+  .nav-cta .btn > .btn-ico--trail{margin-right:-.2em}
+}
 /* The mono label voice, because the thing it opens is headed by a .label set
    exactly like this — the link and the panel's own heading are the same words
    in the same type, which is what makes the connection legible without a word
@@ -504,15 +560,15 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
    site-wide against a 44px minimum, and there is no reason to add a new control
    that repeats the problem. */
 .disclose-link{
-  display:inline-flex;align-items:center;gap:9px;min-height:44px;
-  font-family:var(--font-mono);font-size:11px;font-weight:500;
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;
+  font-family:var(--font-mono);font-size:14.3px;font-weight:500;
   letter-spacing:var(--track-mono);text-transform:uppercase;
   color:var(--text-dim);background:none;border:0;padding:0;cursor:pointer;
   transition:color .12s;
 }
 .disclose-link:hover{color:var(--text)}
 .disclose-link::after{
-  content:'';width:6px;height:6px;flex:none;
+  content:'';width:7.7px;height:7.7px;flex:none;
   border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
   transform:translateY(-2px) rotate(45deg);transition:transform .3s cubic-bezier(.4,0,.2,1);
 }
@@ -689,8 +745,8 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         <a class="nav-link" onclick="navigate('contact')">Contact</a>
       </div>
       <div class="nav-cta">
-        <button class="btn btn-accent" onclick="navigate('brand')">&rarr; Order a brand</button>
-        <button class="btn btn-outline" onclick="navigate('website')">&rarr; Order a website</button>
+        <button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a brand</button>
+        <button class="btn btn-outline" onclick="navigate('website')"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a website</button>
       </div>
     </div>
     <div class="nav-hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
@@ -703,8 +759,8 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
   <a class="nav-link" onclick="navigate('pricing');toggleMenu()">Fixed pricing</a>
   <a class="nav-link" onclick="navigate('contact');toggleMenu()">Contact</a>
   <div class="nav-mobile-actions">
-    <button class="btn btn-accent" onclick="navigate('brand');toggleMenu()">&rarr; Order a brand</button>
-    <button class="btn btn-outline" onclick="navigate('website');toggleMenu()">&rarr; Order a website</button>
+    <button class="btn btn-accent" onclick="navigate('brand');toggleMenu()"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a brand</button>
+    <button class="btn btn-outline" onclick="navigate('website');toggleMenu()"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a website</button>
   </div>
 </div>
 
@@ -721,8 +777,8 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         </div>
         <div class="hero-cta-box">
           <p class="hero-cta-label">Know what you need?</p>
-          <button class="btn btn-accent" onclick="navigate('brand')">→ Order a brand</button>
-          <button class="btn btn-outline" onclick="navigate('website')">→ Order a website</button>
+          <button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a brand</button>
+          <button class="btn btn-outline" onclick="navigate('website')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a website</button>
         </div>
       </div>
     </div>
@@ -772,7 +828,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           </a>
     </div>
     <div style="margin-top:clamp(32px,4vw,48px);">
-      <button class="btn btn-outline" onclick="navigate('work')">See the work &rarr;</button>
+      <button class="btn btn-outline" onclick="navigate('work')">See the work<span class="btn-ico btn-ico--trail" aria-hidden="true">&rarr;</span></button>
     </div>
   </div>
 </div>
@@ -793,7 +849,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
             <div class="process-mini-item"><span class="process-mini-num">05</span><span class="body-lg" style="font-weight:600;">Review, refine, and deliver</span></div>
           </div>
           <div style="margin-top:clamp(26px,3.2vw,40px);">
-            <button class="btn btn-outline" onclick="navigate('how-it-works')">See the full process →</button>
+            <button class="btn btn-outline" onclick="navigate('how-it-works')">See the full process<span class="btn-ico btn-ico--trail" aria-hidden="true">→</span></button>
           </div>
         </div>
       </div>
@@ -817,7 +873,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         <p class="service-card-desc">Logo, type, colour, voice. All of it, without the process overhead.</p>
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;padding-top:16px;border-top:1px solid var(--border-light);">
           <span class="service-card-price">From 12,000 SEK <span style="font-family:var(--font-mono);font-size:11px;font-weight:400;color:var(--text-dim);">ex. moms</span></span>
-          <button class="btn btn-accent" onclick="navigate('brand')">→ Order a brand</button>
+          <button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a brand</button>
         </div>
       </div>
       <div class="service-card">
@@ -825,7 +881,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         <p class="service-card-desc">One page that explains what you do and how to reach you. Designed, built and published.</p>
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;padding-top:16px;border-top:1px solid var(--border-light);">
           <span class="service-card-price">From 8,000 SEK <span style="font-family:var(--font-mono);font-size:11px;font-weight:400;color:var(--text-dim);">ex. moms</span></span>
-          <button class="btn btn-outline" onclick="navigate('website')">→ Order a website</button>
+          <button class="btn btn-outline" onclick="navigate('website')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a website</button>
         </div>
       </div>
     </div>
@@ -849,8 +905,8 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
     <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
       <div><h2 class="h2" style="margin-bottom:10px;">Get to work<span style="color:var(--accent);">.</span></h2><p class="body-lg">Choose what you need and see the price immediately.</p></div>
       <div style="display:flex;gap:12px;flex-wrap:wrap;">
-        <button class="btn btn-accent" onclick="navigate('brand')">→ Order a brand</button>
-        <button class="btn btn-outline" onclick="navigate('website')">→ Order a website</button>
+        <button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a brand</button>
+        <button class="btn btn-outline" onclick="navigate('website')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a website</button>
       </div>
     </div>
   </div>
@@ -870,8 +926,8 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         </div>
         <div class="hero-cta-box">
           <p class="hero-cta-label">Ready to start?</p>
-          <button class="btn btn-accent" onclick="navigate('brand')">→ Order a brand</button>
-          <button class="btn btn-outline" onclick="navigate('website')">→ Order a website</button>
+          <button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a brand</button>
+          <button class="btn btn-outline" onclick="navigate('website')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a website</button>
         </div>
       </div>
     </div>
@@ -911,8 +967,8 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
     <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
       <div><h2 class="h2" style="margin-bottom:10px;">Ready to begin?</h2><p class="body-lg">Choose what you need and see the price immediately.</p></div>
       <div style="display:flex;gap:12px;flex-wrap:wrap;">
-        <button class="btn btn-accent" onclick="navigate('brand')">→ Order a brand</button>
-        <button class="btn btn-outline" onclick="navigate('website')">→ Order a website</button>
+        <button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a brand</button>
+        <button class="btn btn-outline" onclick="navigate('website')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a website</button>
       </div>
     </div>
   </div>
@@ -921,7 +977,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 <!-- BRAND -->
 <div id="page-brand" class="page">
   <div style="background:var(--surface);border-bottom:1.5px solid var(--border);">
-    <div style="max-width:var(--max-w);margin:0 auto;padding:clamp(56px,8vw,100px) var(--pad-x);">
+    <div class="package-hero" style="max-width:var(--max-w);margin:0 auto;padding:clamp(56px,8vw,100px) var(--pad-x);">
       <div class="hero-split">
         <div>
           <p class="label mb-16">Brand</p>
@@ -929,13 +985,13 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           <p class="body-lg muted" style="max-width:540px;margin-bottom:14px;">This service helps you define and create a complete, usable brand — without workshops, long briefs, or agency processes.</p>
           <p class="body-lg muted" style="max-width:540px;margin-bottom:32px;">You make a small number of clear choices. We guide them and execute the work professionally.</p>
           <div class="hero-actions">
-            <button class="btn btn-accent" onclick="document.getElementById('brand-config').scrollIntoView({behavior:'smooth'})">Get started →</button>
+            <button class="btn btn-accent" onclick="document.getElementById('brand-config').scrollIntoView({behavior:'smooth'})">Get started<span class="btn-ico btn-ico--trail" aria-hidden="true">→</span></button>
             <button class="disclose-link" type="button" id="brand-included-toggle" aria-expanded="false" aria-controls="brand-included" onclick="toggleIncluded('brand')">What's included</button>
           </div>
         </div>
         <div class="hero-cta-box">
           <p class="hero-cta-label">Need a site too?</p>
-          <button class="btn btn-outline" onclick="navigate('website')">→ Order a website</button>
+          <button class="btn btn-outline" onclick="navigate('website')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a website</button>
         </div>
       </div>
     </div>
@@ -1030,7 +1086,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
             <div style="display:flex;justify-content:flex-end;padding:2px 0 4px;"><span style="font-family:var(--font-mono);font-size:9px;color:var(--text-dim);letter-spacing:0.08em;text-transform:uppercase;">ex. moms · VAT added at checkout</span></div>
           </div>
           <div class="summary-note">Final scope confirmed before work begins. 50% to start, 50% on delivery.<br><a onclick="navigate('pricing')" style="color:var(--text);text-decoration:underline;cursor:pointer;">Cancellation terms</a></div>
-          <div class="summary-cta"><button class="btn btn-accent" style="width:100%;justify-content:center;" id="brand-checkout-btn" onclick="startCheckout('brand')">Get started →</button></div>
+          <div class="summary-cta"><button class="btn btn-accent" style="width:100%;justify-content:center;" id="brand-checkout-btn" onclick="startCheckout('brand')">Get started<span class="btn-ico btn-ico--trail" aria-hidden="true">→</span></button></div>
         </div>
       </div>
     </div>
@@ -1046,7 +1102,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
   <div class="ink-block">
     <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
       <div><h2 class="h2" style="margin-bottom:10px;">Order your brand.</h2><p style="font-size:16px;">Configure above. You will see the full price before you pay.</p></div>
-      <button class="btn btn-accent" onclick="document.getElementById('brand-config').scrollIntoView({behavior:'smooth'})">Get started →</button>
+      <button class="btn btn-accent" onclick="document.getElementById('brand-config').scrollIntoView({behavior:'smooth'})">Get started<span class="btn-ico btn-ico--trail" aria-hidden="true">→</span></button>
     </div>
   </div>
 </div>
@@ -1054,7 +1110,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 <!-- WEBSITE -->
 <div id="page-website" class="page">
   <div style="background:var(--surface);border-bottom:1.5px solid var(--border);">
-    <div style="max-width:var(--max-w);margin:0 auto;padding:clamp(56px,8vw,100px) var(--pad-x);">
+    <div class="package-hero" style="max-width:var(--max-w);margin:0 auto;padding:clamp(56px,8vw,100px) var(--pad-x);">
       <div class="hero-split">
         <div>
           <p class="label mb-16">Website</p>
@@ -1062,13 +1118,13 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           <p class="body-lg muted" style="max-width:540px;margin-bottom:14px;">No strategy workshops. No unnecessary features. Just a finished website that does its job.</p>
           <p class="body-lg" style="max-width:560px;margin-bottom:32px;"><strong style="color:var(--text);">To build your website we always start with your brand.</strong> If you have a logo, a typeface, a colour palette and an imagery direction, we can start. If not, we build the brand first.</p>
           <div class="hero-actions">
-            <button class="btn btn-accent" onclick="document.getElementById('website-config').scrollIntoView({behavior:'smooth'})">Get started →</button>
+            <button class="btn btn-accent" onclick="document.getElementById('website-config').scrollIntoView({behavior:'smooth'})">Get started<span class="btn-ico btn-ico--trail" aria-hidden="true">→</span></button>
             <button class="disclose-link" type="button" id="website-included-toggle" aria-expanded="false" aria-controls="website-included" onclick="toggleIncluded('website')">What's included</button>
           </div>
         </div>
         <div class="hero-cta-box">
           <p class="hero-cta-label">No brand yet?</p>
-          <button class="btn btn-outline" onclick="navigate('brand')">→ Order a brand</button>
+          <button class="btn btn-outline" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a brand</button>
         </div>
       </div>
     </div>
@@ -1123,8 +1179,8 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
               <p class="body muted" style="max-width:620px;margin-bottom:10px;">We don't build websites without one. There is nothing to build from, and a fixed scope has no room to invent it on the way.</p>
               <p class="body muted" style="max-width:620px;margin-bottom:26px;">The brand package gives you all six items. Four of them are what the website runs on.</p>
               <div style="display:flex;gap:12px;flex-wrap:wrap;">
-                <button class="btn btn-accent" onclick="navigate('brand')">&rarr; Order a brand</button>
-                <button class="btn btn-outline" onclick="navigate('contact')">Ask us about it &rarr;</button>
+                <button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a brand</button>
+                <button class="btn btn-outline" onclick="navigate('contact')">Ask us about it<span class="btn-ico btn-ico--trail" aria-hidden="true">&rarr;</span></button>
               </div>
             </div>
             <div id="w-gate-prep" class="gate-panel" style="display:none;">
@@ -1206,7 +1262,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
             <div style="display:flex;justify-content:flex-end;padding:2px 0 4px;"><span style="font-family:var(--font-mono);font-size:9px;color:var(--text-dim);letter-spacing:0.08em;text-transform:uppercase;">ex. moms · VAT added at checkout</span></div>
           </div>
           <div class="summary-note">Final scope confirmed before work begins. 50% to start, 50% on delivery.<br><a onclick="navigate('pricing')" style="color:var(--text);text-decoration:underline;cursor:pointer;">Cancellation terms</a></div>
-          <div class="summary-cta"><button class="btn btn-accent" style="width:100%;justify-content:center;" id="website-checkout-btn" onclick="startCheckout('website')">Get started →</button></div>
+          <div class="summary-cta"><button class="btn btn-accent" style="width:100%;justify-content:center;" id="website-checkout-btn" onclick="startCheckout('website')">Get started<span class="btn-ico btn-ico--trail" aria-hidden="true">→</span></button></div>
           </div>
           <div id="ws-route" style="display:none;">
             <div class="summary-price-section">
@@ -1217,8 +1273,8 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
             </div>
             <div class="summary-note">Start with the brand. Order the website once it is delivered.</div>
             <div class="summary-cta">
-              <button class="btn btn-accent" style="width:100%;justify-content:center;" onclick="navigate('brand')">Start with the brand &rarr;</button>
-              <button class="btn btn-outline" style="width:100%;justify-content:center;margin-top:8px;" onclick="navigate('contact')">Ask us about it &rarr;</button>
+              <button class="btn btn-accent" style="width:100%;justify-content:center;" onclick="navigate('brand')">Start with the brand<span class="btn-ico btn-ico--trail" aria-hidden="true">&rarr;</span></button>
+              <button class="btn btn-outline" style="width:100%;justify-content:center;margin-top:8px;" onclick="navigate('contact')">Ask us about it<span class="btn-ico btn-ico--trail" aria-hidden="true">&rarr;</span></button>
             </div>
           </div>
 
@@ -1237,7 +1293,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
   <div class="ink-block">
     <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
       <div><h2 class="h2" id="w-foot-h" style="margin-bottom:10px;">Order your website.</h2><p id="w-foot-p" style="font-size:16px;">Configure above. You will see the full price before you pay.</p></div>
-      <button class="btn btn-accent" id="w-foot-btn" onclick="document.getElementById('website-config').scrollIntoView({behavior:'smooth'})">Get started →</button>
+      <button class="btn btn-accent" id="w-foot-btn" onclick="document.getElementById('website-config').scrollIntoView({behavior:'smooth'})">Get started<span class="btn-ico btn-ico--trail" aria-hidden="true">→</span></button>
     </div>
   </div>
 </div>
@@ -1255,8 +1311,8 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           </div>
           <div class="hero-cta-box">
             <p class="hero-cta-label">Seen enough?</p>
-            <button class="btn btn-accent" onclick="navigate('brand')">&rarr; Order a brand</button>
-            <button class="btn btn-outline" onclick="navigate('website')">&rarr; Order a website</button>
+            <button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a brand</button>
+            <button class="btn btn-outline" onclick="navigate('website')"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a website</button>
           </div>
         </div>
       </div>
@@ -1301,8 +1357,8 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
       <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
         <div><h2 class="h2" style="margin-bottom:10px;">Get to work<span style="color:var(--accent);">.</span></h2><p class="body-lg">Choose what you need and see the price immediately.</p></div>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
-          <button class="btn btn-accent" onclick="navigate('brand')">&rarr; Order a brand</button>
-          <button class="btn btn-outline" onclick="navigate('website')">&rarr; Order a website</button>
+          <button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a brand</button>
+          <button class="btn btn-outline" onclick="navigate('website')"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a website</button>
         </div>
       </div>
     </div>
@@ -1334,7 +1390,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
             <h2 class="h2" style="margin-bottom:10px;">This is the Brand package.</h2>
             <p class="body-lg">12,000 SEK ex. moms. Same six items, fixed scope.</p>
           </div>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-accent" onclick="navigate('brand')">&rarr; Order a brand</button></div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a brand</button></div>
         </div>
       </div>
   </div>
@@ -1365,7 +1421,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
             <h2 class="h2" style="margin-bottom:10px;">This is the Brand package.</h2>
             <p class="body-lg">12,000 SEK ex. moms. Same six items, fixed scope.</p>
           </div>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-accent" onclick="navigate('brand')">&rarr; Order a brand</button></div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a brand</button></div>
         </div>
       </div>
   </div>
@@ -1396,7 +1452,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
             <h2 class="h2" style="margin-bottom:10px;">This is the Brand package.</h2>
             <p class="body-lg">12,000 SEK ex. moms. Same six items, fixed scope.</p>
           </div>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-accent" onclick="navigate('brand')">&rarr; Order a brand</button></div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a brand</button></div>
         </div>
       </div>
   </div>
@@ -1415,8 +1471,8 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         </div>
         <div class="hero-cta-box">
           <p class="hero-cta-label">Ready to start?</p>
-          <button class="btn btn-accent" onclick="navigate('brand')">→ Order a brand</button>
-          <button class="btn btn-outline" onclick="navigate('website')">→ Order a website</button>
+          <button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a brand</button>
+          <button class="btn btn-outline" onclick="navigate('website')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a website</button>
         </div>
       </div>
     </div>
@@ -1441,7 +1497,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         <div class="addon-row"><span>Extended imagery pack</span><span class="addon-price">+1,500 SEK</span></div>
         <div class="addon-row"><span>Extra revision round</span><span class="addon-price">+1,500 SEK</span></div>
       </div>
-      <div style="margin-top:28px;"><button class="btn btn-accent" onclick="navigate('brand')">→ Configure and start</button></div>
+      <div style="margin-top:28px;"><button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Configure and start</button></div>
     </div>
     <div class="price-block">
       <p class="label mb-16">Website</p>
@@ -1465,7 +1521,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         <div class="addon-row"><span>Brand prep <span style="color:var(--text-faint);">— priced per missing item</span></span><span class="addon-price">+750 to 4,000 SEK</span></div>
       </div>
       <p class="body muted" style="margin-top:20px;max-width:640px;">A website needs a logo, a typeface, a colour palette and an imagery direction. If you do not have all four, Brand prep supplies what is missing. If you have none of them, start with the brand package.</p>
-      <div style="margin-top:28px;"><button class="btn btn-outline" onclick="navigate('website')">→ Configure and start</button></div>
+      <div style="margin-top:28px;"><button class="btn btn-outline" onclick="navigate('website')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Configure and start</button></div>
     </div>
     <div class="price-block"><h2 class="h3" style="margin-bottom:12px;">Payment</h2><p class="body muted" style="margin-bottom:6px;">50% to start — 50% on final delivery.</p><p class="body muted">You'll see the exact amounts before confirming.</p></div>
     <div class="price-block"><h2 class="h3" style="margin-bottom:12px;">Cancellation &amp; refunds</h2><p class="body muted" style="margin-bottom:6px;">Cancel before work begins for a full refund.</p><p class="body muted" style="margin-bottom:6px;">Once work has started, the upfront payment is non-refundable.</p><p class="body muted">Final files are released after the remaining balance is paid.</p></div>
@@ -1486,8 +1542,8 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         </div>
         <div class="hero-cta-box">
           <p class="hero-cta-label">Ready to start?</p>
-          <button class="btn btn-accent" onclick="navigate('brand')">→ Order a brand</button>
-          <button class="btn btn-outline" onclick="navigate('website')">→ Order a website</button>
+          <button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a brand</button>
+          <button class="btn btn-outline" onclick="navigate('website')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a website</button>
         </div>
       </div>
     </div>
@@ -1521,7 +1577,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           <div class="form-group"><label class="form-label">What do you need?</label><select class="form-select" name="service"><option value="" disabled selected>Select a service</option><option>Brand Tool Kit</option><option>Website</option><option>Brand first, website after</option><option>Not sure yet</option></select></div>
           <div class="form-group"><label class="form-label">Current situation</label><textarea class="form-textarea" name="situation" placeholder="Brief description of where you are now..."></textarea></div>
           <div class="form-group"><label class="form-label">Anything else we should know?</label><textarea class="form-textarea" name="other" placeholder="Deadline, budget, specific questions..."></textarea></div>
-          <div><button type="submit" class="btn btn-accent" id="submit-btn">Submit project request →</button></div>
+          <div><button type="submit" class="btn btn-accent" id="submit-btn">Submit project request<span class="btn-ico btn-ico--trail" aria-hidden="true">→</span></button></div>
         </form>
       </div>
       <div class="form-success" id="contact-success">
@@ -1529,12 +1585,12 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         <p class="h2" style="margin-bottom:14px;">Thanks.</p>
         <p class="body-lg muted" style="margin-bottom:8px;">Your Standard Work request has been received.</p>
         <p class="body muted" style="margin-bottom:32px;">We'll review the scope and come back with the next step.</p>
-        <button class="btn btn-outline" onclick="navigate('home')">← Back to home</button>
+        <button class="btn btn-outline" onclick="navigate('home')"><span class="btn-ico btn-ico--lead" aria-hidden="true">←</span>Back to home</button>
       </div>
     </div>
   </div>
   <div style="background:var(--surface);border-top:1.5px solid var(--border-light);padding:var(--pad-section) var(--pad-x);">
-    <div style="max-width:var(--max-w);margin:0 auto;"><h2 class="h2" style="margin-bottom:28px;">Or start directly.</h2><div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-accent" onclick="navigate('brand')">→ Start building your brand</button><button class="btn btn-outline" onclick="navigate('website')">→ Start building your website</button></div></div>
+    <div style="max-width:var(--max-w);margin:0 auto;"><h2 class="h2" style="margin-bottom:28px;">Or start directly.</h2><div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Start building your brand</button><button class="btn btn-outline" onclick="navigate('website')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Start building your website</button></div></div>
   </div>
 </div>
 
@@ -1554,16 +1610,16 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         <p class="label mb-12">While you're here</p>
         <h2 class="h3" style="margin-bottom:12px;">A brand is what a website is built from.</h2>
         <p class="body muted" style="margin-bottom:20px;">You have just ordered the four things a site needs. If you want one, this is the moment it gets easy.</p>
-        <button class="btn btn-outline" onclick="navigate('website')">&rarr; Order a website</button>
+        <button class="btn btn-outline" onclick="navigate('website')"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a website</button>
       </div>
-      <div style="margin-top:48px;"><button class="btn btn-outline" onclick="navigate('home')">← Back to home</button></div>
+      <div style="margin-top:48px;"><button class="btn btn-outline" onclick="navigate('home')"><span class="btn-ico btn-ico--lead" aria-hidden="true">←</span>Back to home</button></div>
     </div>
   </div>
 </div>
 
 <div class="mtotal" id="mtotal">
   <div><span class="mtotal-key" id="mtotal-key">Total</span><span class="mtotal-val" id="mtotal-val">—</span></div>
-  <button class="btn btn-accent" id="mtotal-btn">Review &rarr;</button>
+  <button class="btn btn-accent" id="mtotal-btn">Review<span class="btn-ico btn-ico--trail" aria-hidden="true">&rarr;</span></button>
 </div>
 <template id="footer-template">
 <footer>
@@ -1638,11 +1694,22 @@ function setCase(slug){
   CASES.forEach(c=>{const el=document.getElementById('case-'+c);if(el)el.classList.toggle('active',c===slug)});
 }
 function showCase(slug){setCase(slug);window.scrollTo(0,0);window.location.hash=slug?('work-'+slug):'work';}
+/* Button labels set from script have to build the same markup the static ones
+   carry, or the arrow loses its element and silently falls back to the 2.9px
+   space this change exists to remove. Our own literal strings only — nothing
+   here comes from input, so innerHTML is safe. */
+function arrowize(label){
+  const lead=label.match(/^\s*(→|←)\s+/);
+  if(lead)return `<span class="btn-ico btn-ico--lead" aria-hidden="true">${lead[1]}</span>${label.slice(lead[0].length)}`;
+  const trail=label.match(/\s+(→|←)\s*$/);
+  if(trail)return `${label.slice(0,trail.index)}<span class="btn-ico btn-ico--trail" aria-hidden="true">${trail[1]}</span>`;
+  return label;
+}
 function mTotal(label,value,cta,fn){
   const b=document.getElementById('mtotal');if(!b)return;
   document.getElementById('mtotal-key').textContent=label;
   document.getElementById('mtotal-val').textContent=value;
-  const btn=document.getElementById('mtotal-btn');btn.textContent=cta;btn.onclick=fn;
+  const btn=document.getElementById('mtotal-btn');btn.innerHTML=arrowize(cta);btn.onclick=fn;
 }
 (function(){
   let inCfg=false,seeSum=false;
@@ -1734,8 +1801,8 @@ function updateWebSummary(){
   document.getElementById('ws-buy').style.display=needBrand?'none':'block';
   document.getElementById('ws-route').style.display=needBrand?'block':'none';
   const fh=document.getElementById('w-foot-h'),fp=document.getElementById('w-foot-p'),fb=document.getElementById('w-foot-btn');
-  if(needBrand){fh.textContent='Start with the brand.';fp.textContent='A website needs one to be built from.';fb.textContent='→ Order a brand';fb.onclick=()=>navigate('brand');}
-  else{fh.textContent='Order your website.';fp.textContent='Configure above. You will see the full price before you pay.';fb.textContent='Get started →';fb.onclick=()=>document.getElementById('website-config').scrollIntoView({behavior:'smooth'});}
+  if(needBrand){fh.textContent='Start with the brand.';fp.textContent='A website needs one to be built from.';fb.innerHTML=arrowize('→ Order a brand');fb.onclick=()=>navigate('brand');}
+  else{fh.textContent='Order your website.';fp.textContent='Configure above. You will see the full price before you pay.';fb.innerHTML=arrowize('Get started →');fb.onclick=()=>document.getElementById('website-config').scrollIntoView({behavior:'smooth'});}
   const type=document.querySelector('input[name="w-type"]:checked');
   const build=document.querySelector('input[name="w-build"]:checked');
   const platform=document.querySelector('input[name="w-platform"]:checked');
@@ -1785,9 +1852,9 @@ function startCheckout(type){
   .then(r=>r.json())
   .then(data=>{
     if(data.url){window.location=data.url;}
-    else{btn.disabled=false;btn.textContent='Get started →';alert('Something went wrong. Please try again or contact us at hello@standardwork.design');}
+    else{btn.disabled=false;btn.innerHTML=arrowize('Get started →');alert('Something went wrong. Please try again or contact us at hello@standardwork.design');}
   })
-  .catch(()=>{btn.disabled=false;btn.textContent='Get started →';alert('Something went wrong. Please try again or contact us at hello@standardwork.design');});
+  .catch(()=>{btn.disabled=false;btn.innerHTML=arrowize('Get started →');alert('Something went wrong. Please try again or contact us at hello@standardwork.design');});
 }
 function submitContact(e){
   e.preventDefault();
@@ -1796,7 +1863,7 @@ function submitContact(e){
   btn.disabled=true;btn.textContent='Sending…';
   fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(form)).toString()})
     .then(()=>{form.style.display='none';document.getElementById('contact-success').classList.add('show');})
-    .catch(()=>{btn.disabled=false;btn.textContent='Submit project request →';alert('Something went wrong — please email us at hello@standardwork.design');});
+    .catch(()=>{btn.disabled=false;btn.innerHTML=arrowize('Submit project request →');alert('Something went wrong — please email us at hello@standardwork.design');});
 }
 (function(){const hash=window.location.hash.replace('#','');
   if(hash.indexOf('work-')===0&&CASES.indexOf(hash.slice(5))>-1){navigate('work');showCase(hash.slice(5));return;}
