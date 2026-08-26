@@ -118,6 +118,13 @@ html{font-size:16px;scroll-behavior:smooth}
   --track-mono:.14em;
 
   /* --- rhythm — the network's, with the radii kept ------------------------ */
+  /* THE NAV IS FIXED, so its height has to be a token: five other rules and one
+     IntersectionObserver all have to agree with it, and they were five separate
+     58s and a 74 before this. Raised from 58px to 76px, 2026-08-26 — the nav
+     carries two pill CTAs about 36px tall, which left only 11px of air above and
+     below them. 76 gives 20. seriouslywow.com's --nav-h is 73 for a nav with no
+     buttons in it, so this sits a hair above its sibling on purpose. */
+  --nav-h:76px;
   --max-w:1280px;          /* was 1320; 1280 across all three sites */
   --measure:34em;
   --pad-x:clamp(20px,5vw,64px);--pad-section:clamp(72px,10vw,140px);
@@ -139,7 +146,7 @@ img{max-width:100%;display:block}
    floor for non-text. */
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 ::selection{background:var(--text);color:var(--bg)}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);border-bottom:1.5px solid var(--border);height:58px;display:flex;align-items:center;padding:0 var(--pad-x)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);border-bottom:1.5px solid var(--border);height:var(--nav-h);display:flex;align-items:center;padding:0 var(--pad-x)}
 .nav-inner{width:100%;max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between}
 .nav-logo{font-family:var(--font-display);font-size:17px;font-weight:800;letter-spacing:-0.01em;color:var(--text);cursor:pointer;text-decoration:none}
 /* 17px at 800. WCAG large-bold starts at 18.66px, so the wordmark's dot is
@@ -155,10 +162,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);bo
 .nav-link:hover,.nav-link.active{color:var(--text)}
 .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
 .nav-hamburger span{display:block;width:22px;height:1.5px;background:var(--text)}
-.nav-mobile{display:none;position:fixed;top:58px;left:0;right:0;bottom:0;background:var(--surface);z-index:99;padding:40px var(--pad-x);flex-direction:column;gap:28px;border-top:1.5px solid var(--border)}
+.nav-mobile{display:none;position:fixed;top:var(--nav-h);left:0;right:0;bottom:0;background:var(--surface);z-index:99;padding:40px var(--pad-x);flex-direction:column;gap:28px;border-top:1.5px solid var(--border)}
 .nav-mobile.open{display:flex}
 .nav-mobile .nav-link{font-size:16px;letter-spacing:0.06em;color:var(--text)}
-.page{display:none;padding-top:58px}
+.page{display:none;padding-top:var(--nav-h)}
 .page.active{display:block}
 .display{font-family:var(--font-display);font-size:clamp(52px,9vw,128px);font-weight:900;line-height:0.92;letter-spacing:-0.03em;text-transform:uppercase}
 .display .dot{color:var(--accent)}
@@ -306,7 +313,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);bo
 .included-desc{font-size:14px;color:var(--text-dim);line-height:1.6}
 .package-layout{display:grid;grid-template-columns:1fr 360px;gap:clamp(32px,4vw,56px);align-items:start}
 .package-content{min-width:0}
-.order-summary-wrap{position:sticky;top:74px}
+/* 16px of clearance under the fixed nav, which is where the old 74 came from
+   when the nav was 58. Expressed as the sum so it tracks --nav-h. */
+.order-summary-wrap{position:sticky;top:calc(var(--nav-h) + 16px)}
 .order-summary{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden}
 .summary-top{padding:20px 24px;border-bottom:1.5px solid var(--border);background:var(--text);color:var(--on-ink)}
 .summary-top .label{color:var(--on-ink-dim)}
@@ -426,7 +435,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 .network-label{font-family:var(--font);font-size:14px;font-weight:400;color:var(--text-dim)}
 .network-link{font-family:var(--font-display);font-size:18px;font-weight:700;letter-spacing:-0.015em;color:var(--text);text-decoration:none;transition:color 0.12s;white-space:nowrap}
 .network-link:hover{color:var(--accent-dark)}
-.thankyou-wrap{min-height:calc(100vh - 58px);display:flex;align-items:center;padding:var(--pad-section) var(--pad-x)}
+.thankyou-wrap{min-height:calc(100vh - var(--nav-h));display:flex;align-items:center;padding:var(--pad-section) var(--pad-x)}
 .thankyou-step{display:flex;gap:20px;padding:18px 0;border-bottom:1px solid var(--border-light)}
 .thankyou-step:first-child{border-top:1px solid var(--border-light)}
 .thankyou-num{font-family:var(--font-mono);font-size:11px;font-weight:600;color:var(--accent-dark);letter-spacing:0.06em;flex-shrink:0;width:24px;margin-top:2px}
@@ -434,6 +443,84 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 .mb-8{margin-bottom:8px}.mb-12{margin-bottom:12px}.mb-16{margin-bottom:16px}.mb-24{margin-bottom:24px}.mb-40{margin-bottom:40px}
 .surface-section{background:var(--surface);padding:var(--pad-section) var(--pad-x)}
 .alt-section{background:var(--surface-alt);padding:var(--pad-section) var(--pad-x);border-top:1.5px solid var(--border-light);border-bottom:1.5px solid var(--border-light)}
+
+/* ============================================================================
+   THE "WHAT'S INCLUDED" DISCLOSURE. The panel used to sit open between the hero
+   and the configurator, so the one thing a visitor came to do — choose options —
+   was always a screen and a half of reading away. Someone who has already
+   decided had to scroll past the argument for deciding. It is now closed by
+   default and opens from a link under the hero CTA, which leaves the path from
+   "Order a brand" to the first radio button uninterrupted. 2026-08-26.
+
+   IT COLLAPSES WITH GRID ROWS, NOT max-height. A max-height animation has to
+   guess a number larger than the content, which makes the easing wrong for
+   every panel that is shorter than the guess and clips the one that is taller —
+   and these two panels differ by an SVG of a few hundred pixels. 0fr to 1fr
+   animates to the content's real height, so both are correct and neither is
+   measured. The child needs min-height:0 and overflow:hidden or 0fr has no
+   effect on it; that is the mechanism, not a workaround.
+
+   The vertical padding and the border widths animate WITH the rows. Left alone
+   they would hold the section open at about 3px of ground plus its two rules,
+   which reads as a seam between the hero and the configurator rather than as
+   nothing. Horizontal padding is untouched and stays on .alt-section. */
+/* TWO THINGS ARE LOAD-BEARING HERE, and both exist because `display:grid`
+   changes how the inner wrapper sizes itself.
+
+   grid-template-columns:minmax(0,1fr) — without an explicit column the grid
+   makes an `auto` track sized to max-content, which lets the anatomy SVG widen
+   the panel past its container. The 0 minimum is what stops that.
+
+   `> * { width:100% }` — this is the one that fixes the indent, and the track
+   alone did not. An auto margin on a grid item suppresses stretch and makes the
+   item shrink-to-fit INSIDE its track, so `margin:0 auto` on the wrapper centred
+   it at max-content: 49px further in than the hero and the configurator, and
+   97px narrower. width:100% restores the fill, max-width still clamps it to
+   --max-w, and the auto margins go back to doing only what they were for —
+   centring the wrapper on viewports wider than 1280. */
+.disclose-panel{
+  display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:0fr;
+  padding-top:0;padding-bottom:0;
+  border-top-width:0;border-bottom-width:0;
+  scroll-margin-top:calc(var(--nav-h) + 12px);
+  transition:grid-template-rows .42s cubic-bezier(.4,0,.2,1),
+             padding .42s cubic-bezier(.4,0,.2,1),
+             border-width .42s cubic-bezier(.4,0,.2,1);
+}
+.disclose-panel > *{min-height:0;overflow:hidden;width:100%}
+.disclose-panel.is-open{
+  grid-template-rows:1fr;
+  padding-top:var(--pad-section);padding-bottom:var(--pad-section);
+  border-top-width:1.5px;border-bottom-width:1.5px;
+}
+
+/* The hero CTA and its disclosure stack, so the link reads as subordinate to
+   the button rather than as a second button beside it. */
+.hero-actions{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+/* The mono label voice, because the thing it opens is headed by a .label set
+   exactly like this — the link and the panel's own heading are the same words
+   in the same type, which is what makes the connection legible without a word
+   of explanation. min-height is 44px: the handover flagged 40px tap targets
+   site-wide against a 44px minimum, and there is no reason to add a new control
+   that repeats the problem. */
+.disclose-link{
+  display:inline-flex;align-items:center;gap:9px;min-height:44px;
+  font-family:var(--font-mono);font-size:11px;font-weight:500;
+  letter-spacing:var(--track-mono);text-transform:uppercase;
+  color:var(--text-dim);background:none;border:0;padding:0;cursor:pointer;
+  transition:color .12s;
+}
+.disclose-link:hover{color:var(--text)}
+.disclose-link::after{
+  content:'';width:6px;height:6px;flex:none;
+  border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
+  transform:translateY(-2px) rotate(45deg);transition:transform .3s cubic-bezier(.4,0,.2,1);
+}
+.disclose-link[aria-expanded="true"]::after{transform:translateY(1px) rotate(225deg)}
+
+@media(prefers-reduced-motion:reduce){
+  .disclose-panel,.disclose-link::after{transition:none}
+}
 @media(max-width:960px){
   .two-col{grid-template-columns:1fr}
   .services-grid{grid-template-columns:1fr}
@@ -841,7 +928,10 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           <h1 class="h1" style="margin-bottom:clamp(22px,3vw,34px);max-width:17ch;">Standard Work builds the brand tool kit your business needs to look coherent and credible<span class="accent">.</span></h1>
           <p class="body-lg muted" style="max-width:540px;margin-bottom:14px;">This service helps you define and create a complete, usable brand — without workshops, long briefs, or agency processes.</p>
           <p class="body-lg muted" style="max-width:540px;margin-bottom:32px;">You make a small number of clear choices. We guide them and execute the work professionally.</p>
-          <button class="btn btn-accent" onclick="document.getElementById('brand-config').scrollIntoView({behavior:'smooth'})">Get a price →</button>
+          <div class="hero-actions">
+            <button class="btn btn-accent" onclick="document.getElementById('brand-config').scrollIntoView({behavior:'smooth'})">Get started →</button>
+            <button class="disclose-link" type="button" id="brand-included-toggle" aria-expanded="false" aria-controls="brand-included" onclick="toggleIncluded('brand')">What's included</button>
+          </div>
         </div>
         <div class="hero-cta-box">
           <p class="hero-cta-label">Need a site too?</p>
@@ -850,7 +940,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
       </div>
     </div>
   </div>
-  <div class="alt-section">
+  <div class="alt-section disclose-panel" id="brand-included">
     <div style="max-width:var(--max-w);margin:0 auto;">
       <p class="label mb-16">What's included</p>
       <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:16px;"><h2 class="h2">Basic Brand Tool Kit</h2><span style="font-family:var(--font);font-size:clamp(22px,3vw,40px);font-weight:800;letter-spacing:-0.03em;">12,000 SEK <span style="font-family:var(--font-mono);font-size:12px;font-weight:400;color:var(--text-dim);">ex. moms</span></span></div>
@@ -956,7 +1046,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
   <div class="ink-block">
     <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
       <div><h2 class="h2" style="margin-bottom:10px;">Order your brand.</h2><p style="font-size:16px;">Configure above. You will see the full price before you pay.</p></div>
-      <button class="btn btn-accent" onclick="document.getElementById('brand-config').scrollIntoView({behavior:'smooth'})">Get a price →</button>
+      <button class="btn btn-accent" onclick="document.getElementById('brand-config').scrollIntoView({behavior:'smooth'})">Get started →</button>
     </div>
   </div>
 </div>
@@ -971,7 +1061,10 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           <h1 class="h1" style="margin-bottom:clamp(22px,3vw,34px);max-width:15ch;">Standard Work creates websites that represent what you do<span class="accent">.</span></h1>
           <p class="body-lg muted" style="max-width:540px;margin-bottom:14px;">No strategy workshops. No unnecessary features. Just a finished website that does its job.</p>
           <p class="body-lg" style="max-width:560px;margin-bottom:32px;"><strong style="color:var(--text);">To build your website we always start with your brand.</strong> If you have a logo, a typeface, a colour palette and an imagery direction, we can start. If not, we build the brand first.</p>
-          <button class="btn btn-accent" onclick="document.getElementById('website-config').scrollIntoView({behavior:'smooth'})">Get a price →</button>
+          <div class="hero-actions">
+            <button class="btn btn-accent" onclick="document.getElementById('website-config').scrollIntoView({behavior:'smooth'})">Get started →</button>
+            <button class="disclose-link" type="button" id="website-included-toggle" aria-expanded="false" aria-controls="website-included" onclick="toggleIncluded('website')">What's included</button>
+          </div>
         </div>
         <div class="hero-cta-box">
           <p class="hero-cta-label">No brand yet?</p>
@@ -980,7 +1073,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
       </div>
     </div>
   </div>
-<div class="alt-section">
+<div class="alt-section disclose-panel" id="website-included">
     <div style="max-width:var(--max-w);margin:0 auto;">
       <p class="label mb-16">What's included</p>
       <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:16px;"><h2 class="h2">One Page Website</h2><span style="font-family:var(--font);font-size:clamp(22px,3vw,40px);font-weight:800;letter-spacing:-0.03em;">8,000 SEK <span style="font-family:var(--font-mono);font-size:12px;font-weight:400;color:var(--text-dim);">ex. moms</span></span></div>
@@ -1144,7 +1237,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
   <div class="ink-block">
     <div style="max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;">
       <div><h2 class="h2" id="w-foot-h" style="margin-bottom:10px;">Order your website.</h2><p id="w-foot-p" style="font-size:16px;">Configure above. You will see the full price before you pay.</p></div>
-      <button class="btn btn-accent" id="w-foot-btn" onclick="document.getElementById('website-config').scrollIntoView({behavior:'smooth'})">Get a price →</button>
+      <button class="btn btn-accent" id="w-foot-btn" onclick="document.getElementById('website-config').scrollIntoView({behavior:'smooth'})">Get started →</button>
     </div>
   </div>
 </div>
@@ -1508,7 +1601,30 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 const PAGES=['home','how-it-works','brand','website','work','pricing','contact','thank-you'];
 const CASES=['harry','90110','eddy'];
 const BRAND_BASE=12000,WEB_BASE=8000;
+/* The "What's included" disclosure. Opening scrolls the panel under the nav —
+   .disclose-panel carries scroll-margin-top for exactly that — because it opens
+   below the fold and a silent expansion off-screen reads as a dead click.
+   Closing does not scroll: the reader is already looking at the thing. */
+function toggleIncluded(which){
+  const panel=document.getElementById(which+'-included');
+  const btn=document.getElementById(which+'-included-toggle');
+  if(!panel||!btn)return;
+  const open=panel.classList.toggle('is-open');
+  btn.setAttribute('aria-expanded',open?'true':'false');
+  if(open)panel.scrollIntoView({behavior:'smooth',block:'start'});
+}
+/* Every panel closes on a view change, so arriving at a package page always
+   gives the same short path to the configurator — which is the point of the
+   disclosure. A panel left open from a previous visit would quietly undo it. */
+function closeAllIncluded(){
+  document.querySelectorAll('.disclose-panel.is-open').forEach(p=>{
+    p.classList.remove('is-open');
+    const b=document.getElementById(p.id+'-toggle');
+    if(b)b.setAttribute('aria-expanded','false');
+  });
+}
 function navigate(page){
+  closeAllIncluded();
   PAGES.forEach(p=>{const el=document.getElementById('page-'+p);if(el)el.classList.remove('active')});
   const t=document.getElementById('page-'+page);
   if(t){t.classList.add('active');if(!t.querySelector('footer')){const clone=document.getElementById('footer-template').content.cloneNode(true);t.appendChild(clone);}}
@@ -1532,8 +1648,12 @@ function mTotal(label,value,cta,fn){
   let inCfg=false,seeSum=false;
   const sync=()=>{const b=document.getElementById('mtotal');if(b)b.classList.toggle('show',inCfg&&!seeSum)};
   const wire=()=>{
+    // The top margin discounts the fixed nav, so it is read from --nav-h rather
+    // than repeated as a number. It was a hardcoded -56 against a 58px nav.
+    const navH=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h'))||0;
     ['brand-config','website-config'].forEach(id=>{const el=document.getElementById(id);if(!el)return;
-      new IntersectionObserver(e=>{inCfg=e[0].isIntersecting;sync()},{rootMargin:'-56px 0px -160px 0px'}).observe(el)});
+      new IntersectionObserver(e=>{inCfg=e[0].isIntersecting;sync()},
+        {rootMargin:`-${navH}px 0px -160px 0px`}).observe(el)});
     document.querySelectorAll('.order-summary').forEach(el=>{
       new IntersectionObserver(e=>{seeSum=e[0].isIntersecting;sync()},{threshold:0.25}).observe(el)});
   };
@@ -1615,7 +1735,7 @@ function updateWebSummary(){
   document.getElementById('ws-route').style.display=needBrand?'block':'none';
   const fh=document.getElementById('w-foot-h'),fp=document.getElementById('w-foot-p'),fb=document.getElementById('w-foot-btn');
   if(needBrand){fh.textContent='Start with the brand.';fp.textContent='A website needs one to be built from.';fb.textContent='→ Order a brand';fb.onclick=()=>navigate('brand');}
-  else{fh.textContent='Order your website.';fp.textContent='Configure above. You will see the full price before you pay.';fb.textContent='Get a price →';fb.onclick=()=>document.getElementById('website-config').scrollIntoView({behavior:'smooth'});}
+  else{fh.textContent='Order your website.';fp.textContent='Configure above. You will see the full price before you pay.';fb.textContent='Get started →';fb.onclick=()=>document.getElementById('website-config').scrollIntoView({behavior:'smooth'});}
   const type=document.querySelector('input[name="w-type"]:checked');
   const build=document.querySelector('input[name="w-build"]:checked');
   const platform=document.querySelector('input[name="w-platform"]:checked');
