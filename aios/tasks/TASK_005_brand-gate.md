@@ -136,7 +136,7 @@ Follow the change protocol in that file: this file first, then `index.html`, the
 
 ---
 
-## Append to `aios/DECISIONS.md`
+## Append to `aios/LOG.md`
 
 Under **Product**:
 

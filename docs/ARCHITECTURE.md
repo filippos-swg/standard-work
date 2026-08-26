@@ -8,7 +8,7 @@ How the site is built. Read this before changing structure, routing, or state. F
 
 The entire site is `index.html`. Markup, styles, and script live in that one file. There is no build step, no bundler, no dependencies, and no backend (yet). To change the site, edit `index.html`.
 
-This is deliberate — see `docs/DECISIONS.md`. The constraint holds until the site outgrows it (roughly: more than ~10 views, or a need for shared components across files).
+This is deliberate — see `aios/LOG.md`. The constraint holds until the site outgrows it (roughly: more than ~10 views, or a need for shared components across files).
 
 ---
 

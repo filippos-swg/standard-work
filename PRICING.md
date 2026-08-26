@@ -3,7 +3,7 @@
 **This file is the single source of truth for all prices.**
 
 `index.html` is the live implementation and must match this file exactly.
-`PROJECT_BRIEF.md`, `AI_HANDOFF.md`, and `README.md` reference this file — they do not restate prices.
+`aios/CANON.md`, `README.md` and `tests.html` reference this file — they do not restate prices.
 
 Currency: SEK. All prices are **ex. moms (excluding VAT)**. VAT is added at checkout.
 
@@ -87,7 +87,7 @@ discovered in three months.
 It was in both places and both were added to the total, so a client who said
 they needed copy help and then ticked the add-on paid 2,000 twice for one job.
 The add-on is gone; the copy step owns it and carries two tiers where the add-on
-had one. Fixed 2026-08-26 — see `aios/DECISIONS.md`.
+had one. Fixed 2026-08-26 — see `aios/LOG.md`.
 
 The prices themselves are unchanged: writing was 2,000 as an add-on and is 2,000
 in the copy step. Editing at 1,000 is a tier the add-on never had, and it is one
