@@ -66,7 +66,7 @@ Single source of the site and its operating docs. Trade-off: site and AIOS docs 
 
 **Warm grey ground (#E8E6E1) with orange-red accent (#E84500).**
 Reads as precise and confident, not SaaS-generic or agency-decorative. Trade-off: orange is loud; it is rationed to CTAs, step bars, and the brand dot.
-*Superseded on the ground 2026-08-25 — see "The network ground" below. The accent is unchanged.*
+*Superseded twice, 2026-08-25/26. The ground is now #F2F0EA — see "The network ground". The rationing clause is withdrawn — see "The accent is a surface". The accent value itself is unchanged.*
 
 **Outfit + JetBrains Mono + UnifrakturMaguntia.**
 Display/body, labels/metadata, and the guild mark respectively. Trade-off: three families and a blackletter face add font weight; loaded from Google Fonts CDN.
@@ -179,22 +179,63 @@ half the site outside this repo behind a vendor and a manual upload step.
 Filippos owns the master repo and wants one place. Trade-off: the repo is no
 longer text-only, and image churn will show in history.
 
+**The accent is a surface, not a ration. Filippos, 2026-08-26.**
+The rationing clause above is withdrawn. The 2026-08-25 handover puts two
+full-bleed accent sections on the homepage, and Simon's latest stands.
+
+This is not a loosening so much as a correction: the network already treats an
+accent as a *ground* rather than only as a highlight — the Guild's About page
+inverts to a full red ground, Seriously, Wow. runs full purple bands — and
+Standard Work was the odd one out in treating its orange as something to spend
+sparingly. Rationing also carried a hidden cost: it is why the bands were set in
+white in the first place, because a surface nobody expected to be a surface
+never got the contrast work a surface needs.
+
+What replaces the ration is a *rule*, and it is stricter than the ration was in
+the one place that matters:
+
+  · an accent surface is `.accent-block` or `.step-header` and therefore a token
+    swap — never a hand-written background
+  · type on it is `--on-accent`, and there is no dim tier on that ground
+  · the accent as INK is still bounded by size: `--accent` ≥24px,
+    `--accent-dark` below. That limit is arithmetic and does not relax.
+
+Trade-off: the homepage is louder, and two large orange fields put more weight
+on the orange staying exactly where it is. Accepted knowingly, alongside the
+decision to keep `#E84500` rather than separate it from the Guild's red.
+
 ---
 
 ## Open — Filippos, not settled here
 
+- **Copy help is billable twice — this one is a defect, not a price question.**
+  Step 05 `w-copy` "Need help writing" is `+2,000` and carries
+  `data-label="Copy support"`. Step 06 `w-addon` "Copy support" is another
+  `+2,000`. Both are summed in `startCheckout`, so a client who says they need
+  copy and then ticks the copy add-on pays **4,000 for one job**, and the order
+  summary lists "Copy support" twice. Reproduced: 8,000 → 10,000 → 12,000.
+  Present in the pristine handover as well, so it predates the visual pass —
+  verified by running the same probe against both builds. Either make the two
+  mutually exclusive or delete one of them.
+
+- **Rush is Brand-only.** `startCheckout` guards the 1,000 rush fee with
+  `isBrand`, and the Website configurator has no deadline step at all. A rushed
+  website is currently free. The handover's price table lists "Rush (14-day
+  window) 1,000" without saying it applies to one package. Intended or not, it
+  should be written down.
+
 - **Every new price in the 2026-08-25 handover is an invented placeholder** and
-  is not in `PRICING.md`. Existing prices are untouched.
+  is not in `PRICING.md`. Of the eighteen priced items in the configurator,
+  eleven match `PRICING.md` exactly and **seven do not appear in it at all**:
+  SEO setup 1,500; the four brand-prep items (logo 1,500, typeface 1,000,
+  palette 750, imagery 750); "Design, build, publish" 1,000; and the two copy
+  options (rough copy 1,000, need help writing 2,000). `PRICING.md` still says
+  it is "the single source of truth" and was last updated 2026-06-16.
 - **Product names are inconsistent** — *Basic Brand Tool Kit* vs *Brand Tool Kit*,
   *One Page Website* vs *Website*. The plain form reaches the Stripe receipt.
 - **A real Stripe transaction with add-ons selected** has not been verified.
   Nothing automated can prove the charge matches the order summary, and it is
   the one path where a bug costs money.
-- **The accent-rationing rule is now contradicted.** This file says orange is
-  rationed; the handover adds two full-bleed accent sections to the homepage.
-  The network licenses accent-as-surface — the Guild's red About ground, Seriously
-  Wow's purple bands — so the reversal is consistent with the system rather than
-  against it. Confirm the rule has changed, or one band goes back to white.
 - **The handover claims nine test files and 126 assertions.** They are not in the
   package and not in this repo — only `review/prototype-opens-anywhere.html`
   shipped. The behaviour was re-verified by hand against the pristine build

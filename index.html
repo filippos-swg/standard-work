@@ -383,7 +383,10 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 .footer-desc{font-size:14px;color:var(--text-dim);line-height:1.6;max-width:420px;margin-top:8px}
 .footer-email{font-family:var(--font-mono);font-size:13px;color:var(--text-dim);text-decoration:none}
 .footer-email:hover{color:var(--accent-dark)}
-.footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;padding-top:28px;border-top:1px solid var(--border-light);font-family:var(--font-mono);font-size:11px;color:var(--text-dim);letter-spacing:0.04em}
+/* The margin-top is what stops the two hairlines — this one and .network's —
+   from reading as a double rule. Both siblings separate the same two rows by
+   roughly this much; at 28px they sit close enough to look like an accident. */
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;margin-top:clamp(32px,4vw,56px);padding-top:28px;border-top:1px solid var(--border-light);font-family:var(--font-mono);font-size:11px;color:var(--text-dim);letter-spacing:0.04em}
 .footer-nav-links{display:flex;gap:24px;flex-wrap:wrap}
 .footer-nav-link{color:var(--text-dim);text-decoration:none;cursor:pointer;transition:color 0.12s}
 .footer-nav-link:hover{color:var(--text)}
@@ -392,18 +395,37 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
    for a site whose whole argument is that it belongs to something is a strange
    omission. Two links, in the mono voice, sitting on the same hairline the rest
    of the footer uses. */
-.footer-guild{display:flex;align-items:baseline;justify-content:flex-end;gap:12px;flex-wrap:wrap;margin-top:48px;padding-top:32px;border-top:1px solid var(--border-light);gap:14px 32px}
-.footer-guild-text{font-family:var(--font);font-size:14px;font-weight:400;color:var(--text-dim)}
+.network{display:flex;align-items:baseline;justify-content:flex-end;flex-wrap:wrap;gap:14px 32px;margin-top:48px;padding-top:32px;border-top:1px solid var(--border-light)}
 /* THE BLACKLETTER IS GONE. UnifrakturMaguntia stood in for a Guild reference
    that did not have a lockup yet. It has one now, and seriouslywow.com retired
    its own blackletter for the same reason — Standard Work was the last site in
    the network still setting the Guild's name in a face the Guild does not use.
    It is the display face at 15px now, which is what the siblings do, and it
    takes a whole font file off the page. */
-.fg-item{display:inline-flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-.fg-label{font-family:var(--font-mono);font-size:11px;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--text-dim)}
-.footer-group-link{font-family:var(--font-display);font-size:15px;font-weight:700;letter-spacing:-0.01em;color:var(--text);text-decoration:none;transition:color 0.12s;white-space:nowrap}
-.footer-group-link:hover{color:var(--accent-dark)}
+/* ============================================================================
+   THE NETWORK LINE. One component, shared verbatim across all three sites —
+   same class names, same markup shape, same place in the footer: the last row
+   above the closing lock. sillywizardsguild.com and seriouslywow.com carry the
+   identical block. Only two things differ per site, and both on purpose:
+
+     the LABEL, because each site occupies a different position in the group —
+       the Guild names its studios, the studios name their parent and each other
+
+     the FACE of .network-link, because each site sets it in its own display
+       face, and the Guild's is scoped to its hero by that site's own rule, so
+       there it is the grotesk. A shared skeleton wearing three faces, which is
+       the whole design of the network.
+
+   THE LABEL IS A SENTENCE, NOT A COLUMN HEADING, so it is the body face in
+   sentence case rather than the mono voice. "Standard Work is a part of the
+   guild of" set in 11px uppercase mono at .14em tracking is a shout, and it is
+   half the width of the footer. The short labels ride the same style so the row
+   has one voice rather than two.
+   ========================================================================== */
+.network-item{display:inline-flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.network-label{font-family:var(--font);font-size:14px;font-weight:400;color:var(--text-dim)}
+.network-link{font-family:var(--font-display);font-size:18px;font-weight:700;letter-spacing:-0.015em;color:var(--text);text-decoration:none;transition:color 0.12s;white-space:nowrap}
+.network-link:hover{color:var(--accent-dark)}
 .thankyou-wrap{min-height:calc(100vh - 58px);display:flex;align-items:center;padding:var(--pad-section) var(--pad-x)}
 .thankyou-step{display:flex;gap:20px;padding:18px 0;border-bottom:1px solid var(--border-light)}
 .thankyou-step:first-child{border-top:1px solid var(--border-light)}
@@ -430,7 +452,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
   .options-grid{grid-template-columns:1fr 1fr}
   .footer-top{flex-direction:column;align-items:flex-start}
   .footer-bottom{flex-direction:column;gap:12px;text-align:center}
-  .footer-guild{justify-content:flex-start;flex-wrap:wrap;gap:14px}
+  .network{justify-content:flex-start}
 }
 /* ---- WORK VIEW ---- added for case studies. Tokens only, nothing hardcoded. ---- */
 .case-index{margin-top:48px}
@@ -1460,6 +1482,16 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
       </div>
       <a href="mailto:hello@standardwork.design" class="footer-email">hello@standardwork.design</a>
     </div>
+    <!-- Filippos's sentence is untouched and still governs only the Guild:
+         "a part of the guild of" is not true of Seriously, Wow., which is a
+         sibling studio, and letting one sentence introduce both would have made
+         the footer say something false. "Sister studio" is the only new copy. -->
+    <div class="network">
+      <span class="network-item"><span class="network-label">Standard Work is a part of the guild of</span>
+        <a class="network-link" href="https://sillywizardsguild.com" rel="noopener">Silly Wizards Guild</a></span>
+      <span class="network-item"><span class="network-label">Sister studio</span>
+        <a class="network-link" href="https://seriouslywow.com" rel="noopener">Seriously, Wow.</a></span>
+    </div>
     <div class="footer-bottom">
       <span>© <span id="yr">2026</span> Standard Work™</span>
       <div class="footer-nav-links">
@@ -1467,19 +1499,6 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         <a class="footer-nav-link" onclick="navigate('pricing')">Fixed pricing</a>
         <a class="footer-nav-link" onclick="navigate('contact')">Contact</a>
       </div>
-    </div>
-    <!-- THE NETWORK LINE. Filippos's sentence is untouched and still governs
-         only the Guild, because "a part of the guild of" is not true of
-         Seriously, Wow. — that is a sibling studio, not a guild, and letting one
-         sentence introduce both would have made the footer say something false.
-         "Sister studio" is the only new copy on the page: two words, in the mono
-         label voice both siblings use for exactly this. Delete the second .fg-item
-         and the line reads as it always did. -->
-    <div class="footer-guild">
-      <span class="fg-item"><span class="footer-guild-text">Standard Work is a part of the guild of</span>
-        <a class="footer-group-link" href="https://www.sillywizardsguild.com" target="_blank" rel="noopener">Silly Wizards Guild</a></span>
-      <span class="fg-item"><span class="fg-label">Sister studio</span>
-        <a class="footer-group-link" href="https://seriouslywow.com" target="_blank" rel="noopener">Seriously, Wow.</a></span>
     </div>
   </div>
 </footer>
