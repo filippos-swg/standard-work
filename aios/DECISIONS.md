@@ -179,6 +179,46 @@ half the site outside this repo behind a vendor and a manual upload step.
 Filippos owns the master repo and wants one place. Trade-off: the repo is no
 longer text-only, and image churn will show in history.
 
+**CHECKOUT WAS BROKEN BY THE HANDOVER, and is fixed. 2026-08-26.**
+`startCheckout` built its payload as `{totalSEK, description, cancelPath}` while
+`description` was never declared — the 2026-08-25 rewrite deleted the definition
+and kept the use. The shorthand referenced an undeclared identifier, so the
+function threw a ReferenceError before reaching `fetch()`: the button disabled
+itself, said "Preparing checkout…", and stayed dead. Both packages. Nobody could
+pay.
+
+Live `standardwork.design` (98446e3) still defines it, so this was never in
+production — it would have shipped the moment the handover merged. It is exactly
+the path HANDOVER.md said only a manual transaction could prove, and the package
+broke it.
+
+`description` is also the PRODUCT NAME ON THE RECEIPT — `create-checkout.js`
+maps it to `line_items[0][price_data][product_data][name]` and `metadata[package]`.
+It read "Brand for Your Business", a THIRD pair of names, which is why
+HANDOVER.md's "the plain form is what reaches the Stripe receipt" was wrong.
+
+**Product names: Brand Tool Kit and Website, everywhere. Filippos, 2026-08-26.**
+"Basic Brand Tool Kit" and "One Page Website" are retired — one instance each,
+both product-page headings. *Basic* is a discount word on a fixed-price premium
+product, and *One Page Website* names a limitation where *Website* names an
+outcome. The page, the order summary and the Stripe receipt now agree, which
+they never have. Trade-off: the receipt loses the "for Your Business" framing a
+customer may have seen on an earlier invoice.
+
+**Six of the seven placeholder prices are canonical. Filippos, 2026-08-26.**
+Brand prep — logo 1,500, typeface 1,000, colour palette 750, imagery direction
+750 — plus publishing 1,000 and SEO setup 1,500. The four prep items sum to
+exactly `PREP_MAX` 4,000 and their weighting holds up: logo is the most work,
+palette and imagery the least. SEO matches Image pack at 1,500. All are now in
+`PRICING.md`, which is reconciled against the build — 19 priced controls, all
+agreeing, where ten had been absent from a file calling itself the single source
+of truth.
+
+**Rush stays open.** 1,000 on a 12,000 package is 8.3%, where a queue-jump
+premium normally runs 15–25%; and it applies to Brand only, because the Website
+configurator has no deadline step, so a rushed website is free. The rate and the
+asymmetry are both still Filippos's.
+
 **Copy is priced once, in the copy step. The duplicate add-on is deleted.
 2026-08-26.**
 "Need help writing" in step 05 and the "Copy support" add-on in step 06 were the
@@ -229,21 +269,11 @@ decision to keep `#E84500` rather than separate it from the Guild's red.
 
 ## Open — Filippos, not settled here
 
-- **Rush is Brand-only.** `startCheckout` guards the 1,000 rush fee with
-  `isBrand`, and the Website configurator has no deadline step at all. A rushed
-  website is currently free. The handover's price table lists "Rush (14-day
-  window) 1,000" without saying it applies to one package. Intended or not, it
-  should be written down.
-
-- **Every new price in the 2026-08-25 handover is an invented placeholder** and
-  is not in `PRICING.md`. Of the eighteen priced items in the configurator,
-  eleven match `PRICING.md` exactly and **seven do not appear in it at all**:
-  SEO setup 1,500; the four brand-prep items (logo 1,500, typeface 1,000,
-  palette 750, imagery 750); "Design, build, publish" 1,000; and the two copy
-  options (rough copy 1,000, need help writing 2,000). `PRICING.md` still says
-  it is "the single source of truth" and was last updated 2026-06-16.
-- **Product names are inconsistent** — *Basic Brand Tool Kit* vs *Brand Tool Kit*,
-  *One Page Website* vs *Website*. The plain form reaches the Stripe receipt.
+- **The rush surcharge.** 1,000 on a 12,000 package is 8.3%; a queue-jump
+  premium normally runs 15–25%. And it applies to Brand only — the Website
+  configurator has no deadline step, so a rushed website is free. Both the rate
+  and the asymmetry are open. Flagged in `PRICING.md` too, so the number is not
+  mistaken for settled.
 - **A real Stripe transaction with add-ons selected** has not been verified.
   Nothing automated can prove the charge matches the order summary, and it is
   the one path where a bug costs money.

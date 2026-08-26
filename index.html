@@ -999,7 +999,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
   <div class="alt-section disclose-panel" id="brand-included">
     <div style="max-width:var(--max-w);margin:0 auto;">
       <p class="label mb-16">What's included</p>
-      <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:16px;"><h2 class="h2">Basic Brand Tool Kit</h2><span style="font-family:var(--font);font-size:clamp(22px,3vw,40px);font-weight:800;letter-spacing:-0.03em;">12,000 SEK <span style="font-family:var(--font-mono);font-size:12px;font-weight:400;color:var(--text-dim);">ex. moms</span></span></div>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:16px;"><h2 class="h2">Brand Tool Kit</h2><span style="font-family:var(--font);font-size:clamp(22px,3vw,40px);font-weight:800;letter-spacing:-0.03em;">12,000 SEK <span style="font-family:var(--font-mono);font-size:12px;font-weight:400;color:var(--text-dim);">ex. moms</span></span></div>
       <div class="included-list">
         <div class="included-item"><div class="included-title">Brand direction</div><div class="included-desc">Keywords and statements describing what your business does, how it operates, and why it exists. Guides all design decisions.</div></div>
         <div class="included-item"><div class="included-title">Logo</div><div class="included-desc">A professionally designed logo based on the agreed direction. Clean, usable, and appropriate for your business.</div></div>
@@ -1132,7 +1132,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 <div class="alt-section disclose-panel" id="website-included">
     <div style="max-width:var(--max-w);margin:0 auto;">
       <p class="label mb-16">What's included</p>
-      <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:16px;"><h2 class="h2">One Page Website</h2><span style="font-family:var(--font);font-size:clamp(22px,3vw,40px);font-weight:800;letter-spacing:-0.03em;">8,000 SEK <span style="font-family:var(--font-mono);font-size:12px;font-weight:400;color:var(--text-dim);">ex. moms</span></span></div>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:16px;"><h2 class="h2">Website</h2><span style="font-family:var(--font);font-size:clamp(22px,3vw,40px);font-weight:800;letter-spacing:-0.03em;">8,000 SEK <span style="font-family:var(--font-mono);font-size:12px;font-weight:400;color:var(--text-dim);">ex. moms</span></span></div>
       <div class="included-list">
         <div class="included-item"><div class="included-title">One scrollable page</div><div class="included-desc">A single-page scrollable website — the most effective format for small businesses and founders.</div></div>
         <div class="included-item"><div class="included-title">Clear content sections</div><div class="included-desc">Structured content areas for your offer, about section, and contact details.</div></div>
@@ -1841,6 +1841,20 @@ function startCheckout(type){
     addonTotal+=sumPriced(['w-build','w-copy']).total;}
   if(isBrand&&rushDue('b-deadline','b-deadline-date'))addonTotal+=RUSH;
   const total=base+addonTotal;
+  /* THIS LINE WAS DELETED BY THE 2026-08-25 HANDOVER AND ITS USE WAS NOT, so
+     the payload below referenced an undeclared identifier and startCheckout
+     threw a ReferenceError before reaching fetch(). The button disabled itself,
+     said "Preparing checkout…", and stayed dead. Both packages. Nobody could
+     pay. Live standardwork.design (98446e3) still defines it, so this was never
+     in production — it would have shipped on merge.
+
+     IT IS ALSO THE PRODUCT NAME ON THE STRIPE RECEIPT: create-checkout.js maps
+     it to line_items[0][price_data][product_data][name] and to
+     metadata[package]. It used to read "Brand for Your Business" — a THIRD pair
+     of names, which is why HANDOVER.md's claim that "the plain form is what
+     reaches the Stripe receipt" was wrong. Filippos settled on the plain pair,
+     2026-08-26, so the page, the order summary and the receipt now agree. */
+  const description=isBrand?'Brand Tool Kit':'Website';
   const cancelPath=isBrand?'#brand':'#website';
   const btn=document.getElementById(isBrand?'brand-checkout-btn':'website-checkout-btn');
   btn.disabled=true;btn.textContent='Preparing checkout…';
