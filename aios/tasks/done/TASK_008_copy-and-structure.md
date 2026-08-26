@@ -1,6 +1,6 @@
 # TASK 008 — Copy, structure and the two anatomy diagrams
 
-**Status: Proposed** · Simon's session, 22–24 August 2026
+**Status: Proposed** · Simon's session, 2026-08-22 to 2026-08-24
 **Covers:** everything not already in TASK 004–007. Merge after those, or all together.
 
 ---
