@@ -506,6 +506,127 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
    centring the wrapper on viewports wider than 1280. */
 
 /* ============================================================================
+   THE CONTACT PAGE — the Guild's design, on Standard Work's colours.
+
+   Same structure, same class names, same measurements as
+   sillywizardsguild.com/contact.html, so the three sites share one contact page
+   rather than three. Only the ground, the accent and the names differ. Ported
+   2026-08-27 at Filippos's request.
+
+   THE FORM IS THE ACCENT SURFACE, reached by a token swap — the same mechanism
+   .accent-block and .ink-block already use here, and the same one .page-red
+   uses on the Guild. Not a forked component style.
+
+   ONE VALUE COULD NOT COME ACROSS, and it is the interesting part. The Guild
+   sets --mono-dim to rgba(0,0,0,.78) inside its form: 4.83 on #FF3D00, which
+   carries its labels and placeholders. On #E84500 that same .78 is 3.66 and
+   fails — measured, not assumed, and it is the same finding as the orange
+   bands: THIS GROUND HAS NO LEGAL DIM TIER. So labels, placeholders and rules
+   inside the form are full ink at 4.63. Slightly heavier than the Guild's, and
+   the only alternative was type nobody can read.
+   ========================================================================== */
+.page-head{padding:clamp(56px,8vw,110px) var(--pad-x) clamp(40px,5vw,72px);max-width:var(--max-w);margin:0 auto}
+.page-head .display{margin-bottom:clamp(24px,3vw,40px)}
+.page-head .lead{font-size:clamp(19px,2.2vw,24px);line-height:1.45;max-width:var(--measure);color:var(--text-dim)}
+
+.contact-layout{
+  display:grid;grid-template-columns:1fr minmax(300px,460px);
+  gap:clamp(32px,4.5vw,72px);align-items:start;
+  max-width:var(--max-w);margin:0 auto;
+  padding:0 var(--pad-x) clamp(72px,10vw,140px);
+}
+.contact-main{display:flex;flex-direction:column;gap:clamp(28px,3.6vw,48px)}
+/* The address spans both columns so it keeps the size the clamp asks for. In a
+   single column it broke mid-domain — "…standardwork.d / esign". */
+.contact-mail{grid-column:1/-1}
+.mail{
+  display:inline-flex;align-items:center;gap:.4em;flex-wrap:wrap;
+  font-family:var(--font-display);
+  font-size:clamp(22px,5.6vw,72px);font-weight:700;letter-spacing:-0.03em;line-height:1.05;
+  color:var(--text);text-decoration:none;transition:color .15s;word-break:break-word;
+}
+.mail:hover{color:var(--accent-dark)}
+/* The one graphic accent on this page. --accent as a filled mark is 3.49, which
+   clears the 3.0 non-text floor; the glyph inside it is --on-accent. */
+.chip{
+  display:inline-grid;place-items:center;width:1.55em;height:1.55em;line-height:1;
+  background:var(--accent);color:var(--on-accent);font-size:.50em;border-radius:50%;
+  flex:none;transform:translateY(-.34em);padding-bottom:.2em;
+}
+.contact-block{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.contact-block a,.contact-block address{color:var(--text);text-decoration:none;font-style:normal;font-size:15px}
+.contact-block a:hover{color:var(--accent-dark)}
+.contact-block.mono,.contact-block.mono a,.contact-block.mono address,.contact-block.mono span{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:var(--track-mono);
+  text-transform:uppercase;color:var(--text-dim);
+}
+.contact-block.mono a:hover{color:var(--accent-dark)}
+.prose{max-width:var(--measure);color:var(--text-dim);font-size:clamp(15px,1.6vw,17px);line-height:1.65}
+.prose p + p{margin-top:1.2em}
+.mono-up{text-transform:uppercase}
+.todo-inline{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:var(--track-mono);
+  color:var(--text-dim);background:var(--greige);padding:2px 6px;text-transform:uppercase;
+}
+
+/* --- the enquiry form ----------------------------------------------------- */
+.form{
+  --bg:#E84500;
+  --text:#141414;
+  --text-dim:#141414;              /* no legal dim tier on this ground — see above */
+  --accent:#F2F0EA;                /* the mark was orange; on orange it is paper */
+  --accent-dark:#141414;
+  --border-light:rgba(20,20,20,.34);
+  --greige:rgba(20,20,20,.16);
+  background:var(--bg);color:var(--text);
+  padding:clamp(24px,3vw,40px);display:flex;flex-direction:column;gap:16px;
+  border-radius:var(--radius);
+}
+.form ::selection{background:var(--text);color:var(--bg)}
+.form-h{font-family:var(--font-display);font-size:clamp(19px,2.2vw,24px);font-weight:700;letter-spacing:-.015em;line-height:1.3;margin-bottom:4px}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:var(--track-mono);
+  text-transform:uppercase;color:var(--text-dim);
+}
+.field input,.field textarea,.field select{
+  font:inherit;font-size:16px;color:var(--text);
+  background:transparent;border:0;border-bottom:1px solid var(--border-light);
+  padding:8px 0;width:100%;transition:border-color .15s;border-radius:0;
+}
+.field textarea{resize:vertical;min-height:88px;line-height:1.6}
+/* FULL INK, NO OPACITY. The Guild dims its placeholders to .78 because that is
+   4.83 on its red. The same treatment here is 3.37 — the ground has no legal
+   dim tier, which is stated at the top of this block and which I then ignored
+   on this one line. A placeholder is a hint, not a label, but it still has to
+   be read. */
+.field ::placeholder{color:var(--text-dim);opacity:1}
+.field input:focus,.field textarea:focus,.field select:focus{outline:0;border-bottom-color:var(--text)}
+.field select{appearance:none;-webkit-appearance:none;padding-right:1.6em;cursor:pointer}
+/* The open list is the OS's surface, so it takes two tokens that never invert.
+   Left alone, several platforms render black-on-orange or orange-on-white. */
+.field select option{color:#141414;background:#FFFFFF}
+.field--select{position:relative}
+.field--select::after{
+  content:'';position:absolute;right:2px;bottom:18px;width:7px;height:7px;
+  border-right:1.5px solid var(--text);border-bottom:1.5px solid var(--text);
+  transform:rotate(45deg);pointer-events:none;
+}
+/* A field a person never sees and a bot fills in. */
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.send{
+  align-self:flex-start;margin-top:8px;cursor:pointer;
+  background:var(--text);color:var(--bg);border:0;border-radius:100px;
+  font-family:var(--font-mono);font-size:11px;letter-spacing:var(--track-mono);
+  text-transform:uppercase;padding:14px 26px;transition:opacity .15s;min-height:44px;
+}
+.send:hover{opacity:.86}
+
+@media(max-width:900px){
+  .contact-layout{grid-template-columns:1fr;padding-bottom:clamp(56px,8vw,96px)}
+}
+
+/* ============================================================================
    THE SPECULATIVE ONE-PAGERS — Simon's 2026-08-27 package, MOCK-PLACEMENT.
 
    Every case carries a speculative Standard Work one-pager. They are NOT
@@ -1792,67 +1913,99 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 
 <!-- CONTACT -->
 <div id="page-contact" class="page">
-  <div style="background:var(--surface);border-bottom:1.5px solid var(--border);">
-    <div style="max-width:var(--max-w);margin:0 auto;padding:clamp(56px,8vw,100px) var(--pad-x);">
-      <div class="hero-split">
-        <div style="max-width:640px;">
-          <p class="label mb-16">Contact</p>
-          <h1 class="h1" style="margin-bottom:clamp(16px,2vw,24px);">Contact<span class="accent">.</span></h1>
-          <p class="body-lg muted" style="margin-bottom:14px;">Standard Work is designed to be self-serve. We don't offer consultations by default.</p>
-          <p class="body-lg muted">If you have a specific question before starting, you can reach us here. Most questions are answered on the site.</p>
-        </div>
-        <div class="hero-cta-box">
-          <p class="hero-cta-label">Ready to start?</p>
-          <button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a brand</button>
-          <button class="btn btn-outline" onclick="navigate('website')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a website</button>
-        </div>
+
+  <section class="page-head">
+    <h1 class="display">Contact</h1>
+    <div class="page-head-row">
+      <p class="lead">Tell us what the work has to do. Most of it is answered on the site — this is for the part that isn't.</p>
+    </div>
+  </section>
+
+  <section class="contact-layout">
+
+    <!-- The address is a direct child of the grid, spanning both columns, so it
+         sets at full size on one line. In the left column alone it broke
+         mid-domain, "…standardwork.d / esign". Same fix as the Guild's. -->
+    <a class="mail contact-mail" href="mailto:hello@standardwork.design">hello@standardwork.design<span class="chip" aria-hidden="true">&rarr;</span></a>
+
+    <div class="contact-main">
+      <div class="contact-block mono">
+        <address>Stenkolsgatan 5, 417 07 G&ouml;teborg</address>
+        <a href="tel:+46709411511">070 941 15 11</a>
+        <span>LinkedIn <span class="todo-inline">todo &mdash; url</span></span>
+        <span>Instagram <span class="todo-inline">todo &mdash; url</span></span>
+      </div>
+
+      <div class="prose">
+        <p>Standard Work is built to be self-serve. Both packages are priced on the site and you can order either without speaking to anyone.</p>
+        <p>Write if you are unsure which one fits, if you have a practical question about scope or delivery, or if you are checking whether we have room. If you already know what you need, ordering is faster than this form.</p>
+      </div>
+
+      <div class="contact-block">
+        <span class="foot-h">Group</span>
+        <a href="https://sillywizardsguild.com" rel="noopener">Silly Wizards Guild &rarr;</a>
+        <a href="https://seriouslywow.com" rel="noopener">Seriously, Wow. &rarr;</a>
       </div>
     </div>
-  </div>
-  <div style="padding:var(--pad-section) var(--pad-x);max-width:var(--max-w);margin:0 auto;">
-    <div class="two-col">
-      <div><p class="label mb-16">Email</p><a href="mailto:hello@standardwork.design" style="font-family:var(--font);font-size:clamp(18px,2vw,28px);font-weight:700;color:var(--text);text-decoration:none;letter-spacing:-0.02em;">hello@standardwork.design</a></div>
-      <div>
-        <p class="label mb-16">When to get in touch</p>
-        <p class="body muted" style="margin-bottom:16px;">This page is best used if:</p>
-        <ul class="list-clean"><li>You're unsure which service fits your situation</li><li>You have a practical question about scope or delivery</li><li>You're checking availability before starting</li></ul>
-        <p class="body muted" style="margin-top:20px;">If you already know what you need, the fastest way forward is to start directly.</p>
+
+    <!-- Netlify handles the POST: data-netlify plus the hidden form-name field.
+         No script, no dependency. The card is the accent surface, reached
+         through a token swap exactly as .accent-block reaches it. The honeypot
+         is a field a person never sees and a bot fills in. -->
+    <form class="form" name="contact" method="POST" data-netlify="true" netlify-honeypot="company-url">
+      <input type="hidden" name="form-name" value="contact">
+      <p class="form-h">Tell us what you need.</p>
+      <p class="hp">
+        <label>Do not fill this in <input name="company-url" tabindex="-1" autocomplete="off"></label>
+      </p>
+      <div class="field">
+        <label for="cf-name">Name</label>
+        <input id="cf-name" name="name" type="text" autocomplete="name" required>
       </div>
-    </div>
-  </div>
-  <div class="alt-section">
-    <div style="max-width:var(--max-w);margin:0 auto;">
-      <p class="label mb-16">Enquiry form</p>
-      <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:16px;"><h2 class="h2">Send us a message.</h2><p class="body muted">We'll come back with the next step.</p></div>
-      <div id="contact-form-wrap">
-        <form class="form-grid" id="contact-form" name="contact" data-netlify="true" onsubmit="submitContact(event)">
-          <input type="hidden" name="form-name" value="contact">
-          <div class="form-row">
-            <div class="form-group"><label class="form-label">Name</label><input class="form-input" type="text" name="name" placeholder="Your name" required></div>
-            <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" name="email" placeholder="your@email.com" required></div>
-          </div>
-          <div class="form-row">
-            <div class="form-group"><label class="form-label">Company</label><input class="form-input" type="text" name="company" placeholder="Company or project name"></div>
-            <div class="form-group"><label class="form-label">Website or social</label><input class="form-input" type="text" name="website" placeholder="Any existing presence"></div>
-          </div>
-          <div class="form-group"><label class="form-label">What do you need?</label><select class="form-select" name="service"><option value="" disabled selected>Select a service</option><option>Brand Tool Kit</option><option>Website</option><option>Brand first, website after</option><option>Not sure yet</option></select></div>
-          <div class="form-group"><label class="form-label">Current situation</label><textarea class="form-textarea" name="situation" placeholder="Brief description of where you are now..."></textarea></div>
-          <div class="form-group"><label class="form-label">Anything else we should know?</label><textarea class="form-textarea" name="other" placeholder="Deadline, budget, specific questions..."></textarea></div>
-          <div><button type="submit" class="btn btn-accent" id="submit-btn">Submit project request<span class="btn-ico btn-ico--trail" aria-hidden="true">→</span></button></div>
-        </form>
+      <div class="field">
+        <label for="cf-company">Company</label>
+        <input id="cf-company" name="company" type="text" autocomplete="organization">
       </div>
-      <div class="form-success" id="contact-success">
-        <p class="label mb-16" style="color:var(--accent-dark);">Received</p>
-        <p class="h2" style="margin-bottom:14px;">Thanks.</p>
-        <p class="body-lg muted" style="margin-bottom:8px;">Your Standard Work request has been received.</p>
-        <p class="body muted" style="margin-bottom:32px;">We'll review the scope and come back with the next step.</p>
-        <button class="btn btn-outline" onclick="navigate('home')"><span class="btn-ico btn-ico--lead" aria-hidden="true">←</span>Back to home</button>
+      <div class="field">
+        <label for="cf-mail">Mail</label>
+        <input id="cf-mail" name="mail" type="email" autocomplete="email" required>
       </div>
-    </div>
-  </div>
-  <div style="background:var(--surface);border-top:1.5px solid var(--border-light);padding:var(--pad-section) var(--pad-x);">
-    <div style="max-width:var(--max-w);margin:0 auto;"><h2 class="h2" style="margin-bottom:28px;">Or start directly.</h2><div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Start building your brand</button><button class="btn btn-outline" onclick="navigate('website')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Start building your website</button></div></div>
-  </div>
+      <!-- REQUIRED STOPS AT THREE, as on the Guild. Somebody writing this early
+           may not know their timing yet — that is a reason to write, not a
+           reason to be blocked by a form. -->
+      <div class="field">
+        <label for="cf-objective">What needs to happen?</label>
+        <textarea id="cf-objective" name="objective" rows="4" required></textarea>
+      </div>
+      <!-- THE OPTIONS ARE STANDARD WORK'S, not the Guild's. Listing "Motion or
+           film" here would offer something this studio does not sell. -->
+      <div class="field field--select">
+        <label for="cf-engagement">What kind of work?</label>
+        <select id="cf-engagement" name="engagement">
+          <option value="Not sure yet">Not sure yet</option>
+          <option value="Brand Tool Kit">Brand Tool Kit</option>
+          <option value="Website">Website</option>
+          <option value="Brand + Website">Brand + Website</option>
+          <option value="A question about scope">A question about scope</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="cf-deadline">Deadline</label>
+        <input id="cf-deadline" name="deadline" type="text" placeholder="Launch date or rough timing">
+      </div>
+      <div class="field">
+        <label for="cf-existing">What you already have</label>
+        <input id="cf-existing" name="existing" type="text" placeholder="Logo, typeface, palette — or nothing yet">
+      </div>
+      <div class="field">
+        <label for="cf-note">Anything else?</label>
+        <textarea id="cf-note" name="note" rows="4"></textarea>
+      </div>
+      <button class="send" type="submit">Send</button>
+    </form>
+
+  </section>
+
 </div>
 
 <!-- THANK YOU -->
