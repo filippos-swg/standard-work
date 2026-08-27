@@ -504,6 +504,58 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
    97px narrower. width:100% restores the fill, max-width still clamps it to
    --max-w, and the auto margins go back to doing only what they were for —
    centring the wrapper on viewports wider than 1280. */
+
+/* ============================================================================
+   THE SPECULATIVE ONE-PAGERS — Simon's 2026-08-27 package, MOCK-PLACEMENT.
+
+   Every case carries a speculative Standard Work one-pager. They are NOT
+   delivered work, and the labelling is not a style preference: on Lex Energy
+   and Sebratec the real sites were built by Simon, so an unlabelled mock there
+   would read as a false claim about work this studio delivered. The
+   "Demonstration" tag and the modal's subtitle stay. Simon's instruction, and
+   he is right.
+
+   NORMALISED: --font-display for the names (Outfit is the display face here),
+   the scrim rebased from his #1A1918 to our #141414 ink, and the hover colour
+   from --accent to --accent-dark — .mockcell-name is 12-14px, and --accent is
+   3.49 on this ground, which fails AA under 24px.
+   ========================================================================== */
+/* the speculative one-pagers */
+.mockwrap{margin-top:clamp(48px,6vw,80px);padding-top:clamp(34px,4.4vw,52px);
+  border-top:1.5px solid var(--border-light)}
+.mockhead{display:flex;flex-direction:column;gap:12px;margin-bottom:clamp(22px,3vw,32px)}
+.mocktag{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
+  font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--text-dim);background:var(--surface-alt);
+  border:1px solid var(--border-light);border-radius:100px;padding:5px 11px}
+.mocktag::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.mockshot{width:100%;display:block;height:auto;border:1.5px solid var(--border-light);
+  border-radius:var(--radius);background:var(--surface-alt)}
+.mockcap{font-size:14px;color:var(--text-dim);line-height:1.6;margin-top:14px;max-width:62ch}
+
+/* the row of five on the Website page.
+   The whole page is visible from the start — no crop, no pan. A thumbnail that
+   only shows a hero is a crop; showing all of it is the argument. */
+.mockrow{display:grid;gap:clamp(10px,1.5vw,20px);grid-template-columns:repeat(5,1fr);
+  margin-top:clamp(28px,3.6vw,44px);align-items:start}
+.mockcell{display:flex;flex-direction:column;gap:11px;text-decoration:none;color:inherit;
+  cursor:pointer}
+.mockcell-img{display:block;width:100%;overflow:hidden;border-radius:var(--radius-sm);
+  border:1px solid var(--border-light);transition:border-color .14s,transform .14s}
+.mockcell-img img{width:100%;height:auto;display:block}
+.mockcell:hover .mockcell-img,.mockcell:focus-visible .mockcell-img{
+  border-color:var(--border);transform:translateY(-3px)}
+.mockcell-name{font-family:var(--font-display);font-size:clamp(12px,1.05vw,14px);font-weight:700;
+  letter-spacing:-0.01em;line-height:1.2;display:flex;align-items:baseline;gap:7px}
+.mockcell-name::after{content:'↗';font-family:var(--font-mono);font-size:11px;
+  color:var(--text-faint);transition:color .14s}
+.mockcell:hover .mockcell-name{color:var(--accent-dark)}
+.mockcell:hover .mockcell-name::after{color:var(--accent-dark)}
+
+@media(max-width:1000px){.mockrow{grid-template-columns:repeat(3,1fr);gap:16px}}
+@media(max-width:600px){.mockrow{grid-template-columns:repeat(2,1fr);gap:12px}}
+@media(prefers-reduced-motion:reduce){.mockcell-img{transition:none}}
+
 .disclose-panel{
   display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:0fr;
   padding-top:0;padding-bottom:0;
@@ -1495,7 +1547,15 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           <div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a brand</button></div>
         </div>
       </div>
-  </div>
+      <div class="mockwrap">
+            <div class="mockhead">
+              <span class="mocktag">Demonstration — not a delivered project</span>
+              <h3 class="slide-title" style="font-size:clamp(19px,2.2vw,26px);">The same brand as a Standard Work website.</h3>
+              <p class="mockcap" style="margin-top:0;">Not what this client was delivered. This is Harry da BBQ's brand book run through the Website structure — the same six sections every Standard Work site gets, wearing their identity.</p>
+            </div>
+            <img class="mockshot" style="aspect-ratio:1000/2391;" src="work/mock-full-harry.webp" alt="Harry da BBQ as a Standard Work website">
+          </div>
+      </div>
 
   <div class="case-detail" id="case-90110">
     <div style="background:var(--surface);border-bottom:1.5px solid var(--border);">
@@ -1526,7 +1586,15 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           <div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a brand</button></div>
         </div>
       </div>
-  </div>
+      <div class="mockwrap">
+            <div class="mockhead">
+              <span class="mocktag">Demonstration — not a delivered project</span>
+              <h3 class="slide-title" style="font-size:clamp(19px,2.2vw,26px);">The same brand as a Standard Work website.</h3>
+              <p class="mockcap" style="margin-top:0;">Not what this client was delivered. This is 90110's brand book run through the Website structure — the same six sections every Standard Work site gets, wearing their identity.</p>
+            </div>
+            <img class="mockshot" style="aspect-ratio:1000/2542;" src="work/mock-full-90110.webp" alt="90110 as a Standard Work website">
+          </div>
+      </div>
 
   <div class="case-detail" id="case-eddy">
     <div style="background:var(--surface);border-bottom:1.5px solid var(--border);">
@@ -1557,7 +1625,15 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           <div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a brand</button></div>
         </div>
       </div>
-  </div>
+      <div class="mockwrap">
+            <div class="mockhead">
+              <span class="mocktag">Demonstration — not a delivered project</span>
+              <h3 class="slide-title" style="font-size:clamp(19px,2.2vw,26px);">The same brand as a Standard Work website.</h3>
+              <p class="mockcap" style="margin-top:0;">Not what this client was delivered. This is Eddy's brand book run through the Website structure — the same six sections every Standard Work site gets, wearing their identity.</p>
+            </div>
+            <img class="mockshot" style="aspect-ratio:1000/2598;" src="work/mock-full-eddy.webp" alt="Eddy as a Standard Work website">
+          </div>
+      </div>
 
 <div class="case-detail" id="case-lex-energy">
     <div style="background:var(--surface);border-bottom:1.5px solid var(--border);">
@@ -1579,7 +1655,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         <div class="mockhead">
           <span class="mocktag">Demonstration — not a delivered project</span>
           <h3 class="slide-title" style="font-size:clamp(19px,2.2vw,26px);">The same brand as a Standard Work website.</h3>
-          <p class="mockcap" style="margin-top:0;">Not what this client was delivered. This is Lex Energy's brand book run through the Basic Website structure — the same six sections every Standard Work site gets, wearing their identity.</p>
+          <p class="mockcap" style="margin-top:0;">Not what this client was delivered. This is Lex Energy's brand book run through the Website structure — the same six sections every Standard Work site gets, wearing their identity.</p>
         </div>
         <img class="mockshot" style="aspect-ratio:1000/2584;" src="work/mock-full-lex-energy.webp" alt="Lex Energy as a Standard Work website">
       </div>
@@ -1598,7 +1674,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           <div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-outline" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a brand</button><button class="btn btn-outline" onclick="navigate('website')"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a website</button><button class="btn btn-accent" onclick="orderBoth()"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order both</button></div>
         </div>
       </div>
-  </div>
+      </div>
 
 <div class="case-detail" id="case-sebratec">
     <div style="background:var(--surface);border-bottom:1.5px solid var(--border);">
@@ -1620,7 +1696,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         <div class="mockhead">
           <span class="mocktag">Demonstration — not a delivered project</span>
           <h3 class="slide-title" style="font-size:clamp(19px,2.2vw,26px);">The same brand as a Standard Work website.</h3>
-          <p class="mockcap" style="margin-top:0;">Not what this client was delivered. This is Sebratec's brand book run through the Basic Website structure — the same six sections every Standard Work site gets, wearing their identity.</p>
+          <p class="mockcap" style="margin-top:0;">Not what this client was delivered. This is Sebratec's brand book run through the Website structure — the same six sections every Standard Work site gets, wearing their identity.</p>
         </div>
         <img class="mockshot" style="aspect-ratio:1000/2872;" src="work/mock-full-sebratec.webp" alt="Sebratec as a Standard Work website">
       </div>
@@ -1639,7 +1715,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           <div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-outline" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a brand</button><button class="btn btn-outline" onclick="navigate('website')"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a website</button><button class="btn btn-accent" onclick="orderBoth()"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order both</button></div>
         </div>
       </div>
-  </div>
+      </div>
 </div>
 
 <!-- PRICING -->
@@ -1849,6 +1925,29 @@ const BRAND_BASE=12000,WEB_BASE=8000;
 /* TASK 011 — the order route. goOrder() takes the nav button to the services
    grid; orderBoth() jumps straight into the combined order, opening the gate on
    the way so the configurator lands in the state the choice implies. */
+/* The mock overlay. openMock reads the case's own .mockshot rather than taking
+   a path, so a case added later works without touching this. Escape closes it;
+   body scroll is locked while it is open. */
+const MOCK_NAMES={"harry": "Harry da BBQ", "90110": "90110", "eddy": "Eddy", "lex-energy": "Lex Energy", "sebratec": "Sebratec"};
+
+function openMock(slug){
+  const src=document.querySelector('#case-'+slug+' .mockshot');
+  if(!src)return;
+  const m=document.getElementById('mockModal');
+  document.getElementById('mockModalImg').src=src.src;
+  document.getElementById('mockModalImg').alt=MOCK_NAMES[slug]+' as a Standard Work website';
+  document.getElementById('mockModalName').textContent=MOCK_NAMES[slug];
+  m.classList.add('open'); m.scrollTop=0;
+  document.body.style.overflow='hidden';
+  m.querySelector('button').focus();
+}
+
+function closeMock(){
+  document.getElementById('mockModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMock();});
+
 function goOrder(){
   if(document.getElementById('page-home').classList.contains('active')){
     const s=document.getElementById('services');
@@ -2156,5 +2255,13 @@ function submitContact(e){
   if(hash.indexOf('work-')===0&&CASES.indexOf(hash.slice(5))>-1){navigate('work');showCase(hash.slice(5));return;}
   navigate(PAGES.includes(hash)?hash:'home');})();
 </script>
+
+<div class="mockmodal" id="mockModal" role="dialog" aria-modal="true" aria-labelledby="mockModalName">
+  <div class="mockmodal-bar">
+    <span class="mockmodal-t"><b id="mockModalName">&mdash;</b><span>Demonstration &middot; not a real client site</span></span>
+    <button class="btn btn-outline" onclick="closeMock()">Close &times;</button>
+  </div>
+  <div class="mockmodal-in"><img id="mockModalImg" src="" alt=""></div>
+</div>
 </body>
 </html>
