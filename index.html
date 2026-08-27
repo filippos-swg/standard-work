@@ -288,9 +288,35 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);bo
 .step-title{font-family:var(--font-display);font-size:clamp(15px,1.7vw,20px);font-weight:700;color:var(--text);letter-spacing:-0.01em}
 .step-body{padding:24px 0 40px;border-bottom:1.5px solid var(--border-light)}
 .step-body:last-child{border-bottom:none}
-.services-grid{display:grid;grid-template-columns:3fr 2fr;gap:0;border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:48px;background:var(--surface)}
+/* ============================================================================
+   THE SERVICES SECTION IS THE CHOOSER — TASK 011, Simon's 2026-08-27 package.
+
+   The site sells three things from a nav that offered two. A third nav button
+   was measured and rejected: at 900px the nav already used 696px of 860px, and
+   another button overflows at 1000px, before the hamburger takes over. So the
+   nav collapses to one "Order" that scrolls here, and the grid grows a third
+   card instead.
+
+   auto-fit rather than 3fr 2fr, so two cards or three both lay out without a
+   second rule, and the cards reflow to one column on their own.
+
+   THE ACCENT MOVED RATHER THAN MULTIPLIED. The orange that was on "Order a
+   brand" is now on "Order both" — exactly one accent per cluster. Simon's
+   reason: it is the money-maker and the option the dependency gate already
+   pushes people towards. Adding a third orange button would have broken the
+   rationing this file's own decisions set.
+   ========================================================================== */
+#services{scroll-margin-top:calc(var(--nav-h) + 8px)}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:0;border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:48px;background:var(--surface)}
 .service-card{padding:clamp(28px,3.5vw,48px);display:flex;flex-direction:column;gap:20px}
-.service-card:first-child{border-right:1.5px solid var(--border)}
+/* Every card but the last takes the divider. His build put it on :first-child
+   only, which separated card 1 from 2 and left 2 and 3 running together once a
+   third card existed. */
+.service-card:not(:last-child){border-right:1.5px solid var(--border)}
+/* The badge is 10px, and --accent is 3.49 on this ground — small text needs
+   4.5, so it takes the deep value like every other small orange here. */
+.service-card.is-both{outline:1.5px solid var(--accent);outline-offset:-1.5px}
+.service-card.is-both .service-card-badge{color:var(--accent-dark)}
 .service-card-badge{display:inline-block;font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--accent-dark);border:1px solid var(--accent);padding:4px 10px;border-radius:100px;margin-bottom:4px;width:fit-content}
 .service-card-title{font-family:var(--font-display);font-size:clamp(20px,2.2vw,32px);font-weight:800;letter-spacing:-0.02em;line-height:1.1}
 .service-card-desc{font-size:clamp(13px,1.2vw,15px);color:var(--text-dim);line-height:1.65;flex:1}
@@ -580,7 +606,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 @media(max-width:960px){
   .two-col{grid-template-columns:1fr}
   .services-grid{grid-template-columns:1fr}
-  .service-card:first-child{border-right:none;border-bottom:1.5px solid var(--border)}
+  .service-card:not(:last-child){border-right:none;border-bottom:1.5px solid var(--border)}
   .included-item{grid-template-columns:1fr;gap:6px}
   .package-layout{grid-template-columns:1fr}
   .order-summary-wrap{position:static}
@@ -775,9 +801,13 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         <a class="nav-link" onclick="navigate('pricing')">Fixed pricing</a>
         <a class="nav-link" onclick="navigate('contact')">Contact</a>
       </div>
+      <!-- ONE BUTTON, NOT THREE. The site sells three things and the nav offered
+           two. A third was measured and rejected: at 900px the nav already used
+           696px of 860px, so another overflows at 1000px — before the hamburger
+           takes over. This routes to the services grid, which is now the
+           chooser. TASK 011. -->
       <div class="nav-cta">
-        <button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a brand</button>
-        <button class="btn btn-outline" onclick="navigate('website')"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a website</button>
+        <button class="btn btn-accent" onclick="goOrder()"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order</button>
       </div>
     </div>
     <div class="nav-hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
@@ -790,8 +820,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
   <a class="nav-link" onclick="navigate('pricing');toggleMenu()">Fixed pricing</a>
   <a class="nav-link" onclick="navigate('contact');toggleMenu()">Contact</a>
   <div class="nav-mobile-actions">
-    <button class="btn btn-accent" onclick="navigate('brand');toggleMenu()"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a brand</button>
-    <button class="btn btn-outline" onclick="navigate('website');toggleMenu()"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a website</button>
+      <button class="btn btn-accent" onclick="goOrder();toggleMenu()"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order</button>
   </div>
 </div>
 
@@ -898,13 +927,14 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
       <div><p class="label mb-12">Our services</p><h2 class="h2">Choose what fits.</h2></div>
       <p class="body" style="max-width:320px;">Fixed scope. Fixed price. Professional results.</p>
     </div>
+    <span id="services" style="position:absolute;" aria-hidden="true"></span>
     <div class="services-grid">
       <div class="service-card">
         <div><div class="service-card-badge">Brand</div><h3 class="service-card-title">We build the brand tool kit your business needs.</h3></div>
         <p class="service-card-desc">Logo, type, colour, voice. All of it, without the process overhead.</p>
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;padding-top:16px;border-top:1px solid var(--border-light);">
           <span class="service-card-price">From 12,000 SEK <span style="font-family:var(--font-mono);font-size:11px;font-weight:400;color:var(--text-dim);">ex. moms</span></span>
-          <button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a brand</button>
+          <button class="btn btn-outline" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a brand</button>
         </div>
       </div>
       <div class="service-card">
@@ -913,6 +943,14 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;padding-top:16px;border-top:1px solid var(--border-light);">
           <span class="service-card-price">From 8,000 SEK <span style="font-family:var(--font-mono);font-size:11px;font-weight:400;color:var(--text-dim);">ex. moms</span></span>
           <button class="btn btn-outline" onclick="navigate('website')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a website</button>
+        </div>
+      </div>
+      <div class="service-card is-both">
+        <div><div class="service-card-badge">Brand + Website</div><h3 class="service-card-title">Both, in one order.</h3></div>
+        <p class="service-card-desc">We build the brand first, then the website from it. Same sequence, one payment.</p>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;padding-top:16px;border-top:1px solid var(--border-light);">
+          <span class="service-card-price">From 20,000 SEK <span style="font-family:var(--font-mono);font-size:11px;font-weight:400;color:var(--text-dim);">ex. moms</span></span>
+          <button class="btn btn-accent" onclick="orderBoth()"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order both</button>
         </div>
       </div>
     </div>
@@ -1706,6 +1744,31 @@ const BRAND_BASE=12000,WEB_BASE=8000;
    .disclose-panel carries scroll-margin-top for exactly that — because it opens
    below the fold and a silent expansion off-screen reads as a dead click.
    Closing does not scroll: the reader is already looking at the thing. */
+/* TASK 011 — the order route. goOrder() takes the nav button to the services
+   grid; orderBoth() jumps straight into the combined order, opening the gate on
+   the way so the configurator lands in the state the choice implies. */
+function goOrder(){
+  if(document.getElementById('page-home').classList.contains('active')){
+    const s=document.getElementById('services');
+    if(s){s.scrollIntoView({behavior:'smooth',block:'start'});return;}
+  }
+  navigate('home');
+  setTimeout(()=>{const s=document.getElementById('services');
+    if(s)s.scrollIntoView({behavior:'smooth',block:'start'});},60);
+}
+function wantBoth(){
+  const el=document.querySelector('input[name="w-start"][value="Not yet"]');
+  if(el){el.checked=true;el.dispatchEvent(new Event('change',{bubbles:true}));}
+  const r=document.querySelector('#opt-both input');
+  if(r){r.checked=true;setOrderMode('both');}
+  const g=document.getElementById('w-gate');
+  if(g)g.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function orderBoth(){
+  navigate('website');
+  setTimeout(()=>{if(typeof wantBoth==='function')wantBoth();},80);
+}
+
 function toggleIncluded(which){
   const panel=document.getElementById(which+'-included');
   const btn=document.getElementById(which+'-included-toggle');
