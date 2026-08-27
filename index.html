@@ -653,6 +653,37 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 .opt-note{display:block;font-family:var(--font-mono);font-size:11px;color:var(--ink-dim);margin-top:6px;font-weight:500;line-height:1.4}
 .option-card input:checked + .option-inner .opt-note{color:var(--accent)}
 .gate-panel{background:var(--surface);border:1.5px solid var(--accent);border-radius:var(--radius);padding:clamp(24px,3vw,36px)}
+
+/* ============================================================================
+   THE ORDER PICK — TASK 010, Simon's 2026-08-27 package.
+
+   Answering "Not yet" used to be a dead end that pushed you at the Brand page.
+   The site added 12,000 and 8,000 together correctly and then told you it could
+   not sell you that: "Bought separately — 20,000 SEK". The promise was in the
+   headline and the refusal was at the counter, which is worse than a missing
+   feature because the page raises the expectation itself.
+
+   PORTED, NOT COPIED. Two things changed on the way in, both because this repo
+   measures its colours: his `.both-opt.on .both-name` set 16px text in --accent,
+   which is 3.49 on this ground and fails AA under 24px, so it takes --accent-dark
+   at 4.84. And .both-name is --font-display here, because Outfit is the display
+   face and a 16px/700 option title is a heading, not body copy.
+   ========================================================================== */
+.both-pick{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+.both-opt{
+  display:block;cursor:pointer;background:var(--surface);
+  border:1.5px solid var(--border-light);border-radius:var(--radius-sm);
+  padding:16px 18px;transition:border-color .14s;
+}
+.both-opt:hover{border-color:var(--border)}
+.both-opt.on{border-color:var(--accent)}
+.both-opt input{position:absolute;opacity:0;pointer-events:none}
+.both-opt:focus-within{outline:2px solid var(--accent);outline-offset:3px}
+.both-head{display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap}
+.both-name{font-family:var(--font-display);font-weight:700;font-size:16px;letter-spacing:-0.01em}
+.both-opt.on .both-name{color:var(--accent-dark)}
+.both-price{font-family:var(--font-mono);font-size:13px;font-weight:600;white-space:nowrap}
+.both-note{display:block;font-size:13.5px;color:var(--text-dim);line-height:1.5;margin-top:5px;max-width:56ch}
 .gate-panel .option-inner{padding-top:18px;min-height:0}
 .gate-panel .option-inner::before{content:none}
 .opt-save{display:block;font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:0.06em;color:var(--ink-dim);margin-top:5px}
@@ -1177,10 +1208,22 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
               <p class="label" style="color:var(--accent-dark);margin-bottom:10px;">Start here</p>
               <h3 class="h3" style="margin-bottom:14px;">You need a brand first.</h3>
               <p class="body muted" style="max-width:620px;margin-bottom:10px;">We don't build websites without one. There is nothing to build from, and a fixed scope has no room to invent it on the way.</p>
-              <p class="body muted" style="max-width:620px;margin-bottom:26px;">The brand package gives you all six items. Four of them are what the website runs on.</p>
-              <div style="display:flex;gap:12px;flex-wrap:wrap;">
-                <button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a brand</button>
-                <button class="btn btn-outline" onclick="navigate('contact')">Ask us about it<span class="btn-ico btn-ico--trail" aria-hidden="true">&rarr;</span></button>
+              <p class="body muted" style="max-width:620px;margin-bottom:8px;">The brand package gives you all six items. Four of them are what the website runs on.</p>
+              <p class="body muted" style="max-width:620px;margin-bottom:4px;">You can order both now, or start with the brand and come back.</p>
+
+              <div class="both-pick" role="radiogroup" aria-label="How to order">
+                <label class="both-opt" id="opt-both">
+                  <input type="radio" name="w-order" value="both" onchange="setOrderMode('both')">
+                  <span class="both-head"><span class="both-name">Order both together</span>
+                  <span class="both-price">20,000 SEK</span></span>
+                  <span class="both-note">One order, one payment. We build the brand first, then the website from it. Same sequence, half the admin.</span>
+                </label>
+                <label class="both-opt" id="opt-brand">
+                  <input type="radio" name="w-order" value="brand" onchange="setOrderMode('brand')">
+                  <span class="both-head"><span class="both-name">Start with the brand</span>
+                  <span class="both-price">12,000 SEK</span></span>
+                  <span class="both-note">Order the website separately once the brand is delivered. Nothing stops you coming back.</span>
+                </label>
               </div>
             </div>
             <div id="w-gate-prep" class="gate-panel" style="display:none;">
@@ -1267,12 +1310,14 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
             <div class="summary-price-section">
               <div class="summary-price-row"><span>Brand Tool Kit</span><span>12,000 SEK</span></div>
               <div class="summary-price-row"><span>Website</span><span>8,000 SEK</span></div>
-              <div class="summary-total-row" style="font-size:18px;"><span>Bought separately</span><span>20,000 SEK</span></div>
+              <div class="summary-price-row" id="wb-addon-row" style="display:none;"><span>Website additions</span><span id="wb-addons" style="color:var(--accent-dark);">+0 SEK</span></div>
+                <div class="summary-price-row" id="wb-adjust-row" style="display:none;"><span>Together</span><span id="wb-adjust" style="color:var(--accent-dark);">0 SEK</span></div>
+                <div class="summary-total-row"><span>Total</span><span id="wb-total">20,000 SEK</span></div>
               <div style="display:flex;justify-content:flex-end;padding:2px 0 4px;"><span style="font-family:var(--font-mono);font-size:9px;color:var(--text-dim);letter-spacing:0.08em;text-transform:uppercase;">ex. moms &middot; VAT added at checkout</span></div>
             </div>
-            <div class="summary-note">Start with the brand. Order the website once it is delivered.</div>
+            <div class="summary-note" id="wb-note">One order, one payment. The brand is built first, then the website from it.</div>
             <div class="summary-cta">
-              <button class="btn btn-accent" style="width:100%;justify-content:center;" onclick="navigate('brand')">Start with the brand<span class="btn-ico btn-ico--trail" aria-hidden="true">&rarr;</span></button>
+              <button class="btn btn-accent" style="width:100%;justify-content:center;" id="both-checkout-btn" onclick="startCheckout('both')">Get started<span class="btn-ico btn-ico--trail" aria-hidden="true">&rarr;</span></button>
               <button class="btn btn-outline" style="width:100%;justify-content:center;margin-top:8px;" onclick="navigate('contact')">Ask us about it<span class="btn-ico btn-ico--trail" aria-hidden="true">&rarr;</span></button>
             </div>
           </div>
@@ -1732,6 +1777,38 @@ function mTotal(label,value,cta,fn){
    configurator has no deadline step, so a rushed website is free. That
    asymmetry is logged, not fixed. */
 const PUBLISH=1000,ROUGH_COPY=1000,WRITE_COPY=2000,RUSH=3000,RUSH_DAYS=14;
+
+/* TASK 010 — brand and website in one order.
+
+   NOTHING IS DISCOUNTED. Twelve plus eight is still twenty, and that is
+   deliberate: the friction being removed is being made to buy twice, not the
+   price. If a bundle rate is ever agreed it goes in this ONE constant and every
+   total, summary row and mobile bar follows. A negative value renders as a
+   discount line labelled "Together". Whether there should be one is Filippos's
+   call and does not block this.
+
+   THE BRAND GOES IN AT BASE SCOPE — the six items, no add-ons. Naming and extra
+   revision rounds stay a conversation: nobody should buy naming from a checkbox
+   they met four seconds ago. The website configurator still asks all six of its
+   questions, so the site itself is properly specified. */
+const BUNDLE_ADJUST=0;
+let ORDER_MODE='brand';
+
+function bothTotals(){
+  let add=0;
+  document.querySelectorAll('input[name="w-addon"]:checked').forEach(a=>{add+=parseInt(a.dataset.price||0)});
+  add+=sumPriced(['w-build','w-copy']).total;
+  return {add, total: BRAND_BASE + WEB_BASE + add + BUNDLE_ADJUST};
+}
+
+function setOrderMode(m){
+  ORDER_MODE=m;
+  const h=document.querySelector('#website-config .summary-top p:last-child');
+  if(h)h.textContent = m==='both' ? 'Brand Tool Kit + Website' : 'Website';
+  document.getElementById('opt-both').classList.toggle('on',m==='both');
+  document.getElementById('opt-brand').classList.toggle('on',m==='brand');
+  updateWebSummary();
+}
 function sumPriced(names){
   let t=0;const list=[];
   names.forEach(n=>document.querySelectorAll(`input[name="${n}"]:checked`).forEach(i=>{
@@ -1805,6 +1882,18 @@ function updateWebSummary(){
   document.getElementById('w-prep-warn').style.display=(needPrep&&!prep.checked)?'block':'none';
   document.getElementById('ws-buy').style.display=needBrand?'none':'block';
   document.getElementById('ws-route').style.display=needBrand?'block':'none';
+  /* The combined view only exists while the gate is open, so its numbers are
+     computed here rather than in a second update path that could disagree. */
+  if(needBrand){
+    const t=bothTotals();
+    const ar2=document.getElementById('wb-addon-row');
+    ar2.style.display=t.add?'flex':'none';
+    if(t.add)document.getElementById('wb-addons').textContent='+'+t.add.toLocaleString('sv-SE')+' SEK';
+    const aj=document.getElementById('wb-adjust-row');
+    aj.style.display=BUNDLE_ADJUST?'flex':'none';
+    if(BUNDLE_ADJUST)document.getElementById('wb-adjust').textContent=BUNDLE_ADJUST.toLocaleString('sv-SE')+' SEK';
+    document.getElementById('wb-total').textContent=t.total.toLocaleString('sv-SE')+' SEK';
+  }
   const fh=document.getElementById('w-foot-h'),fp=document.getElementById('w-foot-p'),fb=document.getElementById('w-foot-btn');
   if(needBrand){fh.textContent='Start with the brand.';fp.textContent='A website needs one to be built from.';fb.innerHTML=arrowize('→ Order a brand');fb.onclick=()=>navigate('brand');}
   else{fh.textContent='Order your website.';fp.textContent='Configure above. You will see the full price before you pay.';fb.innerHTML=arrowize('Get started →');fb.onclick=()=>document.getElementById('website-config').scrollIntoView({behavior:'smooth'});}
@@ -1836,6 +1925,20 @@ function updateWebSummary(){
   else mTotal('Website total',wt,'Review →',()=>document.querySelector('#website-config .order-summary').scrollIntoView({behavior:'smooth',block:'center'}));
 }
 function startCheckout(type){
+  /* THE COMBINED ORDER — TASK 010. It passes its product name as a literal,
+     which is why this path alone worked in Simon's package while the two below
+     threw. Kept as he wrote it; the fix is on the other two. */
+  if(type==='both'){
+    const t=bothTotals();
+    const btn=document.getElementById('both-checkout-btn');
+    btn.disabled=true;btn.textContent='Preparing checkout…';
+    fetch('/.netlify/functions/create-checkout',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({totalSEK:t.total,description:'Brand Tool Kit + Website',cancelPath:'#website'})})
+      .then(r=>r.json()).then(d=>{if(d.url){window.location=d.url;}
+        else{btn.disabled=false;btn.innerHTML=arrowize('Get started →');alert('Something went wrong. Please try again or contact us at hello@standardwork.design');}})
+      .catch(()=>{btn.disabled=false;btn.innerHTML=arrowize('Get started →');alert('Something went wrong. Please try again or contact us at hello@standardwork.design');});
+    return;
+  }
   const isBrand=type==='brand';
   const base=isBrand?BRAND_BASE:WEB_BASE;
   const addonName=isBrand?'b-addon':'w-addon';
