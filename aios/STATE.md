@@ -1,6 +1,6 @@
 <!-- GENERATED — do not edit. Edits are overwritten at next close. -->
-Generated 2026-08-27 14:02 +0200 · HEAD 2ff8594 · branch simon-features-2026-08-27 · host Souths-MacBook-Air.local · generator v2.0
-STALENESS RULE: if `git rev-parse HEAD` ≠ 2ff8594, or the tree is dirty, this file is HISTORY. Regenerate before acting on it.
+Generated 2026-08-27 14:02 +0200 · HEAD 6b4aec5 · branch simon-features-2026-08-27 · host Souths-MacBook-Air.local · generator v2.0
+STALENESS RULE: if `git rev-parse HEAD` ≠ 6b4aec5, or the tree is dirty, this file is HISTORY. Regenerate before acting on it.
 
 ## 1 · Identity
 <sub>CLAUDE.md, the five human lines — the only human input in this file</sub>
@@ -14,16 +14,16 @@ STALENESS RULE: if `git rev-parse HEAD` ≠ 2ff8594, or the tree is dirty, this 
 ## 2 · Head
 <sub>git rev-parse HEAD · git log -1 · git rev-list --left-right --count @{u}...HEAD</sub>
 
-> **As of `2ff8594`.** The close commits this file after generating it, so the counts below are one commit old the moment they land. Re-run `aios-state` for current numbers.
+> **As of `6b4aec5`.** The close commits this file after generating it, so the counts below are one commit old the moment they land. Re-run `aios-state` for current numbers.
 
-- **simon-features-2026-08-27 @ 2ff8594** — Note the v1.3 filenames in Simon's filed brief
+- **simon-features-2026-08-27 @ 6b4aec5** — Unify the date in the filed 2026-08-27 brief to ISO
 - Committed 2026-08-27 14:02 by Filippos Arvanitakis
 - Upstream: **none configured**
 
 ## 3 · Working tree
 <sub>git status --porcelain + a filesystem diff against git ls-files</sub>
 
-> **As of `2ff8594`, before this file was committed.** `aios/STATE.md` and `aios/CLOSING` appear here for that reason and are not real dirt.
+> **As of `6b4aec5`, before this file was committed.** `aios/STATE.md` and `aios/CLOSING` appear here for that reason and are not real dirt.
 
 - Clean.
 
@@ -33,12 +33,12 @@ STALENESS RULE: if `git rev-parse HEAD` ≠ 2ff8594, or the tree is dirty, this 
 - `simon-features-2026-08-27` — last commit 2026-08-27, **no upstream, exists nowhere else**
 
 ## 5 · Since last close
-<sub>git log ed9143a..HEAD</sub>
+<sub>git log 2ff8594..HEAD</sub>
 
-- `2ff8594` 2026-08-27 — Note the v1.3 filenames in Simon's filed brief
-- `c77574d` 2026-08-27 — Generate aios/STATE.md
+- `6b4aec5` 2026-08-27 — Unify the date in the filed 2026-08-27 brief to ISO
+- `8e9a16e` 2026-08-27 — Generate aios/STATE.md
 
-Close marker: 2ff859451dec017559dddf5796fa0987bd47df8a
+Close marker: 6b4aec59ef6367e0b36edde232f5e5a704262efb
 
 ## 6 · Awaiting judgment
 <sub>aios/LOG.md headings + **Status:** lines — headings, dates and statuses only, never bodies</sub>
