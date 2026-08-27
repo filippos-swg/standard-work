@@ -13,6 +13,46 @@ because rewriting it would have been the one thing a migration must not do. Date
 
 ---
 
+## 2026-08-27 — Simon's second package: ported, not merged
+**Status:** APPROVED
+
+A second package arrived, built against `98446e3` and described as superseding the
+25 Aug one. It could not be merged as written and its own instructions said so:
+*"If HEAD is not 98446e3, do not merge."* HEAD was fifteen commits past it.
+
+**It also still shipped the broken checkout.** Run, not assumed: both single-package
+flows throw `ReferenceError: description is not defined` and never reach `fetch`.
+Only his new "order both" path works, because that one passes its product name as a
+literal. Copying his `index.html` over ours would have put the payment bug back on a
+site whose checkout we fixed the day before, and taken the network ground, the arrow
+elements, the disclosure, the nav token, the settled rush and the de-duplicated copy
+add-on with it — all measured before deciding.
+
+**Decision: port the new features into our markup, take nothing else from his file.**
+Filippos, 2026-08-27, with the constraint stated as "fix only the things that don't
+disrupt the work we've done technically". Four things came across:
+
+  · **TASK 010** — brand and website in one order. `BUNDLE_ADJUST=0`; nothing is
+    discounted, and a rate would go in that one constant.
+  · **TASK 011** — the nav collapses to one *Order* that routes to the services grid,
+    which grows a third card. The accent MOVED onto *Order both* rather than
+    multiplying.
+  · **Lex Energy and Sebratec** cases, plus 36 images.
+  · **The speculative one-pagers**, with the "Demonstration" labels intact.
+
+**What the port corrected in his work, each because this repo measures what his
+does not:** four small-text colours set to `--accent` at 3.49 where AA needs 4.5;
+`.service-card:first-child` leaving cards 2 and 3 undivided once a third existed;
+`goOrder()` scrolling to a `#services` anchor that did not exist here, so the route
+silently did nothing; six hardcoded `#fff`/`rgba(255,255,255,…)` literals; bare
+arrow glyphs; and "Each is bought separately" left sitting beside the *Order both*
+button — the same refusal-at-the-counter defect TASK 010 exists to remove.
+
+**Practical consequence:** `tests.html` caught the loose arrows the moment the case
+sections landed, which is what it was written for. 74/74 throughout.
+
+---
+
 ## 2026-08-26 — Tasks 001 and 004–008 closed; 009 opened
 
 TASK_001 (deploy v0.1) had read **In progress** since July while
