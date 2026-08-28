@@ -492,11 +492,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);bo
    a different balance, and start is right for them.
    ========================================================================== */
 #page-home .hero-split{align-items:center}
-/* 24 rather than the 16 the other heroes use: these buttons are the lg step at
-   56px tall, and a gap that reads as generous at 51px reads as tight at 56. The
+
+/* ----------------------------------------------------------------------------
+   .is-lg — THE LEAD CTA TREATMENT. Named, not id-scoped, 2026-08-28.
+
+   Filippos, having seen it on Home: "place it exactly the same in the how it
+   works page so when you change pages these elements dont move." A control that
+   is supposed to survive a page change cannot be defined against one page's id,
+   so the treatment is a class the box opts into and Home and How it works both
+   carry it. Adding a third page is now a class, not a fourth selector.
+
+   24 rather than the 16 the other heroes use: these buttons are the lg step at
+   52px tall, and a gap that reads as generous at 48 reads as tight at 52. The
    spacing follows the control it separates. */
-#page-home .hero-cta-box{min-width:300px;gap:24px}
-#page-home .hero-cta-box .btn{
+.hero-cta-box.is-lg{min-width:300px;gap:24px}
+.hero-cta-box.is-lg .btn{
   font-size:var(--btn-fs-lg);padding:var(--btn-pad-lg);min-height:var(--btn-h-lg);
 }
 
@@ -1230,7 +1240,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           <p class="h3" style="max-width:580px;margin-bottom:clamp(20px,3vw,32px);font-weight:500;color:var(--text-dim);">Order a brand and website for your business without agency processes and extra costs.</p>
 
         </div>
-        <div class="hero-cta-box">
+        <div class="hero-cta-box is-lg">
           <p class="hero-cta-label">Know what you need?</p>
           <button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a brand</button>
           <button class="btn btn-outline" onclick="navigate('website')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a website</button>
@@ -1396,7 +1406,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           <p class="body-lg muted" style="max-width:540px;margin-bottom:14px;">Standard Work is designed to be calm and predictable. No workshops. No discovery phases. No open-ended processes.</p>
           <p class="body-lg muted" style="max-width:540px;">Everything is defined before work begins.</p>
         </div>
-        <div class="hero-cta-box">
+        <div class="hero-cta-box is-lg">
           <p class="hero-cta-label">Ready to start?</p>
           <button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a brand</button>
           <button class="btn btn-outline" onclick="navigate('website')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a website</button>
