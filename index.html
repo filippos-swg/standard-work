@@ -402,8 +402,40 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);bo
 .service-card:not(:last-child){border-right:1.5px solid var(--border)}
 /* The badge is 10px, and --accent is 3.49 on this ground — small text needs
    4.5, so it takes the deep value like every other small orange here. */
-.service-card.is-both{outline:1.5px solid var(--accent);outline-offset:-1.5px}
-.service-card.is-both .service-card-badge{color:var(--accent-dark)}
+/* ============================================================================
+   THE COMBINED CARD IS WHITE. Filippos, 2026-08-28.
+
+   This is the better answer to a problem that showed up when every button went
+   white on the 28th: the services grid lost its one filled control, so the card
+   the whole section points at looked exactly like the two beside it. Rather than
+   give one button its colour back, the CARD carries the emphasis — white against
+   two orange ones, which is a louder signal than a filled button ever was and
+   costs the button system nothing.
+
+   A LOCAL TOKEN SWAP, like .accent-block and .ink-block. Inside .accent-block
+   everything has already inverted for the orange; this card sits on white, so
+   it inverts back. Measured on #FFFFFF, not assumed:
+     ink 18.42 · mono-dim 4.86 · accent-dark 5.52 · accent 3.98 (marks only) */
+.service-card.is-both{
+  background:#FFFFFF;
+  --text:#141414;
+  --text-dim:#6E6C69;
+  --accent:#E84500;
+  --accent-dark:#C03800;
+  --border:#141414;
+  --border-light:rgba(20,20,20,.14);
+  color:var(--text);
+}
+/* Black, not the deep orange: "all white with black text". The badge's frame is
+   currentColor, so it follows without a second rule. */
+.service-card.is-both .service-card-badge{color:var(--text)}
+/* The button is white-on-white here, so its ink border is what draws it — and
+   the hover goes back to orange. .accent-block sends hovers to ink because
+   orange-on-orange vanishes; on this card orange is the contrast, not the
+   ground, so that exception does not apply. */
+.service-card.is-both .btn:hover{
+  background:var(--btn-hover-bg);border-color:var(--btn-hover-bg);color:var(--btn-hover-fg);
+}
 .service-card-badge{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:600;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--accent-dark);border:1px solid currentColor;padding:4px 12px;border-radius:100px;margin-bottom:24px;width:fit-content}
 .service-card-title{font-family:var(--font-display);font-size:var(--fs-h3);font-weight:800;letter-spacing:-0.02em;line-height:1.1}
 /* ============================================================================
