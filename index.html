@@ -197,7 +197,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);bo
    test is re-measured rather than merely re-run. */
 .nav-link{font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-dim);cursor:pointer;text-decoration:none;transition:color 0.12s}
 .nav-link:hover,.nav-link.active{color:var(--text)}
-.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.nav-hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:4px}
 .nav-hamburger span{display:block;width:22px;height:1.5px;background:var(--text)}
 .nav-mobile{display:none;position:fixed;top:var(--nav-h);left:0;right:0;bottom:0;background:var(--surface);z-index:99;padding:40px var(--pad-x);flex-direction:column;gap:28px;border-top:1.5px solid var(--border)}
 .nav-mobile.open{display:flex}
@@ -318,7 +318,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);bo
 .accent-block-items{margin-top:40px;border-top:1px solid var(--border-light)}
 .accent-block-item{padding:24px 0;border-bottom:1px solid var(--border-light);font-family:var(--font-display);font-size:clamp(22px,3vw,44px);font-weight:700;line-height:1.1;color:var(--text);letter-spacing:-0.015em}
 .accent-note{margin-top:40px;font-size:var(--fs-sm);line-height:1.6;color:var(--text);max-width:600px}
-.step-header{padding:14px 25px;display:flex;align-items:baseline;gap:16px}
+.step-header{padding:16px 24px;display:flex;align-items:baseline;gap:16px}
 /* 20px at the cap and 15px at the floor — small text either way, so white at
    3.98 was never legal on these two. They inherit ink from the swap. */
 .step-num{font-family:var(--font-display);font-size:var(--fs-md);font-weight:700;color:var(--text);letter-spacing:-0.01em;flex-shrink:0}
@@ -354,12 +354,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);bo
    4.5, so it takes the deep value like every other small orange here. */
 .service-card.is-both{outline:1.5px solid var(--accent);outline-offset:-1.5px}
 .service-card.is-both .service-card-badge{color:var(--accent-dark)}
-.service-card-badge{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:600;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--accent-dark);border:1px solid var(--accent);padding:4px 10px;border-radius:100px;margin-bottom:4px;width:fit-content}
+.service-card-badge{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:600;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--accent-dark);border:1px solid var(--accent);padding:4px 12px;border-radius:100px;margin-bottom:4px;width:fit-content}
 .service-card-title{font-family:var(--font-display);font-size:var(--fs-h3);font-weight:800;letter-spacing:-0.02em;line-height:1.1}
 .service-card-desc{font-size:var(--fs-sm);color:var(--text-dim);line-height:1.65;flex:1}
 .service-card-price{font-family:var(--font-display);font-size:var(--fs-h3);font-weight:700;letter-spacing:-0.02em}
 .process-mini{margin-top:32px}
-.process-mini-item{display:flex;gap:20px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--border-light)}
+.process-mini-item{display:flex;gap:20px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--border-light)}
 .process-mini-item:last-child{border-bottom:none}
 .process-mini-num{font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:600;color:var(--accent-dark);letter-spacing:0.08em;flex-shrink:0;width:24px}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,80px)}
@@ -383,7 +383,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);bo
 .summary-top{padding:20px 24px;border-bottom:1.5px solid var(--border);background:var(--text);color:var(--on-ink)}
 .summary-top .label{color:var(--on-ink-dim)}
 .summary-body{padding:0 24px}
-.summary-row{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--border-light)}
+.summary-row{display:flex;justify-content:space-between;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--border-light)}
 .summary-row:last-of-type{border-bottom:none}
 .summary-key{font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:500;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--text-dim)}
 .summary-val{font-size:var(--fs-sm);font-weight:600;color:var(--text);text-align:right;max-width:180px}
@@ -391,41 +391,41 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);bo
    #FEFAEC would be invisible. Its rows take --ink-dim, because --text-dim is
    3.36 on greige and fails. */
 .summary-price-section{border-top:1.5px solid var(--border);padding:16px 24px;background:var(--greige)}
-.summary-price-row{display:flex;justify-content:space-between;padding:5px 0;font-size:var(--fs-sm);color:var(--ink-dim)}
-.summary-total-row{display:flex;justify-content:space-between;padding:14px 0 4px;font-family:var(--font-display);font-size:var(--fs-h3);font-weight:800;letter-spacing:-0.02em;border-top:1px solid var(--border-light);margin-top:8px}
-.summary-note{padding:14px 24px;font-family:var(--font-mono);font-size:var(--fs-micro);color:var(--text-dim);line-height:1.6;border-top:1.5px solid var(--border)}
+.summary-price-row{display:flex;justify-content:space-between;padding:4px 0;font-size:var(--fs-sm);color:var(--ink-dim)}
+.summary-total-row{display:flex;justify-content:space-between;padding:16px 0 4px;font-family:var(--font-display);font-size:var(--fs-h3);font-weight:800;letter-spacing:-0.02em;border-top:1px solid var(--border-light);margin-top:8px}
+.summary-note{padding:16px 24px;font-family:var(--font-mono);font-size:var(--fs-micro);color:var(--text-dim);line-height:1.6;border-top:1.5px solid var(--border)}
 .summary-cta{padding:16px 24px;border-top:1px solid var(--border-light)}
 .summary-addons-section{padding:12px 24px;border-bottom:1px solid var(--border-light)}
 .config-step{margin-bottom:40px;padding-bottom:40px;border-bottom:1.5px solid var(--border-light)}
 .config-step:last-child{border-bottom:none}
-.config-step-label{font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:600;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--text-dim);margin-bottom:6px}
+.config-step-label{font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:600;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}
 .config-step-q{font-family:var(--font-display);font-size:var(--fs-lead);font-weight:700;letter-spacing:-0.01em;margin-bottom:16px}
-.options-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;counter-reset:opt}
-.options-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;counter-reset:opt}
+.options-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;counter-reset:opt}
+.options-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;counter-reset:opt}
 .option-card{display:block;cursor:pointer;counter-increment:opt}
 .option-card input{position:absolute;opacity:0;width:0;height:0}
 /* THE OPTION CHIPS ARE THE NETWORK'S GREIGE. They were #F2F0EB, which is the
    new page ground to within a step — on this ground they would have vanished.
    Greige is the value both siblings use for exactly this job: a warm secondary
    block. Type on it is --ink-dim (5.84), never --text-dim (3.36). */
-.option-inner{border:none;background:var(--greige);padding:14px 16px 16px;padding-top:36px;transition:background 0.15s,color 0.15s,transform 0.1s;font-size:var(--fs-sm);font-weight:600;line-height:1.3;color:var(--ink-dim);border-radius:16px;position:relative;min-height:96px;display:flex;flex-direction:column;justify-content:flex-end}
+.option-inner{border:none;background:var(--greige);padding:16px 16px 16px;padding-top:36px;transition:background 0.15s,color 0.15s,transform 0.1s;font-size:var(--fs-md);font-weight:600;line-height:1.25;color:var(--ink-dim);border-radius:16px;position:relative;min-height:96px;display:flex;flex-direction:column;justify-content:flex-end}
 .option-inner::before{content:counter(opt,decimal-leading-zero);position:absolute;top:14px;left:16px;font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:600;letter-spacing:0.1em;color:var(--ink-dim);transition:color 0.15s}
 .option-inner::after{content:'';position:absolute;top:16px;right:16px;width:7px;height:7px;border-radius:50%;background:transparent;border:1.5px solid var(--ink-dim);transition:background 0.15s,border-color 0.15s}
 .option-card:hover .option-inner{background:var(--greige-deep);color:var(--text);transform:translateY(-1px)}
 .option-card input:checked + .option-inner{background:var(--text);color:var(--on-ink);transform:translateY(-1px)}
 .option-card input:checked + .option-inner::before{color:var(--accent)}
 .option-card input:checked + .option-inner::after{background:var(--accent);border-color:var(--accent)}
-.option-inner .price-tag{display:block;font-family:var(--font-mono);font-size:var(--fs-sm);color:var(--ink-dim);margin-top:6px;font-weight:500}
+.option-inner .price-tag{display:block;font-family:var(--font-mono);font-size:var(--fs-sm);color:var(--ink-dim);margin-top:8px;font-weight:500}
 .option-card input:checked + .option-inner .price-tag{color:var(--accent)}
 .price-block{padding:clamp(28px,4vw,48px) 0;border-top:1.5px solid var(--border-light)}
 .price-block:first-child{border-top:none;padding-top:0}
 .price-big{font-family:var(--font-display);font-size:var(--fs-h2);font-weight:800;letter-spacing:-0.03em;margin:8px 0}
 .addons-list{display:flex;flex-direction:column}
-.addon-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--border-light);font-size:var(--fs-sm)}
+.addon-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border-light);font-size:var(--fs-sm)}
 .addon-row:first-child{border-top:1px solid var(--border-light)}
 .addon-price{font-family:var(--font-mono);font-size:var(--fs-sm);font-weight:600;color:var(--text-dim);white-space:nowrap}
 .form-grid{display:flex;flex-direction:column;gap:24px;margin-top:40px;max-width:680px}
-.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group{display:flex;flex-direction:column;gap:8px}
 .form-label{font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:600;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--text-dim)}
 .form-input,.form-select,.form-textarea{background:var(--surface);border:1.5px solid var(--border-light);color:var(--text);font-family:var(--font);font-size:var(--fs-sm);padding:12px 16px;width:100%;transition:border-color 0.12s;outline:none;-webkit-appearance:none;border-radius:var(--radius-sm)}
 .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--border)}
@@ -467,7 +467,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
    for a site whose whole argument is that it belongs to something is a strange
    omission. Two links, in the mono voice, sitting on the same hairline the rest
    of the footer uses. */
-.network{display:flex;align-items:baseline;justify-content:flex-end;flex-wrap:wrap;gap:14px 32px;margin-top:48px;padding-top:32px;border-top:1px solid var(--border-light)}
+.network{display:flex;align-items:baseline;justify-content:flex-end;flex-wrap:wrap;gap:16px 32px;margin-top:48px;padding-top:32px;border-top:1px solid var(--border-light)}
 /* THE BLACKLETTER IS GONE. UnifrakturMaguntia stood in for a Guild reference
    that did not have a lockup yet. It has one now, and seriouslywow.com retired
    its own blackletter for the same reason — Standard Work was the last site in
@@ -494,12 +494,12 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
    half the width of the footer. The short labels ride the same style so the row
    has one voice rather than two.
    ========================================================================== */
-.network-item{display:inline-flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.network-item{display:inline-flex;align-items:baseline;gap:12px;flex-wrap:wrap}
 .network-label{font-family:var(--font);font-size:var(--fs-sm);font-weight:400;color:var(--text-dim)}
 .network-link{font-family:var(--font-display);font-size:var(--fs-md);font-weight:700;letter-spacing:-0.015em;color:var(--text);text-decoration:none;transition:color 0.12s;white-space:nowrap}
 .network-link:hover{color:var(--accent-dark)}
 .thankyou-wrap{min-height:calc(100vh - var(--nav-h));display:flex;align-items:center;padding:var(--pad-section) var(--pad-x)}
-.thankyou-step{display:flex;gap:20px;padding:18px 0;border-bottom:1px solid var(--border-light)}
+.thankyou-step{display:flex;gap:20px;padding:20px 0;border-bottom:1px solid var(--border-light)}
 .thankyou-step:first-child{border-top:1px solid var(--border-light)}
 .thankyou-num{font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:600;color:var(--accent-dark);letter-spacing:0.06em;flex-shrink:0;width:24px;margin-top:2px}
 .mt-8{margin-top:8px}.mt-16{margin-top:16px}.mt-24{margin-top:24px}.mt-32{margin-top:32px}.mt-40{margin-top:40px}.mt-48{margin-top:48px}
@@ -590,7 +590,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
   background:var(--accent);color:var(--on-accent);font-size:.50em;border-radius:50%;
   flex:none;transform:translateY(-.34em);padding-bottom:.2em;
 }
-.contact-block{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.contact-block{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
 .contact-block a,.contact-block address{color:var(--text);text-decoration:none;font-style:normal;font-size:var(--fs-sm)}
 .contact-block a:hover{color:var(--accent-dark)}
 .contact-block.mono,.contact-block.mono a,.contact-block.mono address,.contact-block.mono span{
@@ -603,7 +603,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 .mono-up{text-transform:uppercase}
 .todo-inline{
   font-family:var(--font-mono);font-size:var(--fs-micro);letter-spacing:var(--track-mono);
-  color:var(--text-dim);background:var(--greige);padding:2px 6px;text-transform:uppercase;
+  color:var(--text-dim);background:var(--greige);padding:2px 8px;text-transform:uppercase;
 }
 
 /* --- the enquiry form ----------------------------------------------------- */
@@ -621,7 +621,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 }
 .form ::selection{background:var(--text);color:var(--bg)}
 .form-h{font-family:var(--font-display);font-size:var(--fs-lead);font-weight:700;letter-spacing:-.015em;line-height:1.3;margin-bottom:4px}
-.field{display:flex;flex-direction:column;gap:5px}
+.field{display:flex;flex-direction:column;gap:4px}
 .field label{
   font-family:var(--font-mono);font-size:var(--fs-micro);letter-spacing:var(--track-mono);
   text-transform:uppercase;color:var(--text-dim);
@@ -685,18 +685,18 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 .mocktag{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
   font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:600;letter-spacing:0.12em;
   text-transform:uppercase;color:var(--text-dim);background:var(--surface-alt);
-  border:1px solid var(--border-light);border-radius:100px;padding:5px 11px}
+  border:1px solid var(--border-light);border-radius:100px;padding:4px 12px}
 .mocktag::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent)}
 .mockshot{width:100%;display:block;height:auto;border:1.5px solid var(--border-light);
   border-radius:var(--radius);background:var(--surface-alt)}
-.mockcap{font-size:var(--fs-sm);color:var(--text-dim);line-height:1.6;margin-top:14px;max-width:62ch}
+.mockcap{font-size:var(--fs-sm);color:var(--text-dim);line-height:1.6;margin-top:16px;max-width:62ch}
 
 /* the row of five on the Website page.
    The whole page is visible from the start — no crop, no pan. A thumbnail that
    only shows a hero is a crop; showing all of it is the argument. */
 .mockrow{display:grid;gap:clamp(10px,1.5vw,20px);grid-template-columns:repeat(5,1fr);
   margin-top:clamp(28px,3.6vw,44px);align-items:start}
-.mockcell{display:flex;flex-direction:column;gap:11px;text-decoration:none;color:inherit;
+.mockcell{display:flex;flex-direction:column;gap:12px;text-decoration:none;color:inherit;
   cursor:pointer}
 .mockcell-img{display:block;width:100%;overflow:hidden;border-radius:var(--radius-sm);
   border:1px solid var(--border-light);transition:border-color .14s,transform .14s}
@@ -704,7 +704,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 .mockcell:hover .mockcell-img,.mockcell:focus-visible .mockcell-img{
   border-color:var(--border);transform:translateY(-3px)}
 .mockcell-name{font-family:var(--font-display);font-size:var(--fs-sm);font-weight:700;
-  letter-spacing:-0.01em;line-height:1.2;display:flex;align-items:baseline;gap:7px}
+  letter-spacing:-0.01em;line-height:1.2;display:flex;align-items:baseline;gap:8px}
 .mockcell-name::after{content:'↗';font-family:var(--font-mono);font-size:var(--fs-micro);
   color:var(--text-faint);transition:color .14s}
 .mockcell:hover .mockcell-name{color:var(--accent-dark)}
@@ -754,7 +754,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
    button keeps its natural width at the left. The link then centres its own
    content: under the button where the button is wider, and flush with the hero
    where it is not. Correct at both ends without a breakpoint. */
-.hero-actions{display:inline-flex;flex-direction:column;align-items:stretch;gap:14px}
+.hero-actions{display:inline-flex;flex-direction:column;align-items:stretch;gap:16px}
 .hero-actions > .btn{align-self:flex-start}
 
 /* ============================================================================
@@ -796,7 +796,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
    site-wide against a 44px minimum, and there is no reason to add a new control
    that repeats the problem. */
 .disclose-link{
-  display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;
   font-family:var(--font-mono);font-size:var(--fs-sm);font-weight:500;
   letter-spacing:var(--track-mono);text-transform:uppercase;
   color:var(--text-dim);background:none;border:0;padding:0;cursor:pointer;
@@ -817,7 +817,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
   .two-col{grid-template-columns:1fr}
   .services-grid{grid-template-columns:1fr}
   .service-card:not(:last-child){border-right:none;border-bottom:1.5px solid var(--border)}
-  .included-item{grid-template-columns:1fr;gap:6px}
+  .included-item{grid-template-columns:1fr;gap:8px}
   .package-layout{grid-template-columns:1fr}
   .order-summary-wrap{position:static}
   .hero-split{grid-template-columns:1fr}
@@ -835,7 +835,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 }
 /* ---- WORK VIEW ---- added for case studies. Tokens only, nothing hardcoded. ---- */
 .case-index{margin-top:48px}
-.case-row{display:grid;grid-template-columns:34px minmax(200px,300px) 1fr auto 22px;gap:clamp(14px,2.2vw,36px);align-items:center;padding:18px 0;border-bottom:1px solid var(--border-light);cursor:pointer;text-decoration:none;color:inherit;transition:padding-left 0.14s,border-color 0.14s}
+.case-row{display:grid;grid-template-columns:34px minmax(200px,300px) 1fr auto 22px;gap:clamp(14px,2.2vw,36px);align-items:center;padding:20px 0;border-bottom:1px solid var(--border-light);cursor:pointer;text-decoration:none;color:inherit;transition:padding-left 0.14s,border-color 0.14s}
 .case-row:first-child{border-top:1px solid var(--border-light)}
 .case-row:hover{padding-left:10px;border-color:var(--border)}
 .case-num{font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:600;letter-spacing:0.1em;color:var(--text-faint);transition:color 0.14s}
@@ -843,13 +843,13 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 .case-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;border-radius:var(--radius-sm);background:var(--greige)}
 .case-row-text{display:block}
 .case-row-name{display:block;font-family:var(--font-display);font-size:var(--fs-h3);font-weight:800;letter-spacing:-0.02em;line-height:1.05}
-.case-row-line{display:block;font-size:var(--fs-sm);color:var(--text-dim);line-height:1.5;margin-top:7px;max-width:60ch}
+.case-row-line{display:block;font-size:var(--fs-sm);color:var(--text-dim);line-height:1.5;margin-top:8px;max-width:60ch}
 .case-row-meta{font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:500;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--text-dim);text-align:right;white-space:nowrap}
 .case-row-arrow{font-family:var(--font-display);font-size:var(--fs-md);font-weight:700;color:var(--text-faint);text-align:right;transition:color 0.14s,transform 0.14s}
 .case-row:hover .case-row-arrow{color:var(--accent-dark);transform:translateX(3px)}
 .case-detail{display:none}
 .case-detail.active{display:block}
-.case-back{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:500;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--text-dim);cursor:pointer;text-decoration:none;transition:color 0.12s}
+.case-back{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:500;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--text-dim);cursor:pointer;text-decoration:none;transition:color 0.12s}
 .case-back:hover{color:var(--accent-dark)}
 .case-shot{width:100%;display:block;border-radius:var(--radius);border:1px solid var(--border-light)}
 .case-gallery{display:flex;flex-direction:column;gap:clamp(14px,1.8vw,26px)}
@@ -857,12 +857,12 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 .case-pair a{font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:500;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--text-dim);cursor:pointer;text-decoration:none;transition:color 0.12s}
 .case-pair a:hover{color:var(--accent-dark)}
 .included-item.is-extra .included-title{color:var(--accent-dark)}
-.included-tag{font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:600;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--accent-dark);display:block;margin-top:6px}
+.included-tag{font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:600;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--accent-dark);display:block;margin-top:8px}
 @media(max-width:960px){
   .case-back{min-height:44px;align-items:center}
   .case-pair a{min-height:44px;display:inline-flex;align-items:center}
   .case-pair{padding-top:16px}
-  .case-row{grid-template-columns:28px 180px 1fr;gap:18px}
+  .case-row{grid-template-columns:28px 180px 1fr;gap:20px}
   .case-row-meta{grid-column:2 / -1;text-align:left;margin-top:2px}
   .case-row-arrow{display:none}
 }
@@ -876,17 +876,21 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 /* ---- CASE SLIDES ---- standardised deliverable, six per case ---- */
 .case-slides{display:flex;flex-direction:column;gap:clamp(40px,5vw,72px)}
 .case-slide{display:block}
-.slide-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border-light)}
+.slide-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border-light)}
 .slide-num{font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:600;letter-spacing:0.1em;color:var(--accent-dark)}
 .slide-title{font-family:var(--font-display);font-size:var(--fs-lead);font-weight:700;letter-spacing:-0.01em}
 .slide-beyond{font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:600;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--accent-dark);margin-left:auto}
-.slide-cap{font-size:var(--fs-sm);color:var(--text-dim);line-height:1.6;margin-top:14px;max-width:62ch}
+.slide-cap{font-size:var(--fs-sm);color:var(--text-dim);line-height:1.6;margin-top:16px;max-width:62ch}
 /* A marked empty box, never an <img> pointing at nothing — the same convention
    as the siblings' .ph placeholders, and the same greige. */
 .slide-todo{width:100%;aspect-ratio:16/9;border:1.5px dashed var(--ink-dim);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;background:var(--greige)}
 .slide-todo span{font-family:var(--font-mono);font-size:var(--fs-micro);letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--ink-dim)}
 @media(max-width:640px){.slide-beyond{margin-left:0;flex-basis:100%}}
-.opt-note{display:block;font-family:var(--font-mono);font-size:var(--fs-sm);color:var(--ink-dim);margin-top:6px;font-weight:500;line-height:1.4}
+/* PROSE, NOT DATA. This was mono at 11px, where it read as a caption. Raising
+   it to 15 on the type scale kept the mono and the note started outweighing the
+   label above it — same size, wider face, darker mass. The size is right; the
+   voice was wrong. Mono stays on the price beside it, which IS data. */
+.opt-note{display:block;font-family:var(--font);font-size:var(--fs-sm);color:var(--ink-dim);margin-top:8px;font-weight:400;line-height:1.45}
 .option-card input:checked + .option-inner .opt-note{color:var(--accent)}
 .gate-panel{background:var(--surface);border:1.5px solid var(--accent);border-radius:var(--radius);padding:clamp(24px,3vw,36px)}
 
@@ -905,30 +909,30 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
    at 4.84. And .both-name is --font-display here, because Outfit is the display
    face and a 16px/700 option title is a heading, not body copy.
    ========================================================================== */
-.both-pick{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+.both-pick{display:flex;flex-direction:column;gap:12px;margin-top:20px}
 .both-opt{
   display:block;cursor:pointer;background:var(--surface);
   border:1.5px solid var(--border-light);border-radius:var(--radius-sm);
-  padding:16px 18px;transition:border-color .14s;
+  padding:16px 20px;transition:border-color .14s;
 }
 .both-opt:hover{border-color:var(--border)}
 .both-opt.on{border-color:var(--accent)}
 .both-opt input{position:absolute;opacity:0;pointer-events:none}
 .both-opt:focus-within{outline:2px solid var(--accent);outline-offset:3px}
-.both-head{display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap}
+.both-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
 .both-name{font-family:var(--font-display);font-weight:700;font-size:var(--fs-sm);letter-spacing:-0.01em}
 .both-opt.on .both-name{color:var(--accent-dark)}
 .both-price{font-family:var(--font-mono);font-size:var(--fs-sm);font-weight:600;white-space:nowrap}
-.both-note{display:block;font-size:var(--fs-sm);color:var(--text-dim);line-height:1.5;margin-top:5px;max-width:56ch}
-.gate-panel .option-inner{padding-top:18px;min-height:0}
+.both-note{display:block;font-size:var(--fs-sm);color:var(--text-dim);line-height:1.5;margin-top:4px;max-width:56ch}
+.gate-panel .option-inner{padding-top:20px;min-height:0}
 .gate-panel .option-inner::before{content:none}
-.opt-save{display:block;font-family:var(--font-mono);font-size:var(--fs-sm);font-weight:600;letter-spacing:0.06em;color:var(--ink-dim);margin-top:5px}
+.opt-save{display:block;font-family:var(--font);font-size:var(--fs-sm);font-weight:500;color:var(--ink-dim);margin-top:4px}
 .option-card input:checked + .option-inner .opt-save{color:var(--accent)}
 .opt-good{color:var(--accent-dark)!important}
 .mtotal{display:none}
 @media(max-width:960px){
   .mtotal{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:90;background:var(--text);
-    align-items:center;justify-content:space-between;gap:14px;
+    align-items:center;justify-content:space-between;gap:16px;
     padding:12px var(--pad-x);padding-bottom:calc(12px + env(safe-area-inset-bottom,0px));
     border-top:1.5px solid var(--border);transform:translateY(130%);transition:transform 0.22s ease}
   .mtotal.show{transform:translateY(0)}
@@ -937,7 +941,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
   .mtotal .btn{padding:var(--btn-pad-sm);min-height:var(--btn-h-sm);font-size:var(--btn-fs-sm)}
 }
 .logo-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,1.6vw,26px);margin-top:clamp(36px,4.5vw,56px);padding-top:clamp(30px,4vw,44px);border-top:1px solid var(--border-light)}
-.logo-cell{display:flex;flex-direction:column;align-items:center;gap:14px;cursor:pointer;text-decoration:none;padding:14px 6px;border-radius:var(--radius-sm);transition:background 0.14s;min-height:44px}
+.logo-cell{display:flex;flex-direction:column;align-items:center;gap:16px;cursor:pointer;text-decoration:none;padding:16px 8px;border-radius:var(--radius-sm);transition:background 0.14s;min-height:44px}
 .logo-cell:hover{background:var(--greige)}
 .logo-mark{display:flex;align-items:center;justify-content:center;height:64px;width:100%}
 .logo-mark img{max-width:100%;object-fit:contain;opacity:0.78;transition:opacity 0.14s}
@@ -949,7 +953,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 .nav-cta{display:flex;gap:8px;align-items:center;margin-left:22px}
 .nav-cta .btn{padding:var(--btn-pad-sm);min-height:var(--btn-h-sm);font-size:var(--btn-fs-sm);font-weight:700;white-space:nowrap}
 .nav-right{display:flex;align-items:center}
-.nav-mobile-actions{display:flex;flex-direction:column;gap:10px;margin-top:14px;padding-top:30px;border-top:1px solid var(--border-light)}
+.nav-mobile-actions{display:flex;flex-direction:column;gap:12px;margin-top:16px;padding-top:32px;border-top:1px solid var(--border-light)}
 .nav-mobile-actions .btn{width:100%;justify-content:flex-start;font-size:var(--btn-fs-lg);padding:var(--btn-pad-lg);min-height:var(--btn-h-lg)}
 /* The nav button no longer shrinks at 1100. It was 13px dropping to 12 to fit
    three buttons; there is one now, so the size can stay put — which is rather
@@ -960,7 +964,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
    makes the head ink and turns .accent the paper value, so the brand dot reads
    paper-on-orange exactly as it read orange-on-paper everywhere else. */
 .do-dont .accent-block-items{margin-top:clamp(20px,2.4vw,32px)}
-.do-dont .accent-block-item{font-size:var(--fs-h3);padding:18px 0}
+.do-dont .accent-block-item{font-size:var(--fs-h3);padding:20px 0}
 /* THE SECOND VOICE ON THIS GROUND IS PAPER, NOT A DIMMED INK. rgba(20,20,20,.72)
    on the orange is 3.37 and fails; paper is 3.49 and is legal here because
    .do-dont sets 19px at 700, and WCAG large text starts at 18.66px bold. So the
@@ -970,7 +974,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 @media(max-width:960px){.do-dont{grid-template-columns:1fr;gap:clamp(32px,6vw,48px)}}
 .two-col--process{gap:clamp(40px,6vw,100px)}
 @media(max-width:960px){
-  .two-col--process{gap:30px}
+  .two-col--process{gap:32px}
   .two-col--process .process-mini{margin-top:0}
 }
 .dg{width:100%;height:auto;display:block;max-width:720px}
