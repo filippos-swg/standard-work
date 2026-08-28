@@ -133,7 +133,20 @@ html{font-size:16px;scroll-behavior:smooth}
    * stylesheets declare --fs-mono:11px and Seriously Wow's says the mono voice
    * does not scale. Raising it here would have been a network change made in
    * one repo. What goes is everything BELOW it. */
-  --fs-micro:11px;                    /* mono labels only — never a sentence */
+  /* 14px, not 11. Filippos, 2026-08-28, after seeing it in use: the label voice
+     was still the smallest thing on the page and read as fine print rather than
+     as a deliberate register. 11 x 1.25 = 13.75, taken to 14.
+
+     THIS DIVERGES FROM THE NETWORK, and knowingly. sillywizardsguild.com and
+     seriouslywow.com both declare --fs-mono:11px, and Seriously Wow's says the
+     mono voice does not scale. Standard Work's is now 14. Either the other two
+     follow or the three sites differ here — that is a network decision and it is
+     open, logged in aios/LOG.md.
+
+     14 SITTING BESIDE --fs-sm's 15 IS NOT A ONE-PIXEL STEP. The label voice is
+     its own axis, like the control scale below it: mono, uppercase, tracked at
+     .14em, and set against Inter in sentence case. Two registers, not two sizes. */
+  --fs-micro:14px;                    /* mono labels only — never a sentence */
   --fs-sm:15px;                       /* the smallest thing anyone reads */
   --fs-body:17px;
   --fs-md:clamp(17px,1.8vw,20px);     /* sub-headings, step titles, totals */
