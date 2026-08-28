@@ -288,6 +288,32 @@ function run(w){
   }
 
   /* -------------------------------------------------------------- interface */
+  /* ------------------------------------------------- the speculative mocks */
+  group('Speculative one-pagers');
+  w = await load(); t = run(w);
+  for(const c of ['harry','90110','eddy','lex-energy','sebratec']){
+    const tag=t.$('#case-'+c+' .mocktag');
+    ok(c+': one mock, labelled', t.$$('#case-'+c+' .mockwrap').length===1 &&
+       tag && /Demonstration/i.test(tag.textContent), tag&&tag.textContent.trim().slice(0,40));
+  }
+  /* THE ASSERTION THAT WAS MISSING, and the reason this group exists. The
+     overlay shipped on 27 Aug with none of its CSS — display:none included —
+     so its bar and an empty image rendered inline at the foot of every page.
+     It was checked at the time by fifteen ad-hoc assertions, every one of which
+     opened it first. A component that is never OFF cannot be caught by testing
+     it ON, and none of those checks was in this file anyway. */
+  ok('overlay is HIDDEN at rest', t.w.getComputedStyle(t.$('#mockModal')).display==='none',
+     t.w.getComputedStyle(t.$('#mockModal')).display);
+  ok('overlay bar does not render at rest', t.$('.mockmodal-bar').getBoundingClientRect().height===0);
+  ok('overlay is fixed, not in flow', t.w.getComputedStyle(t.$('.mockmodal-bar')).position==='fixed',
+     t.w.getComputedStyle(t.$('.mockmodal-bar')).position);
+  t.w.showCase('harry'); t.w.openMock('harry');
+  ok('openMock opens it', t.$('#mockModal').classList.contains('open'));
+  ok('it loads that case\'s shot', /mock-full-harry/.test(t.$('#mockModalImg').src));
+  ok('overlay repeats the disclaimer', /not a real client site/i.test(t.$('.mockmodal-t span').textContent));
+  t.w.closeMock();
+  ok('closeMock hides it again', t.w.getComputedStyle(t.$('#mockModal')).display==='none');
+
   group('Interface');
   w = await load(); t = run(w);
   ok('nav height matches --nav-h',

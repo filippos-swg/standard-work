@@ -195,7 +195,7 @@ html{font-size:16px;scroll-behavior:smooth}
 }
 body{
   background:var(--bg);color:var(--text);
-  font-family:var(--font);font-size:var(--fs-body);line-height:1.6;
+  font-family:var(--font);font-size:var(--fs-body);line-height:1.55;
   font-weight:400;letter-spacing:-.005em;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
 }
@@ -236,10 +236,20 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);bo
 .h2{font-family:var(--font-display);font-size:var(--fs-h2);font-weight:700;line-height:1.0;letter-spacing:-0.02em}
 .h3{font-family:var(--font-display);font-size:var(--fs-h3);font-weight:700;line-height:1.1;letter-spacing:-0.01em}
 .label{font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:500;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--text-dim)}
-/* LEADING TIGHTENS AS TYPE GROWS. 1.65 is a small-text value; at --fs-lead's
-   19-24px it opened the lines further than the eye wants to travel. 1.45 is the
-   setting for this size and every standalone statement now shares it. */
-.body-lg{font-size:var(--fs-lead);line-height:1.45}
+/* ============================================================================
+   LEADING TIGHTENS AS TYPE GROWS. One rule, three values, and they are set by
+   the size rather than by the class:
+
+     --fs-micro / --fs-sm   1.6    small text needs the air to stay separable
+     --fs-body              1.55
+     --fs-lead and above    1.35   long lines at 19-24px do not need it and the
+                                   eye has further to travel back
+
+   The file had 1.65 on the largest reading size and 1.5 on the smallest, which
+   is the rule upside down. 1.45 was a step in the right direction this morning
+   and still too open at this size. Filippos, 2026-08-28.
+   ========================================================================== */
+.body-lg{font-size:var(--fs-lead);line-height:1.35}
 .body{font-size:var(--fs-body);line-height:1.55}
 .muted{color:var(--text-dim)}
 .accent{color:var(--accent)}
@@ -357,7 +367,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);bo
    reading size and read as a footnote to the block it was summing up.
    Filippos, 2026-08-28. --measure rather than a flat 600px, so the line length
    is a character count and holds as the size changes. */
-.accent-note{margin-top:40px;font-size:var(--fs-lead);line-height:1.45;color:var(--text);max-width:var(--measure)}
+.accent-note{margin-top:40px;font-size:var(--fs-lead);line-height:1.35;color:var(--text);max-width:var(--measure)}
 .step-header{padding:16px 24px;display:flex;align-items:baseline;gap:16px}
 /* 20px at the cap and 15px at the floor — small text either way, so white at
    3.98 was never legal on these two. They inherit ink from the swap. */
@@ -617,7 +627,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
    ========================================================================== */
 .page-head{padding:clamp(56px,8vw,110px) var(--pad-x) clamp(40px,5vw,72px);max-width:var(--max-w);margin:0 auto}
 .page-head .display{margin-bottom:clamp(24px,3vw,40px)}
-.page-head .lead{font-size:var(--fs-lead);line-height:1.45;max-width:var(--measure);color:var(--text-dim)}
+.page-head .lead{font-size:var(--fs-lead);line-height:1.35;max-width:var(--measure);color:var(--text-dim)}
 
 .contact-layout{
   display:grid;grid-template-columns:1fr minmax(300px,460px);
@@ -651,7 +661,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
   text-transform:uppercase;color:var(--text-dim);
 }
 .contact-block.mono a:hover{color:var(--accent-dark)}
-.prose{max-width:var(--measure);color:var(--text-dim);font-size:var(--fs-body);line-height:1.65}
+.prose{max-width:var(--measure);color:var(--text-dim);font-size:var(--fs-body);line-height:1.55}
 .prose p + p{margin-top:1.2em}
 .mono-up{text-transform:uppercase}
 .todo-inline{
@@ -715,6 +725,35 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 @media(max-width:900px){
   .contact-layout{grid-template-columns:1fr;padding-bottom:clamp(56px,8vw,96px)}
 }
+
+/* ============================================================================
+   THE MOCK OVERLAY'S OWN RULES — RECOVERED 2026-08-28.
+
+   These were never in this file. When the one-pagers were ported on the 27th I
+   sliced the CSS from its section comment to the next @media, and every
+   .mockmodal rule sits after that boundary. So the overlay shipped with markup
+   and no styles: display:none was missing, which left the bar and the empty
+   image rendered inline at the foot of every page.
+
+   MY OWN TESTS PASSED ON IT. Fifteen assertions, and every one checked the
+   overlay OPEN — that it gained .open, loaded the right shot, set the title,
+   locked scroll. Not one asserted the resting state. A test that only exercises
+   the happy path cannot see a component that is never off.
+   ========================================================================== */
+.mockmodal{position:fixed;inset:0;z-index:200;display:none;background:rgba(20,20,20,.88);
+  backdrop-filter:blur(3px);overflow-y:auto;overscroll-behavior:contain}
+.mockmodal.open{display:block}
+.mockmodal-in{max-width:1000px;margin:0 auto;padding:clamp(56px,7vw,88px) var(--pad-x) 80px}
+.mockmodal-bar{position:fixed;top:0;left:0;right:0;background:var(--surface);
+  border-bottom:1.5px solid var(--border);z-index:2;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:12px var(--pad-x)}
+.mockmodal-t{display:flex;flex-direction:column;gap:3px;min-width:0}
+.mockmodal-t b{font-family:var(--font-display);font-size:var(--fs-md);font-weight:700;letter-spacing:-0.01em}
+.mockmodal-t span{font-family:var(--font-mono);font-size:var(--fs-micro);letter-spacing:var(--track-mono);
+  text-transform:uppercase;color:var(--text-dim)}
+.mockmodal img{width:100%;display:block;border-radius:var(--radius);
+  box-shadow:0 30px 80px rgba(0,0,0,.4)}
 
 /* ============================================================================
    THE SPECULATIVE ONE-PAGERS — Simon's 2026-08-27 package, MOCK-PLACEMENT.
