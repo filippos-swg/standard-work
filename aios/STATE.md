@@ -1,6 +1,6 @@
 <!-- GENERATED — do not edit. Edits are overwritten at next close. -->
-Generated 2026-08-28 12:22 +0200 · HEAD e017f77 · branch simon-features-2026-08-27 · host Souths-MacBook-Air.local · generator v2.0
-STALENESS RULE: if `git rev-parse HEAD` ≠ e017f77, or the tree is dirty, this file is HISTORY. Regenerate before acting on it.
+Generated 2026-08-28 16:59 +0200 · HEAD c228827 · branch simon-features-2026-08-27 · host Souths-MacBook-Air.local · generator v2.0
+STALENESS RULE: if `git rev-parse HEAD` ≠ c228827, or the tree is dirty, this file is HISTORY. Regenerate before acting on it.
 
 ## 1 · Identity
 <sub>CLAUDE.md, the five human lines — the only human input in this file</sub>
@@ -14,16 +14,16 @@ STALENESS RULE: if `git rev-parse HEAD` ≠ e017f77, or the tree is dirty, this 
 ## 2 · Head
 <sub>git rev-parse HEAD · git log -1 · git rev-list --left-right --count @{u}...HEAD</sub>
 
-> **As of `e017f77`.** The close commits this file after generating it, so the counts below are one commit old the moment they land. Re-run `aios-state` for current numbers.
+> **As of `c228827`.** The close commits this file after generating it, so the counts below are one commit old the moment they land. Re-run `aios-state` for current numbers.
 
-- **simon-features-2026-08-27 @ e017f77** — chore: regenerate STATE.md
-- Committed 2026-08-28 10:48 by Filippos Arvanitakis
-- Upstream: origin/simon-features-2026-08-27 · **0 ahead**, 0 behind
+- **simon-features-2026-08-27 @ c228827** — Port four features from Simon's 28 Aug package, by hand
+- Committed 2026-08-28 16:59 by Filippos Arvanitakis
+- Upstream: origin/simon-features-2026-08-27 · **1 ahead**, 0 behind
 
 ## 3 · Working tree
 <sub>git status --porcelain + a filesystem diff against git ls-files</sub>
 
-> **As of `e017f77`, before this file was committed.** `aios/STATE.md` and `aios/CLOSING` appear here for that reason and are not real dirt.
+> **As of `c228827`, before this file was committed.** `aios/STATE.md` and `aios/CLOSING` appear here for that reason and are not real dirt.
 
 - Clean.
 
@@ -33,11 +33,12 @@ STALENESS RULE: if `git rev-parse HEAD` ≠ e017f77, or the tree is dirty, this 
 - None. Every branch has an upstream.
 
 ## 5 · Since last close
-<sub>git log 7765a47..HEAD</sub>
+<sub>git log e017f77..HEAD</sub>
 
-- `e017f77` 2026-08-28 — chore: regenerate STATE.md
+- `c228827` 2026-08-28 — Port four features from Simon's 28 Aug package, by hand
+- `bcdea66` 2026-08-28 — chore: regenerate STATE.md
 
-Close marker: e017f77b718447f12fd6c92ef801059a6441806b
+Close marker: c22882798ee9624836a579a5325e798f2a0a1cb9
 
 ## 6 · Awaiting judgment
 <sub>aios/LOG.md headings + **Status:** lines — headings, dates and statuses only, never bodies</sub>
@@ -52,16 +53,16 @@ Close marker: e017f77b718447f12fd6c92ef801059a6441806b
 ## 8 · Staleness
 <sub>git log -1 --format=%ad -- <path>, worst 10</sub>
 
-- `docs/UX_PRINCIPLES.md` — 73d old, **72d behind** the newest commit in the repo
-- `docs/OPEN_QUESTIONS.md` — 73d old, **72d behind** the newest commit in the repo
+- `docs/UX_PRINCIPLES.md` — 73d old, **73d behind** the newest commit in the repo
+- `docs/OPEN_QUESTIONS.md` — 73d old, **73d behind** the newest commit in the repo
 - `docs/MVP_SCOPE.md` — 40d old, **40d behind** the newest commit in the repo
-- `docs/CASE-COPY.md` — 2d old, **2d behind** the newest commit in the repo
-- `docs/COPY-AUDIT.md` — 2d old, **2d behind** the newest commit in the repo
+- `docs/CASE-COPY.md` — 3d old, **3d behind** the newest commit in the repo
+- `docs/COPY-AUDIT.md` — 3d old, **3d behind** the newest commit in the repo
 - `docs/CREATIVE_DIRECTION.md` — 2d old, **2d behind** the newest commit in the repo
-- `CLAUDE.md` — 2d old, **1d behind** the newest commit in the repo
-- `PRICING.md` — 2d old, **1d behind** the newest commit in the repo
-- `README.md` — 2d old, **1d behind** the newest commit in the repo
-- `aios/CANON.md` — 2d old, **1d behind** the newest commit in the repo
+- `CLAUDE.md` — 2d old, **2d behind** the newest commit in the repo
+- `PRICING.md` — 2d old, **2d behind** the newest commit in the repo
+- `README.md` — 2d old, **2d behind** the newest commit in the repo
+- `aios/CANON.md` — 2d old, **2d behind** the newest commit in the repo
 
 ## 9 · Cross-repo pins
 <sub>CLAUDE.md `Depends on:` (human) + the sibling's own git</sub>
