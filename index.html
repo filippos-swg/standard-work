@@ -163,6 +163,19 @@ html{font-size:16px;scroll-behavior:smooth}
    * the one above. A button is a target before it is prose: its size is set by
    * the hand, not by the reading rhythm, which is why 14px is legal here and
    * nowhere else. Three sizes replace the five the file had grown. */
+  /* BUTTONS ARE WHITE WITH INK TYPE ON EVERY GROUND, and go orange on hover.
+     Filippos, 2026-08-28. These four are deliberately NOT redefined by
+     .accent-block or .ink-block: a control that changes colour with its
+     background is a different control, and the point of this is that it is the
+     same one everywhere. That is why they are literals rather than --surface
+     and --text, both of which swap.
+     ink on white 18.42 · ink on orange 4.63 · the white shape on the orange
+     band 3.98, over the 3.0 floor for a non-text mark. */
+  --btn-bg:#FFFFFF;
+  --btn-fg:#141414;
+  --btn-hover-bg:#E84500;
+  --btn-hover-fg:#141414;
+
   --btn-fs-sm:14px;   --btn-pad-sm:10px 18px;   --btn-h-sm:42px;
   --btn-fs-md:16px;   --btn-pad-md:14px 26px;   --btn-h-md:48px;
   --btn-fs-lg:17px;   --btn-pad-lg:16px 30px;   --btn-h-lg:52px;
@@ -223,24 +236,34 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);bo
 .h2{font-family:var(--font-display);font-size:var(--fs-h2);font-weight:700;line-height:1.0;letter-spacing:-0.02em}
 .h3{font-family:var(--font-display);font-size:var(--fs-h3);font-weight:700;line-height:1.1;letter-spacing:-0.01em}
 .label{font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:500;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--text-dim)}
-.body-lg{font-size:var(--fs-lead);line-height:1.65}
+/* LEADING TIGHTENS AS TYPE GROWS. 1.65 is a small-text value; at --fs-lead's
+   19-24px it opened the lines further than the eye wants to travel. 1.45 is the
+   setting for this size and every standalone statement now shares it. */
+.body-lg{font-size:var(--fs-lead);line-height:1.45}
 .body{font-size:var(--fs-sm);line-height:1.65}
 .muted{color:var(--text-dim)}
 .accent{color:var(--accent)}
-.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--font);font-size:var(--btn-fs-md);font-weight:700;letter-spacing:-0.01em;background:var(--text);color:var(--surface);border:1.5px solid var(--text);border-radius:100px;padding:var(--btn-pad-md);min-height:var(--btn-h-md);cursor:pointer;text-decoration:none;transition:background 0.12s,color 0.12s,transform 0.1s;white-space:nowrap}
-.btn:hover{background:var(--accent-dark);border-color:var(--accent-dark);transform:translateY(-1px)}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--font);font-size:var(--btn-fs-md);font-weight:700;letter-spacing:-0.01em;background:var(--btn-bg);color:var(--btn-fg);border:1.5px solid var(--btn-fg);border-radius:100px;padding:var(--btn-pad-md);min-height:var(--btn-h-md);cursor:pointer;text-decoration:none;transition:background 0.12s,color 0.12s,transform 0.1s;white-space:nowrap}
+.btn:hover{background:var(--btn-hover-bg);border-color:var(--btn-hover-bg);color:var(--btn-hover-fg);transform:translateY(-1px)}
 .btn:active{transform:translateY(0)}
-.btn-outline{background:transparent;color:var(--text);border-color:var(--border)}
-.btn-outline:hover{background:var(--text);color:var(--surface)}
+/* .btn-accent and .btn-outline are now the same control. The classes stay:
+   fifty places in the markup carry them, and which button leads is still worth
+   recording even when it no longer changes the paint. */
+.btn-outline,.btn-accent{background:var(--btn-bg);color:var(--btn-fg);border-color:var(--btn-fg)}
+.btn-outline:hover,.btn-accent:hover{background:var(--btn-hover-bg);border-color:var(--btn-hover-bg);color:var(--btn-hover-fg)}
 /* .btn is clamp(14px,1.5vw,17px) at 700 — under the 18.66px bold threshold, so
    it is small text. White on the orange is 3.98 and fails; --on-accent is 4.63
    and passes. Same finding as the bands. */
-.btn-accent{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+/* .btn-accent's own paint is gone — see the unified rule above. */
 /* HOVER INVERTS RATHER THAN DEEPENS, and that is arithmetic too. Deepening the
    fill to --accent-dark would drop --on-accent to 3.34 and break the button on
    the one state where the pointer is already on it. Inverting to an ink fill
    puts the orange on top at 4.63 and matches what .btn-outline already does. */
-.btn-accent:hover{background:var(--on-accent);border-color:var(--on-accent);color:var(--accent)}
+/* THE ORANGE BAND IS THE ONE EXCEPTION, and it has to be. A button that turns
+   orange on a ground that is already orange disappears into it, leaving only its
+   outline. On .accent-block the hover inverts to ink instead — same gesture,
+   still one clear state change, and 4.63 either way. */
+.accent-block .btn:hover{background:var(--btn-fg);border-color:var(--btn-fg);color:var(--btn-bg)}
 /* ============================================================================
    THE ACCENT SURFACES. A TOKEN SWAP, NOT A SET OF FORKED RULES.
 
@@ -304,8 +327,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);bo
 .ink-block .body-lg,.ink-block p{color:var(--text-dim)}
 /* An outline button on the ink band. The base rule paints --text on --surface,
    which the swap has already inverted, so only the border needs saying. */
-.ink-block .btn-outline{border-color:var(--border-light);color:var(--text)}
-.ink-block .btn-outline:hover{background:var(--text);color:#141414}
+/* The ink band needs no override now: the button is white on every ground. */
 
 /* THE GROUND AND THE ACCENT TRADE PLACES, and the values here are literals on
    purpose. A swap cannot source its own background from a token it redefines —
@@ -330,7 +352,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);bo
 .accent-block-inner{max-width:var(--max-w);margin:0 auto;position:relative;z-index:1}
 .accent-block-items{margin-top:40px;border-top:1px solid var(--border-light)}
 .accent-block-item{padding:24px 0;border-bottom:1px solid var(--border-light);font-family:var(--font-display);font-size:clamp(22px,3vw,44px);font-weight:700;line-height:1.1;color:var(--text);letter-spacing:-0.015em}
-.accent-note{margin-top:40px;font-size:var(--fs-sm);line-height:1.6;color:var(--text);max-width:600px}
+/* THE SAME REGISTER AS .body-lg, and now the same size. This is a standalone
+   closing statement, not a caption inside a component — it was set at the small
+   reading size and read as a footnote to the block it was summing up.
+   Filippos, 2026-08-28. --measure rather than a flat 600px, so the line length
+   is a character count and holds as the size changes. */
+.accent-note{margin-top:40px;font-size:var(--fs-lead);line-height:1.45;color:var(--text);max-width:var(--measure)}
 .step-header{padding:16px 24px;display:flex;align-items:baseline;gap:16px}
 /* 20px at the cap and 15px at the floor — small text either way, so white at
    3.98 was never legal on these two. They inherit ink from the swap. */
