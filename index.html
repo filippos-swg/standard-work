@@ -240,7 +240,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);bo
    19-24px it opened the lines further than the eye wants to travel. 1.45 is the
    setting for this size and every standalone statement now shares it. */
 .body-lg{font-size:var(--fs-lead);line-height:1.45}
-.body{font-size:var(--fs-sm);line-height:1.65}
+.body{font-size:var(--fs-body);line-height:1.55}
 .muted{color:var(--text-dim)}
 .accent{color:var(--accent)}
 .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--font);font-size:var(--btn-fs-md);font-weight:700;letter-spacing:-0.01em;background:var(--btn-bg);color:var(--btn-fg);border:1.5px solid var(--btn-fg);border-radius:100px;padding:var(--btn-pad-md);min-height:var(--btn-h-md);cursor:pointer;text-decoration:none;transition:background 0.12s,color 0.12s,transform 0.1s;white-space:nowrap}
@@ -394,9 +394,22 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);bo
    4.5, so it takes the deep value like every other small orange here. */
 .service-card.is-both{outline:1.5px solid var(--accent);outline-offset:-1.5px}
 .service-card.is-both .service-card-badge{color:var(--accent-dark)}
-.service-card-badge{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:600;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--accent-dark);border:1px solid var(--accent);padding:4px 12px;border-radius:100px;margin-bottom:4px;width:fit-content}
+.service-card-badge{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:600;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--accent-dark);border:1px solid currentColor;padding:4px 12px;border-radius:100px;margin-bottom:24px;width:fit-content}
 .service-card-title{font-family:var(--font-display);font-size:var(--fs-h3);font-weight:800;letter-spacing:-0.02em;line-height:1.1}
-.service-card-desc{font-size:var(--fs-sm);color:var(--text-dim);line-height:1.65;flex:1}
+/* ============================================================================
+   DESCRIPTIVE COPY IS --fs-body. --fs-sm IS FOR DATA, META AND CAPTIONS.
+
+   The distinction the type scale was missing: 15px is right for a price, a
+   summary row, a form value or a caption bolted to a component — things read in
+   a glance beside something else. It is too small for a sentence that has to be
+   read on its own, and every card description, list item and standing paragraph
+   was set at it.
+
+   The test is whether the text would still make sense with the thing next to it
+   removed. If yes it is copy and takes --fs-body; if no it is a caption and
+   stays at --fs-sm. Filippos, 2026-08-28.
+   ========================================================================== */
+.service-card-desc{font-size:var(--fs-body);color:var(--text-dim);line-height:1.55;flex:1}
 .service-card-price{font-family:var(--font-display);font-size:var(--fs-h3);font-weight:700;letter-spacing:-0.02em}
 .process-mini{margin-top:32px}
 .process-mini-item{display:flex;gap:20px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--border-light)}
@@ -407,13 +420,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);bo
 .hero-cta-box{display:flex;flex-direction:column;gap:12px;padding-top:8px;min-width:240px}
 .hero-cta-label{font-family:var(--font-mono);font-size:var(--fs-micro);color:var(--text-dim);letter-spacing:var(--track-mono);text-transform:uppercase;margin-bottom:4px}
 .list-clean{list-style:none;display:flex;flex-direction:column}
-.list-clean li{font-size:var(--fs-sm);padding:12px 0;border-bottom:1px solid var(--border-light);line-height:1.5}
+.list-clean li{font-size:var(--fs-body);padding:12px 0;border-bottom:1px solid var(--border-light);line-height:1.5}
 .list-clean li:last-child{border-bottom:none}
 .included-list{margin-top:32px}
 .included-item{padding:20px 0;border-bottom:1px solid var(--border-light);display:grid;grid-template-columns:200px 1fr;gap:32px}
 .included-item:first-child{border-top:1px solid var(--border-light)}
 .included-title{font-family:var(--font-display);font-size:var(--fs-md);font-weight:700;letter-spacing:-0.01em}
-.included-desc{font-size:var(--fs-sm);color:var(--text-dim);line-height:1.6}
+.included-desc{font-size:var(--fs-body);color:var(--text-dim);line-height:1.55}
 .package-layout{display:grid;grid-template-columns:1fr 360px;gap:clamp(32px,4vw,56px);align-items:start}
 .package-content{min-width:0}
 /* 16px of clearance under the fixed nav, which is where the old 74 came from
@@ -492,7 +505,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 .footer-logo{font-family:var(--font-display);font-size:var(--fs-h2);font-weight:900;letter-spacing:-0.02em;margin-bottom:8px}
 .footer-logo .dot{color:var(--accent)}
 .footer-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;gap:32px}
-.footer-desc{font-size:var(--fs-sm);color:var(--text-dim);line-height:1.6;max-width:420px;margin-top:8px}
+.footer-desc{font-size:var(--fs-body);color:var(--text-dim);line-height:1.55;max-width:420px;margin-top:8px}
 .footer-email{font-family:var(--font-mono);font-size:var(--fs-sm);color:var(--text-dim);text-decoration:none}
 .footer-email:hover{color:var(--accent-dark)}
 /* The margin-top is what stops the two hairlines — this one and .network's —
@@ -729,7 +742,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 .mocktag::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent)}
 .mockshot{width:100%;display:block;height:auto;border:1.5px solid var(--border-light);
   border-radius:var(--radius);background:var(--surface-alt)}
-.mockcap{font-size:var(--fs-sm);color:var(--text-dim);line-height:1.6;margin-top:16px;max-width:62ch}
+.mockcap{font-size:var(--fs-body);color:var(--text-dim);line-height:1.55;margin-top:16px;max-width:62ch}
 
 /* the row of five on the Website page.
    The whole page is visible from the start — no crop, no pan. A thumbnail that
@@ -883,7 +896,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 .case-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;border-radius:var(--radius-sm);background:var(--greige)}
 .case-row-text{display:block}
 .case-row-name{display:block;font-family:var(--font-display);font-size:var(--fs-h3);font-weight:800;letter-spacing:-0.02em;line-height:1.05}
-.case-row-line{display:block;font-size:var(--fs-sm);color:var(--text-dim);line-height:1.5;margin-top:8px;max-width:60ch}
+.case-row-line{display:block;font-size:var(--fs-body);color:var(--text-dim);line-height:1.5;margin-top:8px;max-width:60ch}
 .case-row-meta{font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:500;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--text-dim);text-align:right;white-space:nowrap}
 .case-row-arrow{font-family:var(--font-display);font-size:var(--fs-md);font-weight:700;color:var(--text-faint);text-align:right;transition:color 0.14s,transform 0.14s}
 .case-row:hover .case-row-arrow{color:var(--accent-dark);transform:translateX(3px)}
@@ -920,7 +933,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 .slide-num{font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:600;letter-spacing:0.1em;color:var(--accent-dark)}
 .slide-title{font-family:var(--font-display);font-size:var(--fs-lead);font-weight:700;letter-spacing:-0.01em}
 .slide-beyond{font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:600;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--accent-dark);margin-left:auto}
-.slide-cap{font-size:var(--fs-sm);color:var(--text-dim);line-height:1.6;margin-top:16px;max-width:62ch}
+.slide-cap{font-size:var(--fs-body);color:var(--text-dim);line-height:1.55;margin-top:16px;max-width:62ch}
 /* A marked empty box, never an <img> pointing at nothing — the same convention
    as the siblings' .ph placeholders, and the same greige. */
 .slide-todo{width:100%;aspect-ratio:16/9;border:1.5px dashed var(--ink-dim);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;background:var(--greige)}
@@ -963,7 +976,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 .both-name{font-family:var(--font-display);font-weight:700;font-size:var(--fs-sm);letter-spacing:-0.01em}
 .both-opt.on .both-name{color:var(--accent-dark)}
 .both-price{font-family:var(--font-mono);font-size:var(--fs-sm);font-weight:600;white-space:nowrap}
-.both-note{display:block;font-size:var(--fs-sm);color:var(--text-dim);line-height:1.5;margin-top:4px;max-width:56ch}
+.both-note{display:block;font-size:var(--fs-body);color:var(--text-dim);line-height:1.5;margin-top:4px;max-width:56ch}
 .gate-panel .option-inner{padding-top:20px;min-height:0}
 .gate-panel .option-inner::before{content:none}
 .opt-save{display:block;font-family:var(--font);font-size:var(--fs-sm);font-weight:500;color:var(--ink-dim);margin-top:4px}
