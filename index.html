@@ -1065,9 +1065,18 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
    the point of having a control scale. Nav overflow is asserted at three widths. */
 @media(max-width:860px){.nav-cta{display:none}}
 .do-dont{display:grid;grid-template-columns:3fr 2fr;gap:clamp(28px,5vw,72px);align-items:start}
-/* .dd-head and .dd-dot no longer need rules of their own: the swap already
-   makes the head ink and turns .accent the paper value, so the brand dot reads
-   paper-on-orange exactly as it read orange-on-paper everywhere else. */
+/* .dd-head and .dd-dot need no rules of their own: the swap already makes the
+   head ink and turns .accent the paper value, so the brand dot reads
+   paper-on-orange exactly as it read orange-on-paper everywhere else.
+
+   THE "DON'T" HEAD TAKES PAPER, like the items under it. The column already
+   ran two voices — ink for what we do, paper for what we don't — and the
+   heading was the one line still on the wrong side of that split, which read
+   as an oversight rather than as the two polarities it belongs to. Same token
+   the items use, so the pair cannot drift apart. Paper on orange is 3.49 and
+   this is .h2 at 26px and up, well past the 24px where large text is legal.
+   Filippos, 2026-08-28. */
+.dd-head.is-not{color:var(--accent)}
 .do-dont .accent-block-items{margin-top:clamp(20px,2.4vw,32px)}
 .do-dont .accent-block-item{font-size:var(--fs-h3);padding:20px 0}
 /* THE SECOND VOICE ON THIS GROUND IS PAPER, NOT A DIMMED INK. rgba(20,20,20,.72)
@@ -1178,7 +1187,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           </div>
         </div>
         <div>
-          <h2 class="h2 dd-head">What we don't<span class="dd-dot">.</span></h2>
+          <h2 class="h2 dd-head is-not">What we don't<span class="dd-dot">.</span></h2>
           <div class="accent-block-items">
             <div class="accent-block-item is-not">Endless meetings.</div>
             <div class="accent-block-item is-not">Complicated workshops.</div>
