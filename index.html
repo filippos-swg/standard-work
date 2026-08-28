@@ -449,16 +449,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);bo
    was the problem, not the size of the buttons — they already filled their
    column at 240px.
 
-   BOTTOM, NOT CENTRE. Centring halves the void but leaves the CTA floating in
-   the middle of nothing. Aligned to the end, the buttons land on the same line
-   as the close of the lead paragraph: the eye finishes reading and they are
-   already there. What emptiness remains sits above them, where the display type
-   is doing the work.
+   CENTRED. Filippos, having seen it bottom-aligned: the shared baseline did not
+   read as a relationship, it read as the buttons having fallen to the floor.
+   Centred, the column sits against the mass of the display type rather than
+   against the end of the copy, and the 295px splits evenly above and below
+   instead of pooling. My argument for the baseline was wrong in the eye even
+   though it was right on paper — which is what looking at it is for.
 
    Home only. The Brand, Website and Contact heroes have short left columns and
    a different balance, and start is right for them.
    ========================================================================== */
-#page-home .hero-split{align-items:end}
+#page-home .hero-split{align-items:center}
 #page-home .hero-cta-box{min-width:300px}
 #page-home .hero-cta-box .btn{
   font-size:var(--btn-fs-lg);padding:var(--btn-pad-lg);min-height:var(--btn-h-lg);
