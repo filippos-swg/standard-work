@@ -440,7 +440,36 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);bo
    gap 12 -> 16 and the label's margin 4 -> 12, so the stack breathes and the
    label stops sitting on top of the first button. Both on the 4px scale. */
 .hero-cta-box{display:flex;flex-direction:column;gap:16px;padding-top:8px;min-width:240px}
-.hero-cta-box .btn{justify-content:center}
+/* ============================================================================
+   THE HOME HERO'S RIGHT COLUMN — bottom-aligned, wider, larger. 2026-08-28.
+
+   Measured at 1440: the left column is 840x469 and the right is 240x175, so
+   align-items:start pinned a 175px column to the top of a 469px one and
+   collected all 295px of the difference in one pool at the bottom. That pool
+   was the problem, not the size of the buttons — they already filled their
+   column at 240px.
+
+   BOTTOM, NOT CENTRE. Centring halves the void but leaves the CTA floating in
+   the middle of nothing. Aligned to the end, the buttons land on the same line
+   as the close of the lead paragraph: the eye finishes reading and they are
+   already there. What emptiness remains sits above them, where the display type
+   is doing the work.
+
+   Home only. The Brand, Website and Contact heroes have short left columns and
+   a different balance, and start is right for them.
+   ========================================================================== */
+#page-home .hero-split{align-items:end}
+#page-home .hero-cta-box{min-width:300px}
+#page-home .hero-cta-box .btn{
+  font-size:var(--btn-fs-lg);padding:var(--btn-pad-lg);min-height:var(--btn-h-lg);
+}
+
+/* LEFT, NOT CENTRED. Filippos, 2026-08-28, having seen both: centring these
+   made the pair read as a block of its own rather than as two buttons, and the
+   arrow lost the left edge every other CTA on the site shares. They sit at the
+   button's own padding now — the same start point as a button anywhere else,
+   the difference being only that these are stretched to the column. */
+.hero-cta-box .btn{justify-content:flex-start}
 .hero-cta-label{font-family:var(--font-mono);font-size:var(--fs-micro);color:var(--text-dim);letter-spacing:var(--track-mono);text-transform:uppercase;margin-bottom:12px}
 .list-clean{list-style:none;display:flex;flex-direction:column}
 .list-clean li{font-size:var(--fs-body);padding:12px 0;border-bottom:1px solid var(--border-light);line-height:1.5}
