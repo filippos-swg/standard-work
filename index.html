@@ -1288,7 +1288,12 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
    <div class="accent-block-inner">
     <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:16px;">
       <div><p class="label mb-12">Our services</p><h2 class="h2">Choose what fits.</h2></div>
-      <p class="body" style="max-width:320px;">Fixed scope. Fixed price. Professional results.</p>
+      <!-- .body-lg, not .body: this is a standalone statement set beside a heading,
+             the same job .accent-note does at the foot of the block above, and it takes
+             the same --fs-lead. The three .body uses left in the file are the thank-you
+             steps, which are a numbered sequence rather than a statement, and stay.
+             320 -> 380 so the wider type keeps roughly the shape it had. -->
+        <p class="body-lg" style="max-width:380px;">Fixed scope. Fixed price. Professional results.</p>
     </div>
     <span id="services" style="position:absolute;" aria-hidden="true"></span>
     <div class="services-grid">
