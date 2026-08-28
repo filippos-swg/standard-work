@@ -332,6 +332,69 @@ function run(w){
       if(bad.length) return false; }
     return true; })());
 
+  group('Ported from the 28 Aug package');
+  w = await load(); t = run(w);
+  /* Four features ported by hand on 2026-08-28 rather than by taking Simon's
+     file, which would have re-broken checkout. Nothing else asserts them. */
+
+  // 1 - the third hero button
+  const heroBtns = t.$$('#page-home .hero-cta-box .btn');
+  ok('home hero offers three orders', heroBtns.length===3, heroBtns.length);
+  ok('the third is Order both', /Order both/.test(heroBtns[2].textContent));
+  ok('it calls orderBoth, not navigate',
+     /orderBoth\(\)/.test(heroBtns[2].getAttribute('onclick')||''));
+
+  // 2 - five colour thumbnails
+  const cells = t.$$('#page-home .logo-strip .logo-cell');
+  ok('the strip shows five cases', cells.length===5, cells.length);
+  ok('every cell is a splash cell', cells.every(c=>c.classList.contains('splash')));
+  ok('every cell carries both marks',
+     cells.every(c=>c.querySelector('img.ink') && c.querySelector('img.lit')));
+  ok('every cell sets its own --bg and --cat',
+     cells.every(c=>c.style.getPropertyValue('--bg') && c.style.getPropertyValue('--cat')));
+  ok('the lit mark is hidden until hover',
+     cells.every(c=>t.w.getComputedStyle(c.querySelector('img.lit')).opacity==='0'));
+  ok('no cell still points at a retired flat thumbnail',
+     !cells.some(c=>[...c.querySelectorAll('img')].some(i=>/work\/(harry|90110|eddy)\.webp/.test(i.getAttribute('src')))));
+
+  // 3 - the disclosure reads as a control
+  for (const which of ['brand','website']) {
+    /* Measure it on its own page. A hidden page reports 0x0 for everything,
+       which made the tap-target check fail against a button that is fine. */
+    t.w.navigate(which);
+    const b = t.$('#'+which+'-included-toggle');
+    ok(which+': the toggle says what pressing it does',
+       /See what you get/.test(b.textContent), b.textContent.trim());
+    ok(which+': it carries the rotating sign', !!b.querySelector('.disclose-sign'));
+    ok(which+': it is a real tap target',
+       Math.round(b.getBoundingClientRect().height)>=44,
+       Math.round(b.getBoundingClientRect().height)+'px');
+    ok(which+': it starts closed', b.getAttribute('aria-expanded')==='false');
+    t.w.toggleIncluded(which);
+    ok(which+': opening flips the label to Hide', /Hide what you get/.test(b.textContent));
+    ok(which+': opening sets aria-expanded', b.getAttribute('aria-expanded')==='true');
+    ok(which+': the panel is open', t.$('#'+which+'-included').classList.contains('is-open'));
+    t.w.navigate('home');
+    ok(which+': leaving the page resets the label', /See what you get/.test(b.textContent));
+    ok(which+': leaving the page closes the panel',
+       !t.$('#'+which+'-included').classList.contains('is-open'));
+  }
+
+  // 4 - the row of five on the Website page
+  t.w.navigate('website');
+  const row = t.$$('#website-included .mockrow .mockcell');
+  ok('the Website page shows five one-pagers', row.length===5, row.length);
+  ok('each opens its own mock',
+     row.every(c=>/openMock\('[a-z0-9-]+'\)/.test(c.getAttribute('onclick')||'')));
+  ok('each uses the row-sized image, not the full one',
+     row.every(c=>/work\/mock-row-/.test(c.querySelector('img').getAttribute('src'))));
+  /* This label is the reason the row is allowed to exist at all. On Lex and
+     Sebratec the real sites were built by us; unlabelled mocks there would read
+     as a claim about delivered work. If this assertion ever fails, do not
+     "fix" it by deleting the assertion. */
+  ok('the row is labelled a demonstration',
+     /not a delivered project/i.test(t.$('#website-included .mocktag').textContent));
+
   /* ---------------------------------------------------------------- report */
   const s=document.getElementById('summary');
   s.className = fail===0 ? 'ok' : 'bad';

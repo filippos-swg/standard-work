@@ -975,23 +975,41 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
    of explanation. min-height is 44px: the handover flagged 40px tap targets
    site-wide against a 44px minimum, and there is no reason to add a new control
    that repeats the problem. */
+/* ----------------------------------------------------------------------------
+   THE DISCLOSURE IS A CONTROL, SO IT LOOKS LIKE ONE. Filippos, 2026-08-28,
+   adopting the affordance from Simon's 28 Aug package.
+
+   It used to be a quiet grey mono link sitting between two pills, and it read
+   as a caption rather than something you could press — the panel behind it was
+   working the whole time and went unnoticed. It is now a pill on the site's own
+   button scale with a + that rotates to x, and the label says what pressing it
+   does rather than naming the thing below.
+
+   Simon's version inverts to ink on hover. Ours goes orange, because that is
+   what every other button on this site does and the rule is worth more than the
+   one instance. Sized from the --btn-*-sm tokens, not hardcoded; min-height is
+   floored at 44 because this is a tap target and --btn-h-sm is 42. */
 .disclose-link{
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;
-  font-family:var(--font-mono);font-size:var(--fs-sm);font-weight:500;
-  letter-spacing:var(--track-mono);text-transform:uppercase;
-  color:var(--text-dim);background:none;border:0;padding:0;cursor:pointer;
-  transition:color .12s;
+  display:inline-flex;align-items:center;gap:11px;align-self:flex-start;
+  font-family:var(--font);font-size:var(--btn-fs-sm);font-weight:700;
+  letter-spacing:-0.01em;
+  background:var(--btn-bg);color:var(--btn-fg);
+  border:1.5px solid var(--btn-fg);border-radius:100px;
+  padding:var(--btn-pad-sm);min-height:max(var(--btn-h-sm),44px);
+  cursor:pointer;transition:background .12s,color .12s,border-color .12s;
 }
-.disclose-link:hover{color:var(--text)}
-.disclose-link::after{
-  content:'';width:7.7px;height:7.7px;flex:none;
-  border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
-  transform:translateY(-2px) rotate(45deg);transition:transform .3s cubic-bezier(.4,0,.2,1);
+.disclose-link:hover{
+  background:var(--btn-hover-bg);border-color:var(--btn-hover-bg);color:var(--btn-hover-fg);
 }
-.disclose-link[aria-expanded="true"]::after{transform:translateY(1px) rotate(225deg)}
+.disclose-sign{
+  display:grid;place-items:center;width:22px;height:22px;flex:none;
+  border:1.5px solid currentColor;border-radius:50%;
+  font-size:13px;line-height:1;font-weight:700;transition:transform .22s ease;
+}
+.disclose-link[aria-expanded="true"] .disclose-sign{transform:rotate(45deg)}
 
 @media(prefers-reduced-motion:reduce){
-  .disclose-panel,.disclose-link::after{transition:none}
+  .disclose-panel,.disclose-sign{transition:none}
 }
 @media(max-width:960px){
   .two-col{grid-template-columns:1fr}
@@ -1120,7 +1138,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
   .mtotal-val{font-family:var(--font-display);font-size:var(--fs-md);font-weight:800;letter-spacing:-0.02em;color:var(--on-ink);display:block;margin-top:2px;white-space:nowrap}
   .mtotal .btn{padding:var(--btn-pad-sm);min-height:var(--btn-h-sm);font-size:var(--btn-fs-sm)}
 }
-.logo-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,1.6vw,26px);margin-top:clamp(36px,4.5vw,56px);padding-top:clamp(30px,4vw,44px);border-top:1px solid var(--border-light)}
+.logo-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(10px,1.6vw,26px);margin-top:clamp(36px,4.5vw,56px);padding-top:clamp(30px,4vw,44px);border-top:1px solid var(--border-light)}
 .logo-cell{display:flex;flex-direction:column;align-items:center;gap:16px;cursor:pointer;text-decoration:none;padding:16px 8px;border-radius:var(--radius-sm);transition:background 0.14s;min-height:44px}
 .logo-cell:hover{background:var(--greige)}
 .logo-mark{display:flex;align-items:center;justify-content:center;height:64px;width:100%}
@@ -1129,6 +1147,45 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 .logo-cat{font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:500;letter-spacing:var(--track-mono);text-transform:uppercase;color:var(--text-faint);text-align:center;line-height:1.45;transition:color 0.14s}
 .logo-cell:hover .logo-cat{color:var(--accent-dark)}
 @media(max-width:960px){.logo-strip{grid-template-columns:repeat(3,1fr);gap:20px}}
+/* ----------------------------------------------------------------------------
+   .splash — THE CASE THUMBNAILS IN COLOUR. Ported from Simon's 28 Aug package.
+
+   Two marks per cell, stacked: .ink is the flat one that rests, .lit is the
+   brand's own colourway, and the tile fills with the brand's ground behind it.
+   Both are absolutely positioned so the swap has no layout cost — nothing
+   reflows, only opacity moves.
+
+   --bg and --cat are set per cell in the markup rather than here. They are one
+   brand's colours, not the system's, and they are the only hex literals allowed
+   below :root — a client's logo is not ours to tokenise.
+
+   Contrast is not measured for --cat because it sits on that brand's own ground
+   as the brand's own designer specified. The label under a resting cell uses our
+   --text-faint on our ground, which is. */
+.splash{position:relative;padding:22px 14px 18px;border-radius:var(--radius-sm);
+  overflow:hidden;isolation:isolate}
+.splash::before{content:'';position:absolute;inset:0;background:var(--bg);z-index:-1;
+  opacity:0;transform:scale(.92);transition:opacity .26s ease,transform .26s ease}
+.splash:hover::before,.splash:focus-visible::before{opacity:1;transform:scale(1)}
+.splash:hover{background:transparent}
+.splash .logo-mark{position:relative}
+.splash .logo-mark img{position:absolute;left:50%;top:50%;translate:-50% -50%;
+  max-width:100%;object-fit:contain;transition:opacity .24s ease}
+.splash .ink{opacity:.78}
+.splash .lit{opacity:0}
+.splash:hover .ink,.splash:focus-visible .ink{opacity:0}
+.splash:hover .lit,.splash:focus-visible .lit{opacity:1}
+.splash:hover .logo-cat,.splash:focus-visible .logo-cat{color:var(--cat)}
+/* No cursor to hover with: show the colour, it is the better resting state */
+@media(hover:none){
+  .splash::before{opacity:1;transform:none}
+  .splash .ink{opacity:0}.splash .lit{opacity:1}
+  .splash .logo-cat{color:var(--cat)}
+}
+@media(prefers-reduced-motion:reduce){
+  .splash::before{transition:none;transform:none}
+  .splash .logo-mark img{transition:none}
+}
 @media(max-width:520px){.logo-strip{grid-template-columns:repeat(3,1fr);gap:8px}.logo-mark{height:44px}.logo-cat{font-size:var(--fs-sm)}}
 .nav-cta{display:flex;gap:8px;align-items:center;margin-left:22px}
 .nav-cta .btn{padding:var(--btn-pad-sm);min-height:var(--btn-h-sm);font-size:var(--btn-fs-sm);font-weight:700;white-space:nowrap}
@@ -1244,6 +1301,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           <p class="hero-cta-label">Know what you need?</p>
           <button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a brand</button>
           <button class="btn btn-outline" onclick="navigate('website')"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order a website</button>
+          <button class="btn btn-outline" onclick="orderBoth()"><span class="btn-ico btn-ico--lead" aria-hidden="true">→</span>Order both</button>
         </div>
       </div>
     </div>
@@ -1279,17 +1337,45 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
   <div style="max-width:var(--max-w);margin:0 auto;">
     <p class="label mb-12">Work we've done</p><h2 class="h2">Work that works<span class="accent">.</span></h2>
     <div class="logo-strip">
-          <a class="logo-cell" onclick="goCase('harry')" title="Harry da BBQ">
-            <span class="logo-mark"><img src="work/harry.webp" alt="Harry da BBQ" style="max-height:44px"></span>
+          <a class="logo-cell splash" onclick="goCase('harry')" title="Harry da BBQ"
+             style="--bg:#FF91D1;--cat:#1E1E1E">
+            <span class="logo-mark">
+              <img class="ink" src="work/harry-mark-ink.webp" alt="Harry da BBQ" style="max-height:44px">
+              <img class="lit" src="work/harry-mark-lit.png" alt="" aria-hidden="true" style="max-height:44px">
+            </span>
             <span class="logo-cat">Smoked meat</span>
           </a>
-          <a class="logo-cell" onclick="goCase('90110')" title="90110">
-            <span class="logo-mark"><img src="work/90110.webp" alt="90110" style="max-height:62px"></span>
+          <a class="logo-cell splash" onclick="goCase('90110')" title="90110"
+             style="--bg:#000000;--cat:#8A8A8A">
+            <span class="logo-mark">
+              <img class="ink" src="work/90110-mark-ink.webp" alt="90110" style="max-height:62px">
+              <img class="lit" src="work/90110-mark-lit.png" alt="" aria-hidden="true" style="max-height:62px">
+            </span>
             <span class="logo-cat">Emergency callout</span>
           </a>
-          <a class="logo-cell" onclick="goCase('eddy')" title="Eddy">
-            <span class="logo-mark"><img src="work/eddy.webp" alt="Eddy" style="max-height:46px"></span>
+          <a class="logo-cell splash" onclick="goCase('eddy')" title="Eddy"
+             style="--bg:#FFB4B6;--cat:#2939FC">
+            <span class="logo-mark">
+              <img class="ink" src="work/eddy-mark-ink.webp" alt="Eddy" style="max-height:46px">
+              <img class="lit" src="work/eddy-mark-lit.png" alt="" aria-hidden="true" style="max-height:46px">
+            </span>
             <span class="logo-cat">Process software</span>
+          </a>
+          <a class="logo-cell splash" onclick="goCase('lex-energy')" title="Lex Energy"
+             style="--bg:#C6FF00;--cat:#1E1E1E">
+            <span class="logo-mark">
+              <img class="ink" src="work/lex-energy-mark-ink.webp" alt="Lex Energy" style="max-height:52px">
+              <img class="lit" src="work/lex-energy-mark-lit.png" alt="" aria-hidden="true" style="max-height:52px">
+            </span>
+            <span class="logo-cat">EV charging</span>
+          </a>
+          <a class="logo-cell splash" onclick="goCase('sebratec')" title="Sebratec"
+             style="--bg:#610042;--cat:#E06BA8">
+            <span class="logo-mark">
+              <img class="ink" src="work/sebratec-mark-ink.webp" alt="Sebratec" style="max-height:34px">
+              <img class="lit" src="work/sebratec-mark-lit.png" alt="" aria-hidden="true" style="max-height:34px">
+            </span>
+            <span class="logo-cat">Engineering</span>
           </a>
     </div>
     <div style="margin-top:clamp(32px,4vw,48px);">
@@ -1468,7 +1554,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           <p class="body-lg muted" style="max-width:540px;margin-bottom:32px;">You make a small number of clear choices. We guide them and execute the work professionally.</p>
           <div class="hero-actions">
             <button class="btn btn-accent" onclick="document.getElementById('brand-config').scrollIntoView({behavior:'smooth'})">Get started<span class="btn-ico btn-ico--trail" aria-hidden="true">→</span></button>
-            <button class="disclose-link" type="button" id="brand-included-toggle" aria-expanded="false" aria-controls="brand-included" onclick="toggleIncluded('brand')">What's included</button>
+            <button class="disclose-link" type="button" id="brand-included-toggle" aria-expanded="false" aria-controls="brand-included" onclick="toggleIncluded('brand')"><span class="disclose-t">See what you get</span><span class="disclose-sign" aria-hidden="true">+</span></button>
           </div>
         </div>
         <div class="hero-cta-box">
@@ -1601,7 +1687,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           <p class="body-lg" style="max-width:560px;margin-bottom:32px;"><strong style="color:var(--text);">To build your website we always start with your brand.</strong> If you have a logo, a typeface, a colour palette and an imagery direction, we can start. If not, we build the brand first.</p>
           <div class="hero-actions">
             <button class="btn btn-accent" onclick="document.getElementById('website-config').scrollIntoView({behavior:'smooth'})">Get started<span class="btn-ico btn-ico--trail" aria-hidden="true">→</span></button>
-            <button class="disclose-link" type="button" id="website-included-toggle" aria-expanded="false" aria-controls="website-included" onclick="toggleIncluded('website')">What's included</button>
+            <button class="disclose-link" type="button" id="website-included-toggle" aria-expanded="false" aria-controls="website-included" onclick="toggleIncluded('website')"><span class="disclose-t">See what you get</span><span class="disclose-sign" aria-hidden="true">+</span></button>
           </div>
         </div>
         <div class="hero-cta-box">
@@ -1625,6 +1711,40 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
       <div class="dg-below">
         <p class="label mb-24">Anatomy</p>
         <svg class="dg" viewBox="0 0 514 644" role="img" aria-label="Wireframe anatomy of a Standard Work website: header, what you do, your offer, about, contact and footer on one scrollable page, shown at desktop and mobile widths."><text x="0" y="15" class="dg-lab">Desktop</text><text x="408" y="15" class="dg-lab">Mobile</text><rect x="0" y="24" width="392" height="612" rx="6" fill="var(--surface)" stroke="var(--border)" stroke-width="1.6"/><text x="14" y="51" class="dg-logo">LOGO</text><rect x="246" y="45" width="28" height="4" rx="2" fill="var(--border-light)"/><rect x="282" y="45" width="24" height="4" rx="2" fill="var(--border-light)"/><rect x="314" y="45" width="20" height="4" rx="2" fill="var(--border-light)"/><rect x="340" y="39" width="38" height="15" rx="7.5" fill="none" stroke="var(--text-dim)" stroke-width="1.2"/><line x1="0" y1="70" x2="392" y2="70" stroke="var(--border-light)" stroke-width="1"/><text x="14" y="110" class="dg-h1">What you do</text><rect x="14" y="124" width="168" height="5" rx="2" fill="var(--border-light)"/><rect x="14" y="136" width="138" height="5" rx="2" fill="var(--border-light)"/><rect x="14" y="148" width="152" height="5" rx="2" fill="var(--border-light)"/><rect x="14" y="164" width="68" height="17" rx="8.5" fill="none" stroke="var(--text-dim)" stroke-width="1.2"/><rect x="228" y="94" width="150" height="100" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M228 94 L378 194 M378 94 L228 194" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><line x1="0" y1="212" x2="392" y2="212" stroke="var(--border-light)" stroke-width="1"/><text x="196" y="240" class="dg-h2" text-anchor="middle">Your offer</text><g class="dg-n1"><rect x="14" y="252" width="364" height="62" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M14 252 L378 314 M378 252 L14 314" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><rect x="14" y="324" width="225.68" height="6" rx="2" fill="var(--border-light)"/><rect x="14" y="338" width="320.32" height="4" rx="2" fill="var(--border-light)"/></g><g class="dg-n2"><rect x="14" y="252" width="176" height="62" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M14 252 L190 314 M190 252 L14 314" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><rect x="14" y="324" width="109.12" height="6" rx="2" fill="var(--border-light)"/><rect x="14" y="338" width="154.88" height="4" rx="2" fill="var(--border-light)"/><rect x="202" y="252" width="176" height="62" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M202 252 L378 314 M378 252 L202 314" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><rect x="202" y="324" width="109.12" height="6" rx="2" fill="var(--border-light)"/><rect x="202" y="338" width="154.88" height="4" rx="2" fill="var(--border-light)"/></g><g class="dg-n3"><rect x="14" y="252" width="113.333" height="62" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M14 252 L127.333 314 M127.333 252 L14 314" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><rect x="14" y="324" width="70.2667" height="6" rx="2" fill="var(--border-light)"/><rect x="14" y="338" width="99.7333" height="4" rx="2" fill="var(--border-light)"/><rect x="139.333" y="252" width="113.333" height="62" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M139.333 252 L252.667 314 M252.667 252 L139.333 314" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><rect x="139.333" y="324" width="70.2667" height="6" rx="2" fill="var(--border-light)"/><rect x="139.333" y="338" width="99.7333" height="4" rx="2" fill="var(--border-light)"/><rect x="264.667" y="252" width="113.333" height="62" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M264.667 252 L378 314 M378 252 L264.667 314" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><rect x="264.667" y="324" width="70.2667" height="6" rx="2" fill="var(--border-light)"/><rect x="264.667" y="338" width="99.7333" height="4" rx="2" fill="var(--border-light)"/></g><line x1="0" y1="368" x2="392" y2="368" stroke="var(--border-light)" stroke-width="1"/><rect x="14" y="390" width="144" height="84" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M14 390 L158 474 M158 390 L14 474" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><text x="174" y="402" class="dg-h2">About</text><rect x="174" y="414" width="204" height="5" rx="2" fill="var(--border-light)"/><rect x="174" y="426" width="178" height="5" rx="2" fill="var(--border-light)"/><rect x="174" y="438" width="152" height="5" rx="2" fill="var(--border-light)"/><line x1="0" y1="492" x2="392" y2="492" stroke="var(--border-light)" stroke-width="1"/><text x="14" y="522" class="dg-h2">Contact</text><rect x="14" y="534" width="168" height="5" rx="2" fill="var(--border-light)"/><rect x="14" y="550" width="84" height="17" rx="8.5" fill="none" stroke="var(--text-dim)" stroke-width="1.2"/><rect x="258" y="534" width="120" height="5" rx="2" fill="var(--border-light)"/><rect x="290" y="548" width="88" height="5" rx="2" fill="var(--border-light)"/><line x1="0" y1="582" x2="392" y2="582" stroke="var(--border-light)" stroke-width="1"/><text x="14" y="614" class="dg-logo">LOGO</text><rect x="266" y="602" width="42" height="4" rx="2" fill="var(--border-light)"/><rect x="266" y="612" width="34" height="4" rx="2" fill="var(--border-light)"/><rect x="322" y="602" width="42" height="4" rx="2" fill="var(--border-light)"/><rect x="322" y="612" width="28" height="4" rx="2" fill="var(--border-light)"/><rect x="408" y="24" width="104" height="612" rx="4" fill="var(--surface)" stroke="var(--border)" stroke-width="1.3"/><text x="416" y="49" class="dg-logo-s">LOGO</text><rect x="488" y="42" width="16" height="3" rx="2" fill="var(--border-light)"/><rect x="488" y="48" width="16" height="3" rx="2" fill="var(--border-light)"/><line x1="408" y1="70" x2="512" y2="70" stroke="var(--border-light)" stroke-width="1"/><text x="416" y="96" class="dg-h3">What you do</text><rect x="416" y="106" width="88" height="58" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M416 106 L504 164 M504 106 L416 164" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><rect x="416" y="172" width="40" height="13" rx="6.5" fill="none" stroke="var(--text-dim)" stroke-width="1.2"/><line x1="408" y1="212" x2="512" y2="212" stroke="var(--border-light)" stroke-width="1"/><text x="416" y="234" class="dg-h3">Your offer</text><rect x="416" y="244" width="88" height="44" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M416 244 L504 288 M504 244 L416 288" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><rect x="416" y="296" width="61.6" height="4" rx="2" fill="var(--border-light)"/><rect x="416" y="308" width="88" height="44" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M416 308 L504 352 M504 308 L416 352" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><line x1="408" y1="368" x2="512" y2="368" stroke="var(--border-light)" stroke-width="1"/><text x="416" y="390" class="dg-h3">About</text><rect x="416" y="398" width="88" height="48" rx="3" fill="none" stroke="var(--border-light)" stroke-width="1.2"/><path d="M416 398 L504 446 M504 398 L416 446" stroke="var(--border-light)" stroke-width="1.2" fill="none"/><rect x="416" y="456" width="79.2" height="4" rx="2" fill="var(--border-light)"/><rect x="416" y="466" width="61.6" height="4" rx="2" fill="var(--border-light)"/><line x1="408" y1="492" x2="512" y2="492" stroke="var(--border-light)" stroke-width="1"/><text x="416" y="516" class="dg-h3">Contact</text><rect x="416" y="526" width="74.8" height="4" rx="2" fill="var(--border-light)"/><rect x="416" y="538" width="48" height="13" rx="6.5" fill="none" stroke="var(--text-dim)" stroke-width="1.2"/><line x1="408" y1="582" x2="512" y2="582" stroke="var(--border-light)" stroke-width="1"/><text x="416" y="608" class="dg-logo-s">LOGO</text><rect x="416" y="616" width="52.8" height="3" rx="2" fill="var(--border-light)"/></svg>
+      </div>
+    </div>
+
+    <!-- The row of five, inside What's included — the same place Simon put it.
+         Every label here is load-bearing: on Lex and Sebratec the real sites
+         were built by us, so an unlabelled mock on this page would read as a
+         claim about delivered work. The tag stays. -->
+    <div class="mockwrap">
+      <div class="mockhead">
+        <span class="mocktag">Demonstration — not a delivered project</span>
+        <h2 class="h3">Five brands. The same six sections.</h2>
+        <p class="mockcap" style="margin-top:0;">The same six-section structure, wearing five different identities. Nothing moves between them except the colour, the type, the pictures and the words — which is the whole point.</p>
+      </div>
+      <div class="mockrow">
+        <a class="mockcell" onclick="openMock('harry')" tabindex="0" role="button" aria-label="See the Harry da BBQ mock in full">
+          <span class="mockcell-img" style="background:#FF91D1"><img src="work/mock-row-harry.webp" alt="Harry da BBQ as a Standard Work website" loading="lazy"></span>
+          <span class="mockcell-name">Harry da BBQ</span>
+        </a>
+        <a class="mockcell" onclick="openMock('90110')" tabindex="0" role="button" aria-label="See the 90110 mock in full">
+          <span class="mockcell-img" style="background:#000000"><img src="work/mock-row-90110.webp" alt="90110 as a Standard Work website" loading="lazy"></span>
+          <span class="mockcell-name">90110</span>
+        </a>
+        <a class="mockcell" onclick="openMock('eddy')" tabindex="0" role="button" aria-label="See the Eddy mock in full">
+          <span class="mockcell-img" style="background:#FFB4B6"><img src="work/mock-row-eddy.webp" alt="Eddy as a Standard Work website" loading="lazy"></span>
+          <span class="mockcell-name">Eddy</span>
+        </a>
+        <a class="mockcell" onclick="openMock('lex-energy')" tabindex="0" role="button" aria-label="See the Lex Energy mock in full">
+          <span class="mockcell-img" style="background:#C6FF00"><img src="work/mock-row-lex-energy.webp" alt="Lex Energy as a Standard Work website" loading="lazy"></span>
+          <span class="mockcell-name">Lex Energy</span>
+        </a>
+        <a class="mockcell" onclick="openMock('sebratec')" tabindex="0" role="button" aria-label="See the Sebratec mock in full">
+          <span class="mockcell-img" style="background:#610042"><img src="work/mock-row-sebratec.webp" alt="Sebratec as a Standard Work website" loading="lazy"></span>
+          <span class="mockcell-name">Sebratec</span>
+        </a>
       </div>
     </div>
   </div>
@@ -2369,6 +2489,8 @@ function toggleIncluded(which){
   if(!panel||!btn)return;
   const open=panel.classList.toggle('is-open');
   btn.setAttribute('aria-expanded',open?'true':'false');
+  const t=btn.querySelector('.disclose-t');
+  if(t)t.textContent=open?'Hide what you get':'See what you get';
   if(open)panel.scrollIntoView({behavior:'smooth',block:'start'});
 }
 /* Every panel closes on a view change, so arriving at a package page always
@@ -2378,7 +2500,9 @@ function closeAllIncluded(){
   document.querySelectorAll('.disclose-panel.is-open').forEach(p=>{
     p.classList.remove('is-open');
     const b=document.getElementById(p.id+'-toggle');
-    if(b)b.setAttribute('aria-expanded','false');
+    if(b){b.setAttribute('aria-expanded','false');
+      const t=b.querySelector('.disclose-t');
+      if(t)t.textContent='See what you get';}
   });
 }
 function navigate(page){
