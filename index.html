@@ -460,7 +460,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);bo
    a different balance, and start is right for them.
    ========================================================================== */
 #page-home .hero-split{align-items:center}
-#page-home .hero-cta-box{min-width:300px}
+/* 24 rather than the 16 the other heroes use: these buttons are the lg step at
+   56px tall, and a gap that reads as generous at 51px reads as tight at 56. The
+   spacing follows the control it separates. */
+#page-home .hero-cta-box{min-width:300px;gap:24px}
 #page-home .hero-cta-box .btn{
   font-size:var(--btn-fs-lg);padding:var(--btn-pad-lg);min-height:var(--btn-h-lg);
 }
