@@ -427,8 +427,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--surface);bo
 .process-mini-num{font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:600;color:var(--accent-dark);letter-spacing:0.08em;flex-shrink:0;width:24px}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,80px)}
 .hero-split{display:grid;grid-template-columns:1fr auto;gap:clamp(32px,5vw,80px);align-items:start}
-.hero-cta-box{display:flex;flex-direction:column;gap:12px;padding-top:8px;min-width:240px}
-.hero-cta-label{font-family:var(--font-mono);font-size:var(--fs-micro);color:var(--text-dim);letter-spacing:var(--track-mono);text-transform:uppercase;margin-bottom:4px}
+/* ============================================================================
+   THE HERO CTA COLUMN. Given room, 2026-08-28.
+
+   THE BUTTONS STRETCH BUT THEIR CONTENT DID NOT FOLLOW. .btn is a flex row that
+   starts its content at the left, which is right when the button is sized by its
+   label. In this column it is stretched to the full 240px, so the label sat 20px
+   from the left edge and 91px from the right — the single biggest reason the
+   group read as cramped and off-balance. Centred here only; everywhere else a
+   button is still as wide as its words.
+
+   gap 12 -> 16 and the label's margin 4 -> 12, so the stack breathes and the
+   label stops sitting on top of the first button. Both on the 4px scale. */
+.hero-cta-box{display:flex;flex-direction:column;gap:16px;padding-top:8px;min-width:240px}
+.hero-cta-box .btn{justify-content:center}
+.hero-cta-label{font-family:var(--font-mono);font-size:var(--fs-micro);color:var(--text-dim);letter-spacing:var(--track-mono);text-transform:uppercase;margin-bottom:12px}
 .list-clean{list-style:none;display:flex;flex-direction:column}
 .list-clean li{font-size:var(--fs-body);padding:12px 0;border-bottom:1px solid var(--border-light);line-height:1.5}
 .list-clean li:last-child{border-bottom:none}
