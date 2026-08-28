@@ -1,6 +1,6 @@
 <!-- GENERATED — do not edit. Edits are overwritten at next close. -->
-Generated 2026-08-28 09:57 +0200 · HEAD 91c49c8 · branch simon-features-2026-08-27 · host Souths-MacBook-Air.local · generator v2.0
-STALENESS RULE: if `git rev-parse HEAD` ≠ 91c49c8, or the tree is dirty, this file is HISTORY. Regenerate before acting on it.
+Generated 2026-08-28 10:48 +0200 · HEAD 7765a47 · branch simon-features-2026-08-27 · host Souths-MacBook-Air.local · generator v2.0
+STALENESS RULE: if `git rev-parse HEAD` ≠ 7765a47, or the tree is dirty, this file is HISTORY. Regenerate before acting on it.
 
 ## 1 · Identity
 <sub>CLAUDE.md, the five human lines — the only human input in this file</sub>
@@ -14,16 +14,16 @@ STALENESS RULE: if `git rev-parse HEAD` ≠ 91c49c8, or the tree is dirty, this 
 ## 2 · Head
 <sub>git rev-parse HEAD · git log -1 · git rev-list --left-right --count @{u}...HEAD</sub>
 
-> **As of `91c49c8`.** The close commits this file after generating it, so the counts below are one commit old the moment they land. Re-run `aios-state` for current numbers.
+> **As of `7765a47`.** The close commits this file after generating it, so the counts below are one commit old the moment they land. Re-run `aios-state` for current numbers.
 
-- **simon-features-2026-08-27 @ 91c49c8** — Top-align the services header, not baseline
-- Committed 2026-08-28 09:57 by Filippos Arvanitakis
+- **simon-features-2026-08-27 @ 7765a47** — Nav: Fixed pricing -> Pricing
+- Committed 2026-08-28 10:47 by Filippos Arvanitakis
 - Upstream: **none configured**
 
 ## 3 · Working tree
 <sub>git status --porcelain + a filesystem diff against git ls-files</sub>
 
-> **As of `91c49c8`, before this file was committed.** `aios/STATE.md` and `aios/CLOSING` appear here for that reason and are not real dirt.
+> **As of `7765a47`, before this file was committed.** `aios/STATE.md` and `aios/CLOSING` appear here for that reason and are not real dirt.
 
 - Clean.
 
@@ -33,23 +33,16 @@ STALENESS RULE: if `git rev-parse HEAD` ≠ 91c49c8, or the tree is dirty, this 
 - `simon-features-2026-08-27` — last commit 2026-08-28, **no upstream, exists nowhere else**
 
 ## 5 · Since last close
-<sub>git log 6b4aec5..HEAD</sub>
+<sub>git log 91c49c8..HEAD</sub>
 
-- `91c49c8` 2026-08-28 — Top-align the services header, not baseline
-- `29bf06c` 2026-08-28 — The combined card is white
-- `77db3be` 2026-08-28 — "Fixed scope. Fixed price." takes --fs-lead
-- `be39f3a` 2026-08-28 — More space between the home hero's two buttons
-- `06c4c85` 2026-08-28 — Centre the home hero's CTA column
-- `dd27a53` 2026-08-28 — Rebalance the home hero's right column
-- `14b9ef2` 2026-08-28 — "What we don't." takes paper, like the items under it
-- `7aed55c` 2026-08-28 — Give the hero CTA column room
-- `93dafbb` 2026-08-28 — Tighten leading at the large sizes; recover the mock overlay's missing CSS
-- `7910a55` 2026-08-28 — Service card badges, and a rule for what --fs-sm is actually for
-- `f4330a1` 2026-08-28 — One button: white with ink type, orange on hover
-- `98dba03` 2026-08-28 — Label voice up 25%: --fs-micro 11px -> 14px
-- …and 4 more
+- `7765a47` 2026-08-28 — Nav: Fixed pricing -> Pricing
+- `0401e02` 2026-08-28 — Nav: Work -> Gallery
+- `8c41241` 2026-08-28 — Contact: drop the trailing arrows from the Group links
+- `7bd08e5` 2026-08-28 — Nav: See the work -> Work
+- `aff1c16` 2026-08-28 — The lead CTA treatment becomes a class, and How it works opts in
+- `2fb8553` 2026-08-28 — chore: regenerate STATE.md
 
-Close marker: 91c49c8d5f7787d2190c190b48597e9817579179
+Close marker: 7765a47faf786d9cb7ff12926ab7af83bdf056e2
 
 ## 6 · Awaiting judgment
 <sub>aios/LOG.md headings + **Status:** lines — headings, dates and statuses only, never bodies</sub>
