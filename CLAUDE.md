@@ -30,3 +30,8 @@ three — the suite exists to catch exactly that drift, and it is the only thing
 **`tests.html` cannot see past the fetch to Stripe.** VAT, the deposit landing, the wording on
 a receipt — none of that is provable in a browser. A real transaction is still the only proof,
 and it is the one path where being wrong costs money.
+
+## Asset storage rule (universal)
+Original heavy assets (full-res PNGs, PSDs, video, audio masters) are NEVER committed to this repo.
+They live on the Mac at ~/Pictures/projects-images/standard-work/ — create the folder on first use.
+The repo only carries web-optimized delivery copies. Before committing any image, put the original in the vault first.
