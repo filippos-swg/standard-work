@@ -5,4 +5,4 @@ HEAD at close-start: 54b1489
 Session: synchronize Standard Work feature branch
 
 - [x] 1-2
-- [ ] 3-11
+- [x] 3-9. aios check exit=0
