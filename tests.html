@@ -226,6 +226,19 @@ function run(w){
   ok('"Not yet" reveals brand-first, not checkout',
      t.w.getComputedStyle(t.D.getElementById('w-gate-brand')).display!=='none');
   ok('"Not yet" hard-blocks nothing', !t.$$('#page-website button').some(b=>b.disabled));
+  const bothChoice=t.$('input[name="w-order"][value="both"]');
+  const brandChoice=t.$('input[name="w-order"][value="brand"]');
+  bothChoice.click();
+  ok('"Order both" shows both products',
+     t.w.getComputedStyle(t.$('#wb-website-row')).display!=='none' &&
+     /Brand Tool Kit \+ Website/.test(t.$('#page-website .summary-top').innerText));
+  ok('"Order both" shows the combined base total', num(t.$('#wb-total').textContent)===EXPECTED.brandBase+EXPECTED.websiteBase);
+  brandChoice.click();
+  ok('"Start with the brand" hides the website from the route summary',
+     t.w.getComputedStyle(t.$('#wb-website-row')).display==='none');
+  ok('"Start with the brand" shows only the brand total', num(t.$('#wb-total').textContent)===EXPECTED.brandBase);
+  t.$('#both-checkout-btn').click();
+  ok('"Start with the brand" opens the brand configurator', t.$('#page-brand').classList.contains('active'));
 
   /* ------------------------------------------------------------- checkout */
   group('Checkout payload');
@@ -245,6 +258,17 @@ function run(w){
   try{ t.w.startCheckout('website'); }catch(e){ threw=e.message; }
   ok('website checkout reaches the function', sent.length===2, threw||'');
   ok('website receipt name is "Website"', sent[1]&&sent[1].body.description==='Website', sent[1]&&sent[1].body.description);
+
+  w = await load(); t = run(w);
+  const routed=[]; t.w.fetch=(url,opts)=>{routed.push({url,body:JSON.parse(opts.body)});return new Promise(()=>{})};
+  t.w.navigate('website');
+  t.setRadio('w-start',/not yet/i);
+  t.$('input[name="w-order"][value="both"]').click();
+  t.$('#both-checkout-btn').click();
+  ok('"Order both" sends the combined checkout',
+     routed[0]&&routed[0].body.description==='Brand Tool Kit + Website'&&
+     routed[0].body.totalSEK===EXPECTED.brandBase+EXPECTED.websiteBase,
+     routed[0]&&JSON.stringify(routed[0].body));
 
   group('Checkout total equals the displayed total');
   w = await load(); t = run(w);

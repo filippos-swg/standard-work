@@ -1880,7 +1880,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           <div id="ws-route" style="display:none;">
             <div class="summary-price-section">
               <div class="summary-price-row"><span>Brand Tool Kit</span><span>12,000 SEK</span></div>
-              <div class="summary-price-row"><span>Website</span><span>8,000 SEK</span></div>
+              <div class="summary-price-row" id="wb-website-row"><span>Website</span><span>8,000 SEK</span></div>
               <div class="summary-price-row" id="wb-addon-row" style="display:none;"><span>Website additions</span><span id="wb-addons" style="color:var(--accent-dark);">+0 SEK</span></div>
                 <div class="summary-price-row" id="wb-adjust-row" style="display:none;"><span>Together</span><span id="wb-adjust" style="color:var(--accent-dark);">0 SEK</span></div>
                 <div class="summary-total-row"><span>Total</span><span id="wb-total">20,000 SEK</span></div>
@@ -1888,7 +1888,7 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
             </div>
             <div class="summary-note" id="wb-note">One order, one payment. The brand is built first, then the website from it.</div>
             <div class="summary-cta">
-              <button class="btn btn-accent" style="width:100%;justify-content:center;" id="both-checkout-btn" onclick="startCheckout('both')">Get started<span class="btn-ico btn-ico--trail" aria-hidden="true">&rarr;</span></button>
+              <button class="btn btn-accent" style="width:100%;justify-content:center;" id="both-checkout-btn">Get started<span class="btn-ico btn-ico--trail" aria-hidden="true">&rarr;</span></button>
               <button class="btn btn-outline" style="width:100%;justify-content:center;margin-top:8px;" onclick="navigate('contact')">Ask us about it<span class="btn-ico btn-ico--trail" aria-hidden="true">&rarr;</span></button>
             </div>
           </div>
@@ -2584,8 +2584,6 @@ function bothTotals(){
 
 function setOrderMode(m){
   ORDER_MODE=m;
-  const h=document.querySelector('#website-config .summary-top p:last-child');
-  if(h)h.textContent = m==='both' ? 'Brand Tool Kit + Website' : 'Website';
   document.getElementById('opt-both').classList.toggle('on',m==='both');
   document.getElementById('opt-brand').classList.toggle('on',m==='brand');
   updateWebSummary();
@@ -2650,6 +2648,7 @@ function updateWebSummary(){
   const own=sv==='An existing brand';
   document.getElementById('w-assets-wrap').style.display=own?'block':'none';
   const needBrand=sv==='Not yet', needPrep=own&&missing.length>0;
+  const orderBoth=needBrand&&ORDER_MODE==='both';
   const prep=document.getElementById('w-prep-check');
   document.getElementById('w-gate').style.display=(needBrand||needPrep)?'block':'none';
   document.getElementById('w-gate-brand').style.display=needBrand?'block':'none';
@@ -2667,13 +2666,25 @@ function updateWebSummary(){
      computed here rather than in a second update path that could disagree. */
   if(needBrand){
     const t=bothTotals();
+    const h=document.querySelector('#website-config .summary-top p:last-child');
+    if(h)h.textContent=orderBoth?'Brand Tool Kit + Website':'Brand Tool Kit';
+    document.getElementById('wb-website-row').style.display=orderBoth?'flex':'none';
     const ar2=document.getElementById('wb-addon-row');
-    ar2.style.display=t.add?'flex':'none';
+    ar2.style.display=orderBoth&&t.add?'flex':'none';
     if(t.add)document.getElementById('wb-addons').textContent='+'+t.add.toLocaleString('sv-SE')+' SEK';
     const aj=document.getElementById('wb-adjust-row');
-    aj.style.display=BUNDLE_ADJUST?'flex':'none';
+    aj.style.display=orderBoth&&BUNDLE_ADJUST?'flex':'none';
     if(BUNDLE_ADJUST)document.getElementById('wb-adjust').textContent=BUNDLE_ADJUST.toLocaleString('sv-SE')+' SEK';
-    document.getElementById('wb-total').textContent=t.total.toLocaleString('sv-SE')+' SEK';
+    document.getElementById('wb-total').textContent=(orderBoth?t.total:BRAND_BASE).toLocaleString('sv-SE')+' SEK';
+    document.getElementById('wb-note').textContent=orderBoth
+      ? 'One order, one payment. The brand is built first, then the website from it.'
+      : 'Start with the Brand Tool Kit, then order the website separately once it is delivered.';
+    const routeBtn=document.getElementById('both-checkout-btn');
+    routeBtn.innerHTML=arrowize(orderBoth?'Get started →':'Configure the brand →');
+    routeBtn.onclick=orderBoth?()=>startCheckout('both'):()=>navigate('brand');
+  }else{
+    const h=document.querySelector('#website-config .summary-top p:last-child');
+    if(h)h.textContent='Website';
   }
   const fh=document.getElementById('w-foot-h'),fp=document.getElementById('w-foot-p'),fb=document.getElementById('w-foot-btn');
   if(needBrand){fh.textContent='Start with the brand.';fp.textContent='A website needs one to be built from.';fb.innerHTML=arrowize('→ Order a brand');fb.onclick=()=>navigate('brand');}
@@ -2702,6 +2713,7 @@ function updateWebSummary(){
   if(at>0){pr.style.display='flex';document.getElementById('ws-addon-price').textContent='+'+at.toLocaleString('sv-SE')+' SEK'}else{pr.style.display='none'}
   const wt=(WEB_BASE+at).toLocaleString('sv-SE')+' SEK';
   document.getElementById('ws-total').textContent=wt;
+  if(needBrand&&orderBoth){const t=bothTotals();mTotal('Brand + website',t.total.toLocaleString('sv-SE')+' SEK','Review →',()=>document.querySelector('#website-config .order-summary').scrollIntoView({behavior:'smooth',block:'center'}));return;}
   if(needBrand)mTotal('Brand first','12 000 SEK','→ Order a brand',()=>navigate('brand'));
   else mTotal('Website total',wt,'Review →',()=>document.querySelector('#website-config .order-summary').scrollIntoView({behavior:'smooth',block:'center'}));
 }
