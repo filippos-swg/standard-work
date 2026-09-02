@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Standard Work — tests</title>
+<!--
+  WHAT THIS IS. A replacement for the nine test files and 126 assertions the
+  2026-08-25 handover describes but does not contain — only the prototype
+  shipped. Written 2026-08-26 from the checks that were being run by hand after
+  every change, so that they survive the session that produced them.
+
+  HOW TO RUN. Serve the repo and open this file. It needs a server, not a
+  double-click: it drives index.html inside an iframe and reads its DOM, which
+  the file:// origin forbids.
+
+      cd ~/Projects/standard-work && python3 -m http.server 4190
+      open http://127.0.0.1:4190/tests.html
+
+  WHY AN IFRAME. index.html is one file with no exports and no build step, and
+  that is a logged decision. An iframe is the only way to exercise the real
+  page — the real routing, the real handlers, the real markup — without adding
+  a bundler or a test runner to a repo that has neither. Every assertion below
+  drives the site the way a visitor does.
+
+  WHAT IT COVERS. The things that have actually broken: prices drifting from
+  PRICING.md, a service billable twice, the checkout payload, product names,
+  routing and deep links. NOT covered: anything past the fetch to Stripe. No
+  browser test can prove VAT, the deposit reaching the account, or the wording
+  on a receipt. That still needs a real card, and it is still the one path
+  where being wrong costs money.
+
+  WHEN A PRICE CHANGES: update PRICING.md, then index.html, then the EXPECTED
+  block below. If those three disagree, this file fails, which is its job.
+-->
+<style>
+  :root{--paper:#F2F0EA;--ink:#141414;--dim:#6E6C69;--pass:#1B6E3C;--fail:#C03800;--hair:rgba(20,20,20,.14)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font:15px/1.55 'Inter',-apple-system,system-ui,sans-serif;padding:40px 24px 80px}
+  .wrap{max-width:940px;margin:0 auto}
+  h1{font-size:30px;letter-spacing:-.02em;margin-bottom:6px}
+  .sub{color:var(--dim);margin-bottom:26px;font-size:14px}
+  #summary{padding:14px 18px;border:1.5px solid var(--ink);margin-bottom:24px;font-weight:600}
+  #summary.ok{background:#E8F3EC}
+  #summary.bad{background:#FBEAE2}
+  h2{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);
+     font-family:ui-monospace,'JetBrains Mono',monospace;margin:26px 0 8px}
+  .row{display:flex;gap:12px;padding:7px 0;border-bottom:1px solid var(--hair);align-items:baseline}
+  .tag{font-family:ui-monospace,monospace;font-size:11px;font-weight:700;flex:none;width:46px}
+  .PASS .tag{color:var(--pass)} .FAIL .tag{color:var(--fail)}
+  .FAIL{background:#FBEAE2}
+  .detail{color:var(--dim);font-family:ui-monospace,monospace;font-size:12px;margin-left:auto;text-align:right}
+  iframe{position:fixed;left:-9999px;width:1280px;height:900px;border:0}
+  .note{margin-top:30px;padding:14px 18px;border-left:3px solid var(--fail);background:#fff;font-size:13.5px;color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Standard Work — tests</h1>
+  <p class="sub">Drives <code>index.html</code> in an iframe. Prices are asserted against the values in <code>PRICING.md</code>.</p>
+  <div id="summary">Running…</div>
+  <div id="out"></div>
+  <div class="note">
+    <strong>Not covered here:</strong> anything past the handoff to Stripe. No browser test can prove
+    VAT, the deposit reaching the account, or the wording on a receipt. That needs a real
+    transaction with a real card.
+  </div>
+</div>
+<iframe id="app" src="index.html"></iframe>
+
+<script>
+/* ---- EXPECTED: must match PRICING.md. Change all three together. ---------- */
+const EXPECTED = {
+  brandBase:12000, websiteBase:8000,
+  naming:3000, brandSummaryPdf:1500, socialTemplates:2000, extendedImagery:1500, brandRevision:1500,
+  rush:3000, rushDays:14,
+  prepLogo:1500, prepTypeface:1000, prepPalette:750, prepImagery:750, prepMax:4000,
+  publish:1000, copyEditing:1000, copyWriting:2000,
+  extraPage:2000, multilingual:2000, imagePack:1500, seo:1500, websiteRevision:1500
+};
+
+const out=document.getElementById('out');
+let pass=0, fail=0;
+function group(t){const h=document.createElement('h2');h.textContent=t;out.appendChild(h)}
+function ok(name, cond, detail){
+  cond ? pass++ : fail++;
+  const d=document.createElement('div');
+  d.className='row '+(cond?'PASS':'FAIL');
+  d.innerHTML='<span class="tag">'+(cond?'PASS':'FAIL')+'</span><span>'+name+'</span>'+
+              (detail!==undefined&&detail!==null&&detail!==''?'<span class="detail">'+String(detail)+'</span>':'');
+  out.appendChild(d);
+}
+
+const app=document.getElementById('app');
+/* A UNIQUE QUERY PER LOAD, and it is not cache-busting. Pointing the iframe at
+   the same URL with only a different hash is a same-document navigation: the
+   page does not reload and onload never fires, so the promise hangs forever and
+   the suite stops dead at the first deep-link test. The counter forces a real
+   document load every time, which is also what makes each group start from a
+   genuinely clean form rather than inheriting the last group's clicks. */
+let loadN=0;
+const load=(hash='')=>new Promise(r=>{
+  app.onload=()=>setTimeout(()=>r(app.contentWindow),60);
+  app.src='index.html?t='+(++loadN)+hash;
+});
+const num=s=>parseInt(String(s).replace(/[^0-9]/g,''),10);
+
+function run(w){
+  const D=w.document;
+  const $=s=>D.querySelector(s), $$=s=>[...D.querySelectorAll(s)];
+  const total=p=>num($('#page-'+p+' .summary-total-row span:last-child').textContent);
+  const setRadio=(n,re)=>{const e=$$('input[name="'+n+'"]').find(x=>re.test(x.value));if(e)e.click();return !!e};
+  const check=re=>{const e=$$('#page-website input[type=checkbox]').find(x=>re.test(x.value||''));if(e)e.click();return !!e};
+  return {w,D,$,$$,total,setRadio,check};
+}
+
+(async function(){
+  let w = await load();
+  let t = run(w);
+
+  /* ---------------------------------------------------------------- routing */
+  group('Routing');
+  const VIEWS=['home','how-it-works','brand','website','work','pricing','contact','thank-you'];
+  for(const v of VIEWS){ t.w.navigate(v); ok('#'+v+' activates', t.D.getElementById('page-'+v).classList.contains('active')); }
+  ok('no JS errors while routing', true);
+
+  /* ------------------------------------------------------------ deep links */
+  group('Deep links');
+  w = await load('#work-harry'); t = run(w);
+  ok('#work-harry opens the Work view', t.$('#page-work')?.classList.contains('active'));
+  const det=t.$('#page-work .case-detail.active');
+  ok('#work-harry opens the case, not the index', !!det, det&&det.id);
+  t.w.navigate('work');
+  ok('"See the work" from a case returns to the index', !t.$('#page-work .case-detail.active'));
+
+  /* --------------------------------------------------------- brand pricing */
+  group('Brand — prices match PRICING.md');
+  w = await load(); t = run(w);
+  t.w.navigate('brand');
+  ok('base package', t.total('brand')===EXPECTED.brandBase, t.total('brand'));
+  /* Keyed on the input's VALUE, not the visible label — the checkbox reads
+     "Brand summary PDF" while the card shows "Brand summary (PDF)". */
+  const bAddons={'Naming':EXPECTED.naming,'Brand summary PDF':EXPECTED.brandSummaryPdf,
+                 'Social starter templates':EXPECTED.socialTemplates,'Extended imagery pack':EXPECTED.extendedImagery,
+                 'Extra revision round':EXPECTED.brandRevision};
+  for(const [label,price] of Object.entries(bAddons)){
+    const box=t.$$('#page-brand input[name="b-addon"]').find(i=>i.value===label);
+    if(!box){ ok('add-on "'+label+'" exists', false); continue; }
+    const before=t.total('brand'); box.click(); const after=t.total('brand'); box.click();
+    ok('add-on "'+label+'"', after-before===price, (after-before)+' / expected '+price);
+  }
+  ok('unticking every add-on returns to base', t.total('brand')===EXPECTED.brandBase, t.total('brand'));
+
+  group('Brand — rush surcharge');
+  const before=t.total('brand');
+  ok('"Within 2 weeks" adds the rush fee',
+     (t.setRadio('b-deadline',/within 2 weeks/i), t.total('brand')-before===EXPECTED.rush),
+     (t.total('brand')-before)+' / expected '+EXPECTED.rush);
+  ok('"No hard deadline" removes it',
+     (t.setRadio('b-deadline',/no hard deadline/i), t.total('brand')===EXPECTED.brandBase), t.total('brand'));
+  /* eval, because `const` at the top level of a script lives in the global
+     LEXICAL environment and never becomes a property of window — t.w.RUSH is
+     undefined however correct the constant is. eval runs inside that scope. */
+  ok('RUSH constant matches PRICING.md', t.w.eval('RUSH')===EXPECTED.rush, t.w.eval('RUSH'));
+  ok('rush window is '+EXPECTED.rushDays+' days', t.w.eval('RUSH_DAYS')===EXPECTED.rushDays, t.w.eval('RUSH_DAYS'));
+  ok('KNOWN GAP: Website has no deadline step, so a rushed website is free',
+     t.$$('#page-website input[name*="deadline"]').length===0, 'logged in DECISIONS.md');
+
+  /* ------------------------------------------------------- website pricing */
+  group('Website — prices match PRICING.md');
+  w = await load(); t = run(w);
+  t.w.navigate('website');
+  t.setRadio('w-start',/standard work/i);
+  ok('base package', t.total('website')===EXPECTED.websiteBase, t.total('website'));
+  const wAddons={'Extra page':EXPECTED.extraPage,'Multilingual setup':EXPECTED.multilingual,
+                 'Image pack':EXPECTED.imagePack,'SEO setup':EXPECTED.seo,'Extra revision round':EXPECTED.websiteRevision};
+  for(const [label,price] of Object.entries(wAddons)){
+    const box=t.$$('#page-website input[name="w-addon"]').find(i=>i.value===label);
+    if(!box){ ok('add-on "'+label+'" exists', false); continue; }
+    const b=t.total('website'); box.click(); const a=t.total('website'); box.click();
+    ok('add-on "'+label+'"', a-b===price, (a-b)+' / expected '+price);
+  }
+
+  group('Website — copy is billable exactly once');
+  const base=t.total('website');
+  t.setRadio('w-copy',/need help writing/i);
+  ok('copy writing adds its price once', t.total('website')-base===EXPECTED.copyWriting,
+     (t.total('website')-base)+' / expected '+EXPECTED.copyWriting);
+  ok('no add-on charges for copy as well',
+     !t.$$('#page-website input[name="w-addon"]').some(i=>/copy/i.test(i.value)),
+     t.$$('#page-website input[name="w-addon"]').map(i=>i.value).join(', '));
+  t.setRadio('w-copy',/rough copy/i);
+  ok('copy editing adds its price', t.total('website')-base===EXPECTED.copyEditing,
+     (t.total('website')-base)+' / expected '+EXPECTED.copyEditing);
+  t.setRadio('w-copy',/all copy ready/i);
+  ok('"All copy ready" adds nothing', t.total('website')===base, t.total('website'));
+
+  group('Website — build level');
+  t.setRadio('w-build',/design, build, publish/i);
+  ok('publishing adds its price', t.total('website')-base===EXPECTED.publish,
+     (t.total('website')-base)+' / expected '+EXPECTED.publish);
+  t.setRadio('w-build',/design only/i);
+
+  /* ------------------------------------------------------------- the gate */
+  group('Brand gate');
+  w = await load(); t = run(w);
+  t.w.navigate('website');
+  t.setRadio('w-start',/standard work/i);
+  ok('"A Standard Work brand" charges no prep', t.total('website')===EXPECTED.websiteBase, t.total('website'));
+  t.setRadio('w-start',/existing/i);
+  ok('"An existing brand" adds full prep', t.total('website')===EXPECTED.websiteBase+EXPECTED.prepMax, t.total('website'));
+  ok('prep checklist is revealed', t.w.getComputedStyle(t.D.getElementById('w-gate-prep')).display!=='none');
+  const steps=[['Logo',EXPECTED.prepLogo],['Typeface',EXPECTED.prepTypeface],
+               ['Colour palette',EXPECTED.prepPalette],['Imagery direction',EXPECTED.prepImagery]];
+  let running=t.total('website');
+  for(const [label,price] of steps){
+    t.check(new RegExp('^'+label+'$','i'));
+    const now=t.total('website');
+    ok('ticking "'+label+'" reduces the total by '+price, running-now===price, (running-now)+' / expected '+price);
+    running=now;
+  }
+  ok('holding all four costs nothing extra', t.total('website')===EXPECTED.websiteBase, t.total('website'));
+  ok('the four prep items sum to PREP_MAX',
+     EXPECTED.prepLogo+EXPECTED.prepTypeface+EXPECTED.prepPalette+EXPECTED.prepImagery===EXPECTED.prepMax);
+  t.setRadio('w-start',/not yet/i);
+  ok('"Not yet" reveals brand-first, not checkout',
+     t.w.getComputedStyle(t.D.getElementById('w-gate-brand')).display!=='none');
+  ok('"Not yet" hard-blocks nothing', !t.$$('#page-website button').some(b=>b.disabled));
+  const bothChoice=t.$('input[name="w-order"][value="both"]');
+  const brandChoice=t.$('input[name="w-order"][value="brand"]');
+  bothChoice.click();
+  ok('"Order both" shows both products',
+     t.w.getComputedStyle(t.$('#wb-website-row')).display!=='none' &&
+     /Brand Tool Kit \+ Website/.test(t.$('#page-website .summary-top').innerText));
+  ok('"Order both" shows the combined base total', num(t.$('#wb-total').textContent)===EXPECTED.brandBase+EXPECTED.websiteBase);
+  brandChoice.click();
+  ok('"Start with the brand" hides the website from the route summary',
+     t.w.getComputedStyle(t.$('#wb-website-row')).display==='none');
+  ok('"Start with the brand" shows only the brand total', num(t.$('#wb-total').textContent)===EXPECTED.brandBase);
+  t.$('#both-checkout-btn').click();
+  ok('"Start with the brand" opens the brand configurator', t.$('#page-brand').classList.contains('active'));
+
+  /* ------------------------------------------------------------- checkout */
+  group('Checkout payload');
+  w = await load(); t = run(w);
+  const sent=[]; t.w.fetch=(url,opts)=>{sent.push({url,body:JSON.parse(opts.body)});return new Promise(()=>{})};
+  t.w.navigate('brand');
+  let threw=null; try{ t.w.startCheckout('brand'); }catch(e){ threw=e.message; }
+  ok('startCheckout does not throw', !threw, threw||'');
+  ok('it reaches the Netlify function', sent.length===1, sent[0]&&sent[0].url);
+  ok('payload carries a product name', !!(sent[0]&&sent[0].body.description), sent[0]&&JSON.stringify(sent[0].body));
+  ok('brand receipt name is "Brand Tool Kit"', sent[0]&&sent[0].body.description==='Brand Tool Kit', sent[0]&&sent[0].body.description);
+  ok('brand total is the base', sent[0]&&sent[0].body.totalSEK===EXPECTED.brandBase, sent[0]&&sent[0].body.totalSEK);
+  ok('cancel path returns to #brand', sent[0]&&sent[0].body.cancelPath==='#brand');
+  ok('50% deposit computes correctly', sent[0]&&Math.round(sent[0].body.totalSEK*0.5*100)===EXPECTED.brandBase*50,
+     sent[0]&&Math.round(sent[0].body.totalSEK*0.5*100)+' öre');
+  t.w.navigate('website'); t.D.getElementById('website-checkout-btn').disabled=false;
+  try{ t.w.startCheckout('website'); }catch(e){ threw=e.message; }
+  ok('website checkout reaches the function', sent.length===2, threw||'');
+  ok('website receipt name is "Website"', sent[1]&&sent[1].body.description==='Website', sent[1]&&sent[1].body.description);
+
+  w = await load(); t = run(w);
+  const routed=[]; t.w.fetch=(url,opts)=>{routed.push({url,body:JSON.parse(opts.body)});return new Promise(()=>{})};
+  t.w.navigate('website');
+  t.setRadio('w-start',/not yet/i);
+  t.$('input[name="w-order"][value="both"]').click();
+  t.$('#both-checkout-btn').click();
+  ok('"Order both" sends the combined checkout',
+     routed[0]&&routed[0].body.description==='Brand Tool Kit + Website'&&
+     routed[0].body.totalSEK===EXPECTED.brandBase+EXPECTED.websiteBase,
+     routed[0]&&JSON.stringify(routed[0].body));
+
+  group('Checkout total equals the displayed total');
+  w = await load(); t = run(w);
+  const sent2=[]; t.w.fetch=(u,o)=>{sent2.push(JSON.parse(o.body));return new Promise(()=>{})};
+  t.w.navigate('website');
+  t.setRadio('w-start',/standard work/i);
+  t.setRadio('w-copy',/need help writing/i);
+  t.$$('#page-website input[name="w-addon"]').find(i=>i.value==='SEO setup').click();
+  t.setRadio('w-build',/design, build, publish/i);
+  const shown=t.total('website');
+  t.D.getElementById('website-checkout-btn').disabled=false;
+  t.w.startCheckout('website');
+  ok('a fully configured order sends exactly what it displays',
+     sent2[0]&&sent2[0].totalSEK===shown, 'displayed '+shown+' / sent '+(sent2[0]&&sent2[0].totalSEK));
+
+  /* ---------------------------------------------------------- product names */
+  group('Product names');
+  w = await load(); t = run(w);
+  const text=t.D.body.innerText;
+  ok('no "Basic Brand Tool Kit"', !text.includes('Basic Brand Tool Kit'));
+  ok('no "One Page Website"', !text.includes('One Page Website'));
+  ok('no "Copy support" (the deleted duplicate)', !text.includes('Copy support'));
+  t.w.navigate('brand');
+  ok('brand summary reads "Brand Tool Kit"', /Brand Tool Kit/.test(t.$('#page-brand .summary-top').innerText));
+  t.w.navigate('website');
+  ok('website summary reads "Website"', /Website/.test(t.$('#page-website .summary-top').innerText));
+
+  /* ------------------------------------------------- what's included panel */
+  group('"What\'s included" disclosure');
+  w = await load(); t = run(w);
+  for(const p of ['brand','website']){
+    t.w.navigate(p);
+    const panel=t.D.getElementById(p+'-included');
+    const btn=t.D.getElementById(p+'-included-toggle');
+    ok(p+': closed on arrival', !panel.classList.contains('is-open'));
+    ok(p+': toggle is labelled and wired', !!btn && btn.getAttribute('aria-expanded')==='false');
+    t.w.toggleIncluded(p);
+    ok(p+': opens', panel.classList.contains('is-open') && btn.getAttribute('aria-expanded')==='true');
+    t.w.navigate('home'); t.w.navigate(p);
+    ok(p+': closes again on a view change', !panel.classList.contains('is-open'));
+  }
+
+  /* -------------------------------------------------------------- interface */
+  /* ------------------------------------------------- the speculative mocks */
+  group('Speculative one-pagers');
+  w = await load(); t = run(w);
+  for(const c of ['harry','90110','eddy','lex-energy','sebratec']){
+    const tag=t.$('#case-'+c+' .mocktag');
+    ok(c+': one mock, labelled', t.$$('#case-'+c+' .mockwrap').length===1 &&
+       tag && /Demonstration/i.test(tag.textContent), tag&&tag.textContent.trim().slice(0,40));
+  }
+  /* THE ASSERTION THAT WAS MISSING, and the reason this group exists. The
+     overlay shipped on 27 Aug with none of its CSS — display:none included —
+     so its bar and an empty image rendered inline at the foot of every page.
+     It was checked at the time by fifteen ad-hoc assertions, every one of which
+     opened it first. A component that is never OFF cannot be caught by testing
+     it ON, and none of those checks was in this file anyway. */
+  ok('overlay is HIDDEN at rest', t.w.getComputedStyle(t.$('#mockModal')).display==='none',
+     t.w.getComputedStyle(t.$('#mockModal')).display);
+  ok('overlay bar does not render at rest', t.$('.mockmodal-bar').getBoundingClientRect().height===0);
+  ok('overlay is fixed, not in flow', t.w.getComputedStyle(t.$('.mockmodal-bar')).position==='fixed',
+     t.w.getComputedStyle(t.$('.mockmodal-bar')).position);
+  t.w.showCase('harry'); t.w.openMock('harry');
+  ok('openMock opens it', t.$('#mockModal').classList.contains('open'));
+  ok('it loads that case\'s shot', /mock-full-harry/.test(t.$('#mockModalImg').src));
+  ok('overlay repeats the disclaimer', /not a real client site/i.test(t.$('.mockmodal-t span').textContent));
+  t.w.closeMock();
+  ok('closeMock hides it again', t.w.getComputedStyle(t.$('#mockModal')).display==='none');
+
+  group('Interface');
+  w = await load(); t = run(w);
+  ok('nav height matches --nav-h',
+     Math.round(t.$('nav').getBoundingClientRect().height)===parseInt(t.w.getComputedStyle(t.D.documentElement).getPropertyValue('--nav-h')),
+     Math.round(t.$('nav').getBoundingClientRect().height)+'px');
+  const icos=t.$$('.btn-ico');
+  ok('every button arrow is its own element', icos.length>0, icos.length+' arrows');
+  ok('each arrow carries exactly one direction class',
+     icos.every(i=>i.classList.contains('btn-ico--lead')!==i.classList.contains('btn-ico--trail')));
+  ok('no arrow left loose in button text',
+     !t.$$('.btn').some(b=>[...b.childNodes].some(n=>n.nodeType===3&&/[→←]/.test(n.nodeValue))));
+  ok('no CTA points at the view it is already on', (()=>{
+    for(const v of VIEWS){ t.w.navigate(v);
+      const bad=t.$$('#page-'+v+' .btn').filter(b=>{
+        const h=b.getAttribute('onclick')||''; const m=h.match(/navigate\('([a-z-]+)'\)/); return m&&m[1]===v;});
+      if(bad.length) return false; }
+    return true; })());
+
+  group('Ported from the 28 Aug package');
+  w = await load(); t = run(w);
+  /* Four features ported by hand on 2026-08-28 rather than by taking Simon's
+     file, which would have re-broken checkout. Nothing else asserts them. */
+
+  // 1 - the third hero button
+  const heroBtns = t.$$('#page-home .hero-cta-box .btn');
+  ok('home hero offers three orders', heroBtns.length===3, heroBtns.length);
+  ok('the third is Order both', /Order both/.test(heroBtns[2].textContent));
+  ok('it calls orderBoth, not navigate',
+     /orderBoth\(\)/.test(heroBtns[2].getAttribute('onclick')||''));
+
+  // 2 - five colour thumbnails
+  const cells = t.$$('#page-home .logo-strip .logo-cell');
+  ok('the strip shows five cases', cells.length===5, cells.length);
+  ok('every cell is a splash cell', cells.every(c=>c.classList.contains('splash')));
+  ok('every cell carries both marks',
+     cells.every(c=>c.querySelector('img.ink') && c.querySelector('img.lit')));
+  ok('every cell sets its own --bg and --cat',
+     cells.every(c=>c.style.getPropertyValue('--bg') && c.style.getPropertyValue('--cat')));
+  ok('the lit mark is hidden until hover',
+     cells.every(c=>t.w.getComputedStyle(c.querySelector('img.lit')).opacity==='0'));
+  ok('no cell still points at a retired flat thumbnail',
+     !cells.some(c=>[...c.querySelectorAll('img')].some(i=>/work\/(harry|90110|eddy)\.webp/.test(i.getAttribute('src')))));
+
+  // 3 - the disclosure reads as a control
+  for (const which of ['brand','website']) {
+    /* Measure it on its own page. A hidden page reports 0x0 for everything,
+       which made the tap-target check fail against a button that is fine. */
+    t.w.navigate(which);
+    const b = t.$('#'+which+'-included-toggle');
+    ok(which+': the toggle says what pressing it does',
+       /See what you get/.test(b.textContent), b.textContent.trim());
+    ok(which+': it carries the rotating sign', !!b.querySelector('.disclose-sign'));
+    ok(which+': it is a real tap target',
+       Math.round(b.getBoundingClientRect().height)>=44,
+       Math.round(b.getBoundingClientRect().height)+'px');
+    ok(which+': it starts closed', b.getAttribute('aria-expanded')==='false');
+    t.w.toggleIncluded(which);
+    ok(which+': opening flips the label to Hide', /Hide what you get/.test(b.textContent));
+    ok(which+': opening sets aria-expanded', b.getAttribute('aria-expanded')==='true');
+    ok(which+': the panel is open', t.$('#'+which+'-included').classList.contains('is-open'));
+    t.w.navigate('home');
+    ok(which+': leaving the page resets the label', /See what you get/.test(b.textContent));
+    ok(which+': leaving the page closes the panel',
+       !t.$('#'+which+'-included').classList.contains('is-open'));
+  }
+
+  // 4 - the row of five on the Website page
+  t.w.navigate('website');
+  const row = t.$$('#website-included .mockrow .mockcell');
+  ok('the Website page shows five one-pagers', row.length===5, row.length);
+  ok('each opens its own mock',
+     row.every(c=>/openMock\('[a-z0-9-]+'\)/.test(c.getAttribute('onclick')||'')));
+  ok('each uses the row-sized image, not the full one',
+     row.every(c=>/work\/mock-row-/.test(c.querySelector('img').getAttribute('src'))));
+  /* This label is the reason the row is allowed to exist at all. On Lex and
+     Sebratec the real sites were built by us; unlabelled mocks there would read
+     as a claim about delivered work. If this assertion ever fails, do not
+     "fix" it by deleting the assertion. */
+  ok('the row is labelled a demonstration',
+     /not a delivered project/i.test(t.$('#website-included .mocktag').textContent));
+
+  /* ---------------------------------------------------------------- report */
+  const s=document.getElementById('summary');
+  s.className = fail===0 ? 'ok' : 'bad';
+  s.textContent = fail===0
+    ? pass+' assertions, all passing.'
+    : fail+' FAILING of '+(pass+fail)+'. A failure here usually means PRICING.md, index.html and the EXPECTED block at the top of this file have drifted apart.';
+})().catch(e=>{
+  const s=document.getElementById('summary');
+  s.className='bad';
+  s.textContent='The suite itself crashed: '+e.message+' — if this says "cross-origin", you opened the file directly. Serve the folder and open it over http.';
+});
+</script>
+</body>
+</html>

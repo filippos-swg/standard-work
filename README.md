@@ -60,35 +60,21 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for how it all fits together.
 
 ## Repo Structure
 
-```
-standard-work/
-  index.html              ← the entire site
-  README.md
-  PRICING.md              ← canonical prices (single source of truth)
-  CLAUDE.md               ← pointer to aios/AI_HANDOFF.md (read automatically)
-  .gitignore
-  aios/                   ← Project OS (AIOS v1.3)
-    AI_HANDOFF.md         ← standing briefing for any AI agent
-    PROJECT_BRIEF.md      ← what it is and must not become
-    PROJECT_CANON.md      ← immutable identity (placeholder, to complete)
-    DECISIONS.md          ← what was decided and why
-    CHANGELOG.md          ← timestamped changes
-    tasks/
-      TASK_001.md         ← deploy v0.1
-      done/               ← completed tasks
-  docs/                   ← extended reference
-    ARCHITECTURE.md       ← how the site is built
-    MVP_SCOPE.md          ← what is in scope, what waits
-    CREATIVE_DIRECTION.md ← design system, copy rules, banned language
-    UX_PRINCIPLES.md      ← how the site behaves
-    OPEN_QUESTIONS.md     ← what is still undecided
-```
+The whole site is `index.html`. Everything else is either canonical data
+(`PRICING.md`), the project OS (`aios/`), extended reference (`docs/`), the case images
+(`work/`) or the test suite (`tests.html`).
+
+*This used to be a drawn file tree. It was wrong within a month of being written, which is why
+AiOS bans a hand-maintained list of files: `aios/STATE.md` is generated and reports the
+real one.*
 
 ---
 
 ## Working on This Project
 
-Start with [`aios/AI_HANDOFF.md`](aios/AI_HANDOFF.md). It is the standing briefing for any agent or collaborator and points to everything else.
+Start with `CLAUDE.md` — five lines, loaded automatically — then `aios/STATE.md` for what is
+true right now. `aios/CANON.md` holds the rules that outlive the build; `aios/LOG.md` holds
+every decision and what is still open.
 
 ---
 
