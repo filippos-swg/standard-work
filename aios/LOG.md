@@ -13,6 +13,13 @@ because rewriting it would have been the one thing a migration must not do. Date
 
 ---
 
+## 2026-09-02 — External vault for heavy media
+**Status:** APPROVED
+
+**Evidence:** Filippos confirmed the fleet-wide policy in this work cycle: large originals and unused media belong outside project Git repositories, while live sites and prototypes retain the optimized copies they actually use. Standard Work currently tracks only a 3.1 MB web-delivery set; its largest file is about 220 KB, so nothing needs relocating. The external folder at `~/Pictures/projects-images/standard-work/` now exists for future masters.
+
+**Practical consequence:** Put full-resolution images, editable source files, video, audio, and unused alternates in the external vault before committing. Keep referenced web-delivery files in `work/`; never remove a referenced asset merely to reduce repository size.
+
 ## 2026-08-27 — Simon's second package: ported, not merged
 **Status:** APPROVED
 

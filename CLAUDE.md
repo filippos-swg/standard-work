@@ -1,4 +1,4 @@
-Standard: AiOS v2.0 · canon: `AIOS/Framework/project-aios/aios/CANON.md` · **Profile:** build · **Visibility:** private
+Standard: AiOS v2.0 · canon: `~/Projects/AIOS/Framework/project-aios/aios/CANON.md` · **Profile:** build · **Visibility:** private
 State: read `aios/STATE.md` first. If its HEAD stamp ≠ `git rev-parse HEAD`, or the tree is dirty, regenerate before acting.
 Truth: git history and `aios/`. Not chat. Not this file.
 Depends on: nothing. `~/Projects/silly-wizards-guild` and `~/Projects/seriously-wow` are siblings in the same network — read-only from here, and never edited from this repo.
