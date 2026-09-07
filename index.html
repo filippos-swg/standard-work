@@ -861,6 +861,14 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
 /* the speculative one-pagers */
 .mockwrap{margin-top:clamp(48px,6vw,80px);padding-top:clamp(34px,4.4vw,52px);
   border-top:1.5px solid var(--border-light)}
+/* .is-inset — the case-page mock, sized like the case photography above it.
+   Filippos, 2026-08-28: the artwork was full-bleed while every .case-shot on
+   the page sits in a max-w box with --pad-x either side, so the one speculative
+   image was also the widest thing on the page. These are the same constraints
+   that box holds, applied to the wrap rather than the image, so the border-top
+   insets too — which matches .case-pair, the other inset rule on this page. */
+.mockwrap.is-inset{max-width:var(--max-w);margin-left:auto;margin-right:auto;
+  padding-left:var(--pad-x);padding-right:var(--pad-x)}
 .mockhead{display:flex;flex-direction:column;gap:12px;margin-bottom:clamp(22px,3vw,32px)}
 .mocktag{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
   font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:600;letter-spacing:0.12em;
@@ -2067,12 +2075,8 @@ footer{padding:clamp(60px,8vw,100px) var(--pad-x) clamp(48px,6vw,80px);border-to
           <div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn btn-accent" onclick="navigate('brand')"><span class="btn-ico btn-ico--lead" aria-hidden="true">&rarr;</span>Order a brand</button></div>
         </div>
       </div>
-      <div class="mockwrap">
-            <div class="mockhead">
-              <span class="mocktag">Demonstration — not a delivered project</span>
-              <h3 class="slide-title" style="font-size:clamp(19px,2.2vw,26px);">The same brand as a Standard Work website.</h3>
-              <p class="mockcap" style="margin-top:0;">Not what this client was delivered. This is 90110's brand book run through the Website structure — the same six sections every Standard Work site gets, wearing their identity.</p>
-            </div>
+      <div class="mockwrap is-inset">
+            
             <img class="mockshot" style="aspect-ratio:1000/2542;" src="work/mock-full-90110.webp" alt="90110 as a Standard Work website">
           </div>
       </div>

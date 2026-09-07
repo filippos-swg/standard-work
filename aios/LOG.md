@@ -13,6 +13,35 @@ because rewriting it would have been the one thing a migration must not do. Date
 
 ---
 
+## 2026-08-28 — The case-page mocks lose their header block
+**Status:** APPROVED
+
+**Decision.** The `.mockhead` block — the "Demonstration — not a delivered project" tag, the
+"The same brand as a Standard Work website." heading and its caption — comes off the case-page
+one-pagers. 90110 first; the other four follow on request. The artwork is inset to sit at the
+same width and left edge as the `.case-shot` photography above it, via a new
+`.mockwrap.is-inset`, measured equal at 1152px wide from 64px on a 1280 viewport.
+
+**Why.** Filippos asked for it, and **Simon asked for it out** — the same person who wrote
+*"Do not remove or soften the Demonstration — not a delivered project labels"* into
+`FOR-CLAUDE.md` in the 28 August package. That rule is the only reason the label was there,
+and its author withdrawing it is the only thing that could take it off.
+
+**Trade-off accepted, and it is a real one.** The case-page mock carries **no click handler** —
+unlike the row of five on the Website page, it does not open the overlay — so that header was
+the only disclosure on the page. 90110's speculative one-pager now sits directly beneath
+90110's delivered work with nothing distinguishing the two. The exposure is smaller here than
+it would be on Lex Energy or Sebratec, where the real sites are ours and an unlabelled mock
+would read as a claim about delivered work. **Before those two follow, decide on a
+replacement disclosure** — the cheapest is a click handler, since the overlay already says
+*"Demonstration · not a real client site"*.
+
+`tests.html` records the exception rather than dropping the check: `MOCK_UNLABELLED` and
+`MOCK_LABELLED` must together cover all five cases, and the unlabelled ones are asserted to
+still line up with the case photography. Suite 117 → 125.
+
+---
+
 ## 2026-09-02 — External vault for heavy media
 **Status:** APPROVED
 

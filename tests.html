@@ -315,10 +315,32 @@ function run(w){
   /* ------------------------------------------------- the speculative mocks */
   group('Speculative one-pagers');
   w = await load(); t = run(w);
-  for(const c of ['harry','90110','eddy','lex-energy','sebratec']){
+  /* UNLABELLED BY DECISION, not by accident. Simon asked for the header block
+     off the case-page mocks on 2026-08-28 — the same person who wrote the "do
+     not remove these labels" rule in the 28 Aug package, which is the only
+     reason it comes off. 90110 is the first; move a slug across as each one
+     follows, and keep both lists exhaustive so a case cannot fall out of the
+     suite by being forgotten in either. */
+  const MOCK_UNLABELLED = ['90110'];
+  const MOCK_LABELLED   = ['harry','eddy','lex-energy','sebratec'];
+  ok('every case is in exactly one list',
+     MOCK_UNLABELLED.length + MOCK_LABELLED.length === 5 &&
+     !MOCK_UNLABELLED.some(c=>MOCK_LABELLED.includes(c)));
+  for(const c of MOCK_LABELLED){
     const tag=t.$('#case-'+c+' .mocktag');
     ok(c+': one mock, labelled', t.$$('#case-'+c+' .mockwrap').length===1 &&
        tag && /Demonstration/i.test(tag.textContent), tag&&tag.textContent.trim().slice(0,40));
+  }
+  for(const c of MOCK_UNLABELLED){
+    ok(c+': one mock, header deliberately removed',
+       t.$$('#case-'+c+' .mockwrap').length===1 && !t.$('#case-'+c+' .mocktag'));
+    /* It must still line up with the case photography above it — that was the
+       other half of the same request, and it is the thing most likely to drift. */
+    const shot=t.$('#case-'+c+' img.case-shot'), mock=t.$('#case-'+c+' img.mockshot');
+    const a=shot.getBoundingClientRect(), b=mock.getBoundingClientRect();
+    ok(c+': the mock is inset like the case photography',
+       Math.abs(b.left-a.left)<1 && Math.abs(b.width-a.width)<1,
+       'left '+Math.round(b.left-a.left)+' width '+Math.round(b.width-a.width));
   }
   /* THE ASSERTION THAT WAS MISSING, and the reason this group exists. The
      overlay shipped on 27 Aug with none of its CSS — display:none included —
