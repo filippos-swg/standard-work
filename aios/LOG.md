@@ -27,6 +27,17 @@ same width and left edge as the `.case-shot` photography above it, via a new
 `FOR-CLAUDE.md` in the 28 August package. That rule is the only reason the label was there,
 and its author withdrawing it is the only thing that could take it off.
 
+**Extended to all five, 2026-08-28.** Harry, Eddy, Lex Energy and Sebratec followed the same
+afternoon. Two things differed from 90110 and are worth knowing:
+
+- **Lex Energy and Sebratec did not need `is-inset`.** Their `.mockwrap` already sits inside
+  the padded `max-w` container, so the class double-padded them to 1024px against the 1152px
+  of the photography. Removed on those two. All five now measure 1152 wide, zero delta.
+- **Neither gets the Website strip.** They used both packages and already carry
+  *"This one used both packages. Brand 12,000 SEK. Website 8,000 SEK. Or both in one order,
+  20,000."* A second strip would put 8,000 and 10,000 for the same product on one page.
+  Harry, 90110 and Eddy are Brand-only cases and carry both strips.
+
 **Trade-off accepted, and it is a real one.** The case-page mock carries **no click handler** —
 unlike the row of five on the Website page, it does not open the overlay — so that header was
 the only disclosure on the page. 90110's speculative one-pager now sits directly beneath

@@ -321,8 +321,8 @@ function run(w){
      reason it comes off. 90110 is the first; move a slug across as each one
      follows, and keep both lists exhaustive so a case cannot fall out of the
      suite by being forgotten in either. */
-  const MOCK_UNLABELLED = ['90110'];
-  const MOCK_LABELLED   = ['harry','eddy','lex-energy','sebratec'];
+  const MOCK_UNLABELLED = ['harry','90110','eddy','lex-energy','sebratec'];
+  const MOCK_LABELLED   = [];
   ok('every case is in exactly one list',
      MOCK_UNLABELLED.length + MOCK_LABELLED.length === 5 &&
      !MOCK_UNLABELLED.some(c=>MOCK_LABELLED.includes(c)));
@@ -336,18 +336,35 @@ function run(w){
      as written rather than against PRICING.md on purpose — 10,000 is Website
      base 8,000 plus copywriting 2,000, a bundle rather than a listed price, and
      it is Filippos's wording. If PRICING.md moves, this needs a human. */
-  t.w.navigate('work'); t.w.showCase('90110');   // geometry needs it visible
-  const strips = t.$$('#case-90110 .ink-block');
-  ok('90110 carries both package strips', strips.length===2, strips.length);
-  ok('Brand first, Website second',
-     /Brand package/.test(strips[0].querySelector('h2').textContent) &&
-     /Website package/.test(strips[1].querySelector('h2').textContent));
-  ok('each strip points at its own configurator',
-     /navigate\('brand'\)/.test(strips[0].querySelector('.btn').getAttribute('onclick')) &&
-     /navigate\('website'\)/.test(strips[1].querySelector('.btn').getAttribute('onclick')));
-  ok('the Website strip sits below the artwork it refers to',
-     strips[1].getBoundingClientRect().top >
-     t.$('#case-90110 .mockshot').getBoundingClientRect().bottom);
+  /* The Brand-only cases carry a Brand strip then a Website strip. Lex Energy
+     and Sebratec do not: they used both packages and already carry one strip
+     that prices both, so a second one would put two different Website numbers
+     on the same page. */
+  const STRIP_BOTH = ['harry','90110','eddy'];
+  const STRIP_COMBINED = ['lex-energy','sebratec'];
+  for(const c of STRIP_BOTH){
+    t.w.navigate('work'); t.w.showCase(c);
+    const strips = t.$$('#case-'+c+' .ink-block');
+    ok(c+': carries both package strips', strips.length===2, strips.length);
+    ok(c+': Brand first, Website second',
+       /Brand package/.test(strips[0].querySelector('h2').textContent) &&
+       /Website package/.test(strips[1].querySelector('h2').textContent));
+    ok(c+': each strip points at its own configurator',
+       /navigate\('brand'\)/.test(strips[0].querySelector('.btn').getAttribute('onclick')) &&
+       /navigate\('website'\)/.test(strips[1].querySelector('.btn').getAttribute('onclick')));
+    ok(c+': the Website strip sits below the artwork',
+       strips[1].getBoundingClientRect().top >
+       t.$('#case-'+c+' .mockshot').getBoundingClientRect().bottom);
+  }
+  for(const c of STRIP_COMBINED){
+    const strips = t.$$('#case-'+c+' .ink-block');
+    ok(c+': one combined strip, not two',
+       strips.length===1 && /used both packages/.test(strips[0].querySelector('h2').textContent),
+       strips.length);
+    ok(c+': the Website price is stated once',
+       (t.$('#case-'+c).textContent.match(/Website/g)||[]).length>0 &&
+       !/This is the Website package/.test(t.$('#case-'+c).textContent));
+  }
 
   for(const c of MOCK_UNLABELLED){
     ok(c+': one mock, header deliberately removed',
