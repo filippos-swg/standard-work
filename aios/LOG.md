@@ -38,6 +38,21 @@ afternoon. Two things differed from 90110 and are worth knowing:
   20,000."* A second strip would put 8,000 and 10,000 for the same product on one page.
   Harry, 90110 and Eddy are Brand-only cases and carry both strips.
 
+**The Website strip quotes 8,000, not 10,000. Filippos, 2026-08-28.** It first read
+*"10,000 SEK ex. moms. One page plus copy"* — Website base 8,000 plus copywriting 2,000. Changed
+to *"8,000 SEK ex. moms. One page, fixed scope."* for four reasons: the Brand strip beside it
+quotes a base, so the pair should quote the same kind of figure; Lex and Sebratec already show
+8,000 on the same set of pages; a case page is top of funnel and wants the smallest honest
+number, with copy sold at the add-on step where it belongs; and 10,000 appears nowhere in
+`PRICING.md`, which `tests.html` could not have caught because marketing copy is not a
+configurator control. Both strips are now asserted against `EXPECTED.brandBase` and
+`EXPECTED.websiteBase` rather than taken as written.
+
+**Still open, and it is a product question, not a copy one:** if in practice nearly every
+Website client needs the copy written, 8,000 is the number nobody pays and 10,000 is the truer
+one. The answer then is a named bundle line in `PRICING.md`, not a different number in one
+strip.
+
 **Trade-off accepted, and it is a real one.** The case-page mock carries **no click handler** —
 unlike the row of five on the Website page, it does not open the overlay — so that header was
 the only disclosure on the page. 90110's speculative one-pager now sits directly beneath
